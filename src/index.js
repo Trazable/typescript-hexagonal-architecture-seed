@@ -3,4 +3,4 @@
  */
 
 
-require('./interactors/rest')
+require('./interactors/rest/express')
