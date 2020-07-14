@@ -1,7 +1,6 @@
 const { MongoClient } = require('mongodb')
-const Config = require('../config')
 
-const mongoClient = new MongoClient(Config.DATASOURCES.MONGODB.DB_URL, {
+const mongoClient = new MongoClient('mongodb://localhost:27017', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -18,7 +17,7 @@ exports.makeDb = async () => {
       console.debug('Database connected')
     }
     
-    return mongoClient.db(Config.DATASOURCES.MONGODB.DB_NAME)
+    return mongoClient.db('hexagonal')
   } catch (error) {
     console.error('Database error', error.message)
   }
