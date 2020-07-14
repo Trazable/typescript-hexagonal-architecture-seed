@@ -6,5 +6,10 @@
 
 ___
 
+Install dependencies:
+npm i
+
+___
+
 Now you can run this example ( ensure your node version is >= 12.18 ):  
 `npm start`
