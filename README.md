@@ -2,7 +2,8 @@
 
 ## Before run
 
-- You need a MongoDB instance: `docker run --name hexagonal-architecture-example-mongo --network host -d mongo:4.2-bionic`.
+- You need a MongoDB instance:  
+`docker run --name hexagonal-architecture-example-mongo --network host -d mongo:4.2-bionic`.
 
 ___
 
