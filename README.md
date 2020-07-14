@@ -6,8 +6,8 @@
 
 ___
 
-Install dependencies:
-npm i
+Install dependencies:  
+`npm i`
 
 ___
 
