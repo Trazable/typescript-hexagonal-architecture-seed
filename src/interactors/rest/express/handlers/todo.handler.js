@@ -4,9 +4,9 @@
  */
 
 
-const { addTodo } = require('../../../use-cases/add-todo')
-const { getTodos } = require('../../../use-cases/get-todos')
-const MongoDataSource = require('../../../datasources/mongo.datasource')
+const { addTodo } = require('../../../../services/add-todo')
+const { getTodos } = require('../../../../services/get-todos')
+const MongoDataSource = require('../../../../datasources/mongoDB/collections/todo.data-source')
 
 /**
  * Handler Post a new Todo

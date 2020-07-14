@@ -6,7 +6,6 @@ const app = require('express')()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const routes = require('./routes')
-const Config = require('../../config')
 
 // Middlewares
 app.use(bodyParser.json())
@@ -17,8 +16,9 @@ app.use(routes)
 
 
 // Listen for requests
-app.listen(Config.INTERACTORS.REST.PORT, () => {
-  console.log(`Server is listening on port ${Config.INTERACTORS.REST.PORT}`)
+const port = 3000
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`)
 })
 
 
