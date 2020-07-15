@@ -1,12 +1,8 @@
 const router = require('express').Router()
-const todoRoutes = require('./todo.routes')
-const { makeExpressCallback } = require('../express-callback')
+const todoRouter = require('./todo.router')
 
 
-for (const route of todoRoutes) {
-  // router.METHOD(PATH, ...HANDLERS)
-  router[route.method.toLowerCase()](route.path, ...route.handlers.map(handler => makeExpressCallback(handler)))
-}
+router.use('/todos', todoRouter)
 
 
 module.exports = router
