@@ -1,15 +1,14 @@
 /**
- * @constant COLLECTION Todo Database Collection Name
- */
-const COLLECTION = 'todo'
-
-/**
  * Todo Repository initialization
  * 
- * @param {DataSource} datasource 
+ * @param {dataSource} dataSource 
  */
-function TodoRepository (datasource) {
-  this.datasource = datasource
+function TodoRepository (dataSource) {
+  this.dataSource = dataSource
+
+  if (dataSource.getAll === undefined) {
+    throw new Error('You must implement getAll in your dataSource')
+  }
 }
 
 /**
@@ -20,7 +19,7 @@ function TodoRepository (datasource) {
  * @returns {Todo} Todo
  */
 TodoRepository.prototype.insert = function (todo) {
-  return this.datasource.insert(COLLECTION, todo)
+  return this.dataSource.insert(todo)
 }
 
 /**
@@ -29,7 +28,7 @@ TodoRepository.prototype.insert = function (todo) {
  * @returns {Todo[]} Todos
  */
 TodoRepository.prototype.getAll = function () {
-  return this.datasource.getAll(COLLECTION)
+  return this.dataSource.getAll()
 }
 
-exports.TodoRepository = TodoRepository
+module.exports = TodoRepository
