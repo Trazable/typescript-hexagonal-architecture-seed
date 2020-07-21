@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {
-  postTodo,
-  getTodos,
+  getAll,
+  save,
 } = require('../controllers/todo.controller')
 
 
@@ -12,8 +12,8 @@ const {
  */
 router
   .route('/')
-  .get(getTodos)
-  .post(postTodo)
+  .get(getAll)
+  .post(save)
 
 
 module.exports = router

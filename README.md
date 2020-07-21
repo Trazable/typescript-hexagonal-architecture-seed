@@ -14,3 +14,8 @@ ___
 
 Now you can run this example ( ensure your node version is >= 12.18 ):  
 `npm start`
+
+___
+
+Run unitary test:  
+`npm run test`

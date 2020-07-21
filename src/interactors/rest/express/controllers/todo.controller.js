@@ -3,9 +3,7 @@
  * and prepare the response for the rest interactor
  */
 
-
-const { addTodo } = require('../../../../services/add-todo')
-const { getTodos } = require('../../../../services/get-todos')
+const ExampleService = require('../../../../services/example.service')
 const MongoDataSource = require('../../../../datasources/mongoDB/collections/todo.data-source')
 
 /**
@@ -16,11 +14,13 @@ const MongoDataSource = require('../../../../datasources/mongoDB/collections/tod
  * @param {Request} req
  * @param {Response} res
  */
-exports.postTodo = async (req, res) => {
+exports.save = async (req, res) => {
   try {
-    const todo = await addTodo(MongoDataSource, req.body)
+    const exampleService = new ExampleService(MongoDataSource)
 
-    return res.status(201).json(todo)
+    await exampleService.save(req.body)
+
+    return res.status(201).end()
   } catch (error) {
     console.error(error)
 
@@ -38,9 +38,11 @@ exports.postTodo = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-exports.getTodos = async (req, res) => {
+exports.getAll = async (req, res) => {
   try {
-    const todos = await getTodos(MongoDataSource)
+    const exampleService = new ExampleService(MongoDataSource)
+
+    const todos = await exampleService.getAll()
 
     return res.status(200).json(todos)
   } catch (error) {
