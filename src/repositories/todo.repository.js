@@ -9,6 +9,9 @@ function TodoRepository (dataSource) {
   if (dataSource.getAll === undefined) {
     throw new Error('You must implement getAll in your dataSource')
   }
+  if (dataSource.save === undefined) {
+    throw new Error('You must implement save in your dataSource')
+  }
 }
 
 /**
@@ -18,8 +21,8 @@ function TodoRepository (dataSource) {
  * 
  * @returns {Todo} Todo
  */
-TodoRepository.prototype.insert = function (todo) {
-  return this.dataSource.insert(todo)
+TodoRepository.prototype.save = function (todo) {
+  return this.dataSource.save(todo)
 }
 
 /**
