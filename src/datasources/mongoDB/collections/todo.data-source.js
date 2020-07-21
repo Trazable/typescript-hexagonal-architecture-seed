@@ -29,11 +29,11 @@ exports.makeDb = async () => {
  * @param {string} collection 
  * @param {any} info 
  */
-exports.insert = async (collection, info) => {
+exports.save = async (info) => {
   const db = await this.makeDb()
 
   const result = await db
-    .collection(collection)
+    .collection('example')
     .insertOne(info)
     
   return result.ops[0]
@@ -47,11 +47,11 @@ exports.insert = async (collection, info) => {
  * 
  * @returns {any[]} all collection's documents
  */
-exports.getAll = async (collection, query) => {
+exports.getAll = async (query) => {
   const db = await this.makeDb()
 
   const result = await db
-    .collection(collection)
+    .collection('example')
     .find(query)
     .toArray()
     
