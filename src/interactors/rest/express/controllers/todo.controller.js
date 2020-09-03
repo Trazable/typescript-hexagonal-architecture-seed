@@ -10,7 +10,7 @@ const MongoDataSource = require('../../../../datasources/mongoDB/collections/tod
  * Handler Post a new Todo
  * @method POST
  * @namespace TODO
- * 
+ *
  * @param {Request} req
  * @param {Response} res
  */
@@ -25,7 +25,7 @@ exports.save = async (req, res) => {
     console.error(error)
 
     return res.status(400).json({
-      error: error.message
+      error: error.message,
     })
   }
 }
@@ -34,7 +34,7 @@ exports.save = async (req, res) => {
  * Handler GET all Todo
  * @method GET
  * @namespace TODO
- * 
+ *
  * @param {Request} req
  * @param {Response} res
  */
@@ -46,10 +46,11 @@ exports.getAll = async (req, res) => {
 
     return res.status(200).json(todos)
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error)
 
     return res.status(400).json({
-      error: error.message
+      error: error.message,
     })
   }
 }

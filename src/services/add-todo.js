@@ -4,10 +4,10 @@ const { makeTodo } = require('../entities/todo.entity')
 /**
  * @description
  * Add a new Todo document and return it
- * 
- * @param {DataSource} datasource 
- * @param {any} todoInfo 
- * 
+ *
+ * @param {DataSource} datasource
+ * @param {any} todoInfo
+ *
  * @returns {Todo} the Todo created
  */
 exports.addTodo = async (datasource, todoInfo) => {

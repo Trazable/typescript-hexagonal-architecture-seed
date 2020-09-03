@@ -1,7 +1,7 @@
 /**
  * Todo Repository initialization
- * 
- * @param {dataSource} dataSource 
+ *
+ * @param {dataSource} dataSource
  */
 function TodoRepository (dataSource) {
   this.dataSource = dataSource
@@ -16,9 +16,9 @@ function TodoRepository (dataSource) {
 
 /**
  * Insert new Todo
- * 
- * @param {Todo} todo 
- * 
+ *
+ * @param {Todo} todo
+ *
  * @returns {Todo} Todo
  */
 TodoRepository.prototype.save = function (todo) {
@@ -27,7 +27,7 @@ TodoRepository.prototype.save = function (todo) {
 
 /**
  * Get all Todos
- * 
+ *
  * @returns {Todo[]} Todos
  */
 TodoRepository.prototype.getAll = function () {

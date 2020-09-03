@@ -10,7 +10,7 @@ ExampleService.prototype.getAll = function () {
 
 ExampleService.prototype.save = function (object) {
   // Business logic
-  object = { ...object, param: 'modified data'}
+  object = { ...object, param: 'modified data' }
   return this.repository.save(object)
 }
 
