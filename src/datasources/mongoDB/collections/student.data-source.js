@@ -3,29 +3,8 @@
  * que se debería hacer en el inicio de la aplicación o donde se desee este fichero copia el comportamiento del extends clasico de las clases.
  */
 
-
-/* eslint-disable no-console */
 const StudentRepository = require('../../../repositories/student.repository')
-const { MongoClient } = require('mongodb')
-
-// DATABASE CONFIGURATION
-const mongoClient = new MongoClient('mongodb://localhost:27017', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-
-async function _makeDataBase () {
-  try {
-    if (!mongoClient.isConnected()) {
-      await mongoClient.connect()
-      console.debug('Database connected')
-    }
-
-    return mongoClient.db('hexagonal')
-  } catch (error) {
-    console.error('Database error', error.message)
-  }
-}
+const initDatabase = require('../../mongoDB')
 
 
 // Creamos el nombre de la función
@@ -46,7 +25,7 @@ StudentMongoDataSource.prototype.constructor = StudentMongoDataSource
 
 // Método save del padre, al extender del padre este creara un redireccionamiento que lanzara un error si se invoca a un método no implementado aqui.
 StudentMongoDataSource.prototype.save = async function (student) {
-  const database = await _makeDataBase()
+  const database = await initDatabase()
 
   const result = await database
     .collection('example')
