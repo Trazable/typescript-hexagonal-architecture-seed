@@ -6,13 +6,15 @@ const app = require('express')()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const routes = require('./routes')
+const dependencies = require('../../../config/projectdependencies')
 
 // Middlewares
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 
 // Router
-app.use(routes)
+// Inyección de dependencias en cascada desde el inicio de la aplicación, en este caso un servidor de express
+app.use('/', routes(dependencies))
 
 
 // Listen for requests
