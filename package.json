@@ -1,5 +1,5 @@
 {
-  "name": "hexagonal-architecture-example",
+  "name": "hexagonal-architecture-seed",
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.js",
@@ -18,9 +18,11 @@
   },
   "devDependencies": {
     "expect": "^26.1.0",
-    "mocha": "^8.0.1"
+    "mocha": "^8.2.0"
   },
   "eslintConfig": {
-    "extends": ["@trazable/eslint-config"]
+    "extends": [
+      "@trazable/eslint-config"
+    ]
   }
 }
