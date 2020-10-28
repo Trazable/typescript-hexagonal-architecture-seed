@@ -6,7 +6,7 @@ const app = require('express')()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const routes = require('./routes')
-const dependencies = require('../../../dependencies/index')
+const dependencies = require('../../../dependencies')
 
 // Middlewares
 app.use(bodyParser.json())
