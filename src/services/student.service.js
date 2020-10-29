@@ -1,11 +1,11 @@
 
 // STUDENT SERVICE
-const StudentRepository = require("../repositories/student.repository")
+const StudentRepository = require('../repositories/student.repository')
 
 // Recogemos la dependencia inyectada desde el controlador
 /**
- * 
- * @param {StudentRepository} studentRepository 
+ *
+ * @param {StudentRepository} studentRepository
  */
 module.exports = (studentRepository) => {
   /**
@@ -21,8 +21,8 @@ module.exports = (studentRepository) => {
     const student = {
       name: studentData.name,
       age: studentData.age,
-      hobbies: studentData.hobbies || [],  
-      createdAt: new Date()
+      hobbies: studentData.hobbies || [],
+      createdAt: new Date(),
     }
     // Si no creamos ningun objeto y solo metemos lo que venga por el input, la base de datos lo guardaría sin ningún problema.
 
@@ -31,5 +31,9 @@ module.exports = (studentRepository) => {
   }
 
   return { save }
+}
+
+module.exports = {
+  StudentRepository,
 }
 
