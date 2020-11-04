@@ -34,6 +34,18 @@ ExampleMongoDataSource.prototype.save = async function (example) {
   return result.ops[0]
 }
 
+// Método save del padre, al extender del padre este creara un redireccionamiento que lanzara un error si se invoca a un método no implementado aqui.
+ExampleMongoDataSource.prototype.getAll = async function () {
+  const database = await initDatabase()
+
+  const result = await database
+    .collection('example')
+    .find()
+    .toArray()
+
+  return result
+}
+
 
 module.exports = ExampleMongoDataSource
 

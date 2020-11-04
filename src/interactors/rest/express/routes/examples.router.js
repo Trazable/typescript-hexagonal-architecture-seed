@@ -9,6 +9,7 @@ const ExamplesRouter = (dependencies) => {
 
   router.route('/')
     .post(exampleController.save)
+    .get(exampleController.getAll)
 
   return router
 }

@@ -7,7 +7,7 @@ module.exports = (dependencies) => {
   */
   const { exampleRepository } = dependencies
 
-  const save = async (req, res, next) => {
+  const save = async (req, res) => {
     try {
       // Inyectamos en el servicio el repositorio de example que ha venido desde el inicio de la aplicación declarado en el fichero config/projectdependencies.js
       // Si quisieramos mas repositorios solo habria que añadirlos como parametros
@@ -24,6 +24,23 @@ module.exports = (dependencies) => {
     }
   }
 
+  const getAll = async (req, res) => {
+    try {
+      // Inyectamos en el servicio el repositorio de example que ha venido desde el inicio de la aplicación declarado en el fichero config/projectdependencies.js
+      // Si quisieramos mas repositorios solo habria que añadirlos como parametros
+      // Ejemplo => const exampleService = ExampleService(exampleMongoRepository, pubsubRepository, exampleMysqlRepository, externalServiceRepository)
+      const exampleService = ExampleService(exampleRepository)
 
-  return { save }
+      const response = await exampleService.getAll()
+
+      return res.status(200).json(response)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      return res.status(500).json(error)
+    }
+  }
+
+
+  return { save, getAll }
 }

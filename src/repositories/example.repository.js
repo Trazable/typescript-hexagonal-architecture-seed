@@ -18,8 +18,8 @@ ExampleRepository.prototype.save = function (example) {
  *
  * @param {*} example
  */
-ExampleRepository.prototype.update = function (example) {
-  return Promise.reject(new Error('Method update not implemented'))
+ExampleRepository.prototype.getAll = function (example) {
+  return Promise.reject(new Error('Method getAll not implemented'))
 }
 
 module.exports = ExampleRepository

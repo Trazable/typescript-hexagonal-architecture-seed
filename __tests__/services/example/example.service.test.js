@@ -1,32 +1,33 @@
 const expect = require('expect')
 const ExampleService = require('../../../src/services/example.service')
 
-let dataSource
-before(function () {
-  // DATA SOURCE MOCK
-  dataSource = {
-    getAll: function () { return { name: 'name' } },
-    save: function () { return { name: 'name' } },
-  }
-})
-
 describe('Example Service tests', () => {
-  describe('when get all data', () => {
-    it('should return all data from the database', () => {
-      const exampleService = new ExampleService(dataSource)
+  let dataSource
 
-      const response = exampleService.getAll()
-
-      expect(response).toStrictEqual({ name: 'name' })
-    })
+  beforeEach(function () {
+    // DATA SOURCE MOCK
+    dataSource = {
+      getAll: () => new Promise(resolve => resolve([{ name: 'example1' }, { name: 'example2' }])),
+      save: (example) => new Promise(resolve => resolve({
+        name: example.name,
+        createdAt: '2020-11-04T16:55:28.725Z',
+      })),
+    }
   })
-  describe('when save data', () => {
-    it('should return the data saved in the database', () => {
-      const exampleService = new ExampleService(dataSource)
 
-      const response = exampleService.save({ name: 'name' })
+  it('should return all data from the database', async () => {
+    const exampleService = ExampleService(dataSource)
 
-      expect(response).toStrictEqual({ name: 'name' })
-    })
+    const response = await exampleService.getAll()
+
+    expect(response).toStrictEqual([{ name: 'example1' }, { name: 'example2' }])
+  })
+
+  it('should return the data saved in the database', async () => {
+    const exampleService = ExampleService(dataSource)
+
+    const response = await exampleService.save({ name: 'example' })
+
+    expect(response).toStrictEqual({ name: 'example', createdAt: '2020-11-04T16:55:28.725Z' })
   })
 })
