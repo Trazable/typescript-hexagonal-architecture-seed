@@ -9,7 +9,7 @@
     "test": "npm run lint",
     "mocha": "./node_modules/.bin/mocha",
     "test:unit": "npm run lint && mocha ./__tests__/src/services/**/*.test.js",
-    "test:happy-path": "mocha ./__tests__/happy-path.test.js",
+    "test:happy": "./node_modules/.bin/mocha ./__tests__/happy-path/happy-path.test.js",
     "lint": "npm run lint:eslint",
     "lint:eslint": "./node_modules/.bin/eslint ."
   },
