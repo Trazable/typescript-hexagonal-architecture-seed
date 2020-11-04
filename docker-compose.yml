@@ -2,22 +2,19 @@ version: '3.7'
 
 services:
 
-    ethereum_api:
-        image: ${something_IMAGE_NAME:-something}
+    PROJECT_NAME:
         build:
             context: .
             dockerfile: Dockerfile
             target: development
-            args:
-                something: something
         depends_on:
             - mongo
         stdin_open: true
         tty: true
-        container_name: something
+        container_name: PROJECT_NAME
         volumes:
             - ./:/app
-            - ethereum_api_node_modules:/app/node_modules
+            - PROJECT_NAME_node_modules:/app/node_modules
         ports:
             - 8080:8080
             - 9229:9229
@@ -64,7 +61,7 @@ services:
         command: sh /backup/something
 
 volumes:
-    something_node_modules:
+    PROJECT_NAME_node_modules:
 networks:
     default:
-        name: something-environment-network
+        name: PROJECT_NAME-environment-network

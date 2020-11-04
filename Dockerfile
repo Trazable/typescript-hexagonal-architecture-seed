@@ -7,11 +7,7 @@ WORKDIR /app
 
 HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/ping || exit 1
 
-ARG SOMETHING
-
-ENV \
-  SOMETHING=$SOMETHING \
-  PATH=/app/node_modules/.bin:$PATH
+ENV PATH=/app/node_modules/.bin:$PATH
 
 EXPOSE 8080
 
