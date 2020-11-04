@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const studentsRouter = require('./students.router')
+const examplesRouter = require('./examples.router')
 
 const apiRouter = (dependencies) => {
   // Inyectamos las dependencias al router de student
-  router.use('/students', studentsRouter(dependencies))
+  router.use('/examples', examplesRouter(dependencies))
 
   return router
 }
