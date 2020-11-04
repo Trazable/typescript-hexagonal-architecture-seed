@@ -5,7 +5,7 @@ FROM node:14.15-alpine AS base
 
 WORKDIR /app
 
-HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/ || exit 1
+HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/ping || exit 1
 
 ARG SOMETHING
 
