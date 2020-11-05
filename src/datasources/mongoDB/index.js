@@ -1,10 +1,14 @@
-const { MongoClient } = require('mongodb')
+const MongoDB = require('mongodb')
 const { loggerController: logger } = require('../../utils/logger')
 
 // DATABASE CONFIGURATION
-const mongoClient = new MongoClient('mongodb://localhost:27017', {
+const mongoClient = new MongoDB.MongoClient('mongodb://mongo:27017', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  auth: {
+    user: 'mongoadmin',
+    password: 'secret',
+  },
 })
 
 const initDatabase = async () => {
