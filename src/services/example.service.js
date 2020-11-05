@@ -40,6 +40,21 @@ module.exports = (exampleRepository) => {
     return exampleRepository.getAll()
   }
 
-  return { save, getAll }
-}
+  /**
+   * @name update
+   * @description Atomic update
+   *
+   * @param {string} exampleId document id
+   * @param {any} example
+   * @returns {Promise<any>} the full document updated
+   */
+  const update = async (exampleId, exampleData) => {
+    // Business logic
+    // If an object is not created, whatever comes in the input will be saved in the database.
 
+    // Call the repository to save the data in the database, if the following method is not implemented in the datasource, then the repository will thrown an error.
+    return exampleRepository.update(exampleId, exampleData)
+  }
+
+  return { save, getAll, update }
+}

@@ -11,6 +11,9 @@ const ExamplesRouter = (dependencies) => {
     .post(exampleController.save)
     .get(exampleController.getAll)
 
+  router.route('/:id')
+    .post(exampleController.update)
+
   return router
 }
 

@@ -23,4 +23,16 @@ ExampleRepository.prototype.getAll = function (example) {
   return Promise.reject(new Error('Method getAll not implemented'))
 }
 
+/**
+ * @name update
+ * @description Atomic update
+ *
+ * @param {string} exampleId document id
+ * @param {any} example
+ * @returns {Promise<any>} the full document updated
+ */
+ExampleRepository.prototype.update = function (exampleId, example) {
+  return Promise.reject(new Error('Method update not implemented'))
+}
+
 module.exports = ExampleRepository

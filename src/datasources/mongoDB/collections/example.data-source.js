@@ -5,7 +5,7 @@
 
 const ExampleRepository = require('../../../repositories/example.repository')
 const initDatabase = require('..')
-
+const { ObjectID } = require('mongodb')
 
 function ExampleMongoDataSource () {
   // Call parent class's constructor
@@ -47,6 +47,24 @@ ExampleMongoDataSource.prototype.getAll = async function () {
   return result
 }
 
+/**
+ * @name update
+ * @description Atomic update
+ *
+ * @param {string} exampleId document id
+ * @param {any} example
+ * @returns {Promise<any>} the full document updated
+ */
+ExampleMongoDataSource.prototype.update = async function (exampleId, example) {
+  const database = await initDatabase()
+
+  const { value } = await database
+    .collection('example')
+    .findOneAndUpdate({ _id: new ObjectID(exampleId) }, { $set: example }, {
+      returnOriginal: false,
+    })
+
+  return value
+}
 
 module.exports = ExampleMongoDataSource
-

@@ -42,6 +42,22 @@ module.exports = (dependencies) => {
     }
   }
 
+  const update = async (req, res) => {
+    try {
+      // Inject the comming repository into the service
+      // In case you want more repositories just add them as params
+      // Example => const exampleService = ExampleService(exampleMongoRepository, pubsubRepository, exampleMysqlRepository, externalServiceRepository)
+      const exampleService = ExampleService(exampleRepository)
 
-  return { save, getAll }
+      const response = await exampleService.update(req.params.id, req.body)
+
+      return res.status(OK).json(response)
+    } catch (error) {
+      logger.error(error)
+      return res.status(INTERNAL_SERVER_ERROR).json(error)
+    }
+  }
+
+
+  return { save, getAll, update }
 }
