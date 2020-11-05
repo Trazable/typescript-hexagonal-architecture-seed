@@ -2,7 +2,7 @@
 // EXAMPLE SERVICE
 const ExampleRepository = require('../repositories/example.repository') // eslint-disable-line no-unused-vars
 
-// Recogemos la dependencia inyectada desde el controlador
+// Get the injected dependency from the controller
 /**
  *
  * @param {ExampleRepository} exampleRepository
@@ -16,15 +16,15 @@ module.exports = (exampleRepository) => {
   const save = async (exampleData) => {
     // Business logic
 
-    // Creamos la estructura en run-time que sera almacenada por primera vez en el guardado de la base de datos.
-    // En este ejemplo, si exampleData no tiene name, age y hobbies lanzara un error de undefined.
+    // Create initial runtime structure to be saved in the database.
+    // In this example, if exampleData has no name, age and hobbies then an error of undefined will be thrown
     const example = {
       name: exampleData.name,
       createdAt: new Date(),
     }
-    // Si no creamos ningun objeto y solo metemos lo que venga por el input, la base de datos lo guardaría sin ningún problema.
+    // If an object is not created, whatever comes in the input will be saved in the database.
 
-    // Llamamos al repositorio para hacer el guardado en base de datos, si este no esta implementado en el dataSource el repositorio lanzara un error por falta de implementación
+    // Call the repository to save the data in the database, if the following method is not implemented in the datasource, then the repository will thrown an error.
     return exampleRepository.save(example)
   }
 
@@ -34,9 +34,9 @@ module.exports = (exampleRepository) => {
    */
   const getAll = async () => {
     // Business logic
-    // Si no creamos ningun objeto y solo metemos lo que venga por el input, la base de datos lo guardaría sin ningún problema.
+    // If an object is not created, whatever comes in the input will be saved in the database.
 
-    // Llamamos al repositorio para hacer el guardado en base de datos, si este no esta implementado en el dataSource el repositorio lanzara un error por falta de implementación
+    // Call the repository to save the data in the database, if the following method is not implemented in the datasource, then the repository will thrown an error.
     return exampleRepository.getAll()
   }
 

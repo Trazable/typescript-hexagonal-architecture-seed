@@ -1,29 +1,30 @@
 /**
- * En este ejemplo se utiliza la creación de una "clase" de javascript mediante prototypes, obviando la configuración de base de datos
- * que se debería hacer en el inicio de la aplicación o donde se desee este fichero copia el comportamiento del extends clasico de las clases.
+ * In this example a "Class" is created through prototypes, bypassing the database's configuration
+ * which must still working at the app's startup or wherever you need. This file mirror the Classes's extends behaviour.
  */
 
 const ExampleRepository = require('../../../repositories/example.repository')
 const initDatabase = require('..')
 
 
-// Creamos el nombre de la función
 function ExampleMongoDataSource () {
-  // Llama al constructor de la clase padre
+  // Call parent class's constructor
   ExampleRepository.call(this)
 }
-// La lógica para realizar un extends con prototype ocurre en estas dos lineas.
-// Creamos la nueva "clase" con el prototype del padre (Obteniendo los métodos y atributos de la clase padre)
+
+// The logic to extends with prototypes happen on the following 2 lines.
+// Create a new "class" with the parent's prototype (getting methods and attributes from the parent class)
 ExampleMongoDataSource.prototype = Object.create(ExampleRepository.prototype)
-// Declaramos en el prototype de la nueva "clase" que su constructor es su padre al haber invocado en su función a ExampleRepository.call(this)
+// Declare in the prototype from the new "class" that its constructor is its parent for having invoked ExampleRepository.call(this) in its function.
 ExampleMongoDataSource.prototype.constructor = ExampleMongoDataSource
 
-/* Metodos de la clase
-* Para intentar imitar el comportamiento de una interfaz haremos uso en javascript de extends para implementar los métodos declarados en la clase padre,
-* en caso de invocar a un método no implementado de la superclase, la superclase lanzara un error de método no implementado.
+/*
+* Class methods
+* To try to mirror the behavior of an interface, we will use extends javascript to implement the methods declared in the parent class,
+* in case of invoking a non-implemented method of the superclass, the superclass will throw an error of non-implemented method.
 */
 
-// Método save del padre, al extender del padre este creara un redireccionamiento que lanzara un error si se invoca a un método no implementado aqui.
+// The parent's save method, extending the parent will create a redirect that will throw an error if a method not implemented here is invoked.
 ExampleMongoDataSource.prototype.save = async function (example) {
   const database = await initDatabase()
 
@@ -34,7 +35,7 @@ ExampleMongoDataSource.prototype.save = async function (example) {
   return result.ops[0]
 }
 
-// Método save del padre, al extender del padre este creara un redireccionamiento que lanzara un error si se invoca a un método no implementado aqui.
+// The parent's getAll method, extending the parent will create a redirect that will throw an error if a method not implemented here is invoked.
 ExampleMongoDataSource.prototype.getAll = async function () {
   const database = await initDatabase()
 

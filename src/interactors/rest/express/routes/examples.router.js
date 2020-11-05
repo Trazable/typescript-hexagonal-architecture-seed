@@ -3,7 +3,7 @@ const ExampleController = require('../controllers/example.controller.js')
 const express = require('express')
 
 const ExamplesRouter = (dependencies) => {
-  // Inyectamos las dependencias al controlador de example
+  // Inject dependencies into the controller
   const exampleController = ExampleController(dependencies)
   const router = express.Router()
 

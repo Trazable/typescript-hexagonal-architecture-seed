@@ -1,22 +1,21 @@
 const ExampleMongoDataSource = require('../datasources/mongoDB/collections/example.data-source')
 
-/* Dependencias del proyecto, en este fichero se pueden declarar dependencias para inyectarlas en cascada a lo largo de la aplicación.
+/*
+Project dependencies, this file serves for declaring dependencies and then inject them in cascade along the app.
 
-En este ejemplo se hace uso del repositorio de example, se crea una instancia del data source de mongo de estudiante que extiende de ExampleRepository,
-en caso de querer por ejemplo dos bases de datos distintas que utilicen el mismo repositorio habria que renombrar el repositorio haciendo referencia a la base de datos.
-Ejemplo =>
-exampleRepository: new ExampleMongoDataSource()
+In this example is used the example repository, is created a data source's instance which extends from ExampleRepository,
+In case you want for example different databases that uses the same repository, just rename the repository making reference to the database.
+Example => exampleRepository: new ExampleMongoDataSource()
 
-Ambos dataSources extenderian de ExampleRepository que es quien dicta los metodos.
-
-De esta misma forma se puede hacer una inyección de las dependencias necesarias para usarlas mas tarde.
+Both datasources would extend from ExampleRepository which is the file that rules the methods.
+By this way you can inject the needed dependencies to use them later.
 
 */
 
 
 module.exports = (() => {
   return {
-    // ExampleRepository es una instancia del dataSource de example de mongo que a su vez extiende de la "interfaz" ExampleRepository
+    // exampleRepository is a datasource's instance, which in turn extends from the ExampleRepository's "interface"
     exampleRepository: new ExampleMongoDataSource(),
   }
 })()

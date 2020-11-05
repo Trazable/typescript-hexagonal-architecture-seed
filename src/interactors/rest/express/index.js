@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 
 // Router
-// Inyección de dependencias en cascada desde el inicio de la aplicación, en este caso un servidor de express
+// Cascade dependency injection from the app's start
 app.use('/ping', (req, res) => {
   res.status(NO_CONTENT).end()
 })

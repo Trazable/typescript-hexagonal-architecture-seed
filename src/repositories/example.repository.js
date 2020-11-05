@@ -1,8 +1,9 @@
 /**
  * Example Repository Interface
- * Esta "interfaz" deberá seguirse por todas sus implementaciones y servir de "plantilla" para conocer todos los métodos para el acceso a datos.
- * Los dataSources deberán extender de el.
- * En caso de llamar a un método y este no estar implementado en el dataSource el repositorio se encargará de lanzar un error de método no implementado.
+ * This "interface" is the contract repository, must have all datasource methods and serve as a template.
+ * The datasources must extend from it.
+ *
+ * In case of calling a method and it is not "implemented" or extended in the datasource, the repository will thrown an error.
  */
 function ExampleRepository () {}
 
