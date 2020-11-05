@@ -1,5 +1,9 @@
 const ExampleService = require('../../../../services/example.service')
 const { loggerController: logger } = require('../../../../utils/logger')
+const {
+  OK,
+  INTERNAL_SERVER_ERROR,
+} = require('http-status-codes')
 
 // Dependency injection
 module.exports = (dependencies) => {
@@ -17,11 +21,11 @@ module.exports = (dependencies) => {
 
       const response = await exampleService.save(req.body)
 
-      return res.status(200).json(response)
+      return res.status(OK).json(response)
     } catch (error) {
       // eslint-disable-next-line no-console
       logger.error(error)
-      return res.status(500).json(error)
+      return res.status(INTERNAL_SERVER_ERROR).json(error)
     }
   }
 
@@ -34,11 +38,11 @@ module.exports = (dependencies) => {
 
       const response = await exampleService.getAll()
 
-      return res.status(200).json(response)
+      return res.status(OK).json(response)
     } catch (error) {
       // eslint-disable-next-line no-console
       logger.error(error)
-      return res.status(500).json(error)
+      return res.status(INTERNAL_SERVER_ERROR).json(error)
     }
   }
 
