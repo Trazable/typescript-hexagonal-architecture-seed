@@ -20,9 +20,8 @@ services:
             - 9229:9229
 
     mongo:
-        image: mongo:4.0.11-xenial
+        image: mongo:4.4-bionic
         container_name: mongo
-        command: --smallfiles
         environment:
             - MONGO_INITDB_ROOT_USERNAME=mongoadmin
             - MONGO_INITDB_ROOT_PASSWORD=secret
