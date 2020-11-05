@@ -23,7 +23,7 @@ describe('Example Service tests', () => {
     expect(response).toStrictEqual([{ name: 'example1' }, { name: 'example2' }])
   })
 
-  it('should return the data saved in the database', async () => {
+  it('should save data in the database', async () => {
     const exampleService = ExampleService(dataSource)
 
     const response = await exampleService.save({ name: 'example' })
