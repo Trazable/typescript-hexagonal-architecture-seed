@@ -43,23 +43,6 @@ services:
             - 8081:8081
 
 
-    ####################
-    ### MR. MEESEEKS ###
-    ####################
-
-    # Look at me! I'm Mr. Meeseeks who feeds the database
-    meeseek_mongo_feed:
-        image: mongo:4.0.11-xenial
-        container_name: meeseek_mongo_feed
-        depends_on:
-            - mongo
-        environment:
-            - ME_CONFIG_MONGODB_ADMINUSERNAME=mongoadmin
-            - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
-        volumes:
-            - ./data:/backup
-        command: sh /backup/something
-
 volumes:
     PROJECT_NAME_node_modules:
 networks:
