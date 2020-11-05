@@ -19,34 +19,42 @@ ExampleMongoDataSource.prototype = Object.create(ExampleRepository.prototype)
 ExampleMongoDataSource.prototype.constructor = ExampleMongoDataSource
 
 /*
-* Class methods
-* To try to mirror the behavior of an interface, we will use extends javascript to implement the methods declared in the parent class,
-* in case of invoking a non-implemented method of the superclass, the superclass will throw an error of non-implemented method.
-*/
+ * Class methods
+ * To try to mirror the behavior of an interface, we will use extends javascript to implement the methods declared in the parent class,
+ * in case of invoking a non-implemented method of the superclass, the superclass will throw an error of non-implemented method.
+ */
 
-// The parent's save method, extending the parent will create a redirect that will throw an error if a method not implemented here is invoked.
+/**
+ * @name save
+ * @description save a new example document
+ *
+ * @param {any} example
+ * @returns {Promise<any>} the example document saved in db
+ */
 ExampleMongoDataSource.prototype.save = async function (example) {
   const database = await initDatabase()
 
-  const result = await database
-    .collection('example')
-    .insertOne(example)
+  const result = await database.collection('example').insertOne(example)
 
   return result.ops[0]
 }
 
-// The parent's getAll method, extending the parent will create a redirect that will throw an error if a method not implemented here is invoked.
+/**
+ * @name getAll
+ * @description Get all example documents
+ *
+ *
+ * @returns {Promise<any[]>} all example documents
+ */
 ExampleMongoDataSource.prototype.getAll = async function () {
   const database = await initDatabase()
 
-  const result = await database
-    .collection('example')
-    .find()
-    .toArray()
+  const result = await database.collection('example').find().toArray()
 
   return result
 }
 
+// The parent's update method, extending the parent will create a redirect that will throw an error if a method not implemented here is invoked.
 /**
  * @name update
  * @description Atomic update

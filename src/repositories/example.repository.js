@@ -8,18 +8,24 @@
 function ExampleRepository () {}
 
 /**
+ * @name save
+ * @description save a new example document
  *
- * @param {*} example
+ * @param {any} example
+ * @returns {Promise<any>} the example document saved in db
  */
 ExampleRepository.prototype.save = function (example) {
   return Promise.reject(new Error('Method save not implemented'))
 }
 
 /**
+ * @name getAll
+ * @description Get all example documents
  *
- * @param {*} example
+ *
+ * @returns {Promise<any[]>} all example documents
  */
-ExampleRepository.prototype.getAll = function (example) {
+ExampleRepository.prototype.getAll = function () {
   return Promise.reject(new Error('Method getAll not implemented'))
 }
 

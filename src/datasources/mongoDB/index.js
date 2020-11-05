@@ -11,6 +11,12 @@ const mongoClient = new MongoDB.MongoClient('mongodb://mongo:27017', {
   },
 })
 
+/**
+ * @name initDatabase
+ * @description Mongo database initialisation only if the database is not already initialised
+ *
+ * @returns {Promise<MongoDB.Db>}
+ */
 const initDatabase = async () => {
   try {
     if (!mongoClient.isConnected()) {

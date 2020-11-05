@@ -1,4 +1,3 @@
-
 // EXAMPLE SERVICE
 const ExampleRepository = require('../repositories/example.repository') // eslint-disable-line no-unused-vars
 
@@ -9,9 +8,11 @@ const ExampleRepository = require('../repositories/example.repository') // eslin
  */
 module.exports = (exampleRepository) => {
   /**
+   * @name save
+   * @description save a new example document
    *
-   * @param {*} example
-   * @return {Promise<T>}
+   * @param {any} example
+   * @returns {Promise<any>} the example document saved in db
    */
   const save = async (exampleData) => {
     // Business logic
@@ -29,8 +30,11 @@ module.exports = (exampleRepository) => {
   }
 
   /**
+   * @name getAll
+   * @description Get all example documents
    *
-   * @return {Promise<T>}
+   *
+   * @returns {Promise<any[]>} all example documents
    */
   const getAll = async () => {
     // Business logic
