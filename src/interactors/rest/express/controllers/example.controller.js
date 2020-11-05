@@ -1,4 +1,5 @@
 const ExampleService = require('../../../../services/example.service')
+const { loggerController: logger } = require('../../../../utils/logger')
 
 // Dependency injection
 module.exports = (dependencies) => {
@@ -19,7 +20,7 @@ module.exports = (dependencies) => {
       return res.status(200).json(response)
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(error)
+      logger.error(error)
       return res.status(500).json(error)
     }
   }
@@ -36,7 +37,7 @@ module.exports = (dependencies) => {
       return res.status(200).json(response)
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(error)
+      logger.error(error)
       return res.status(500).json(error)
     }
   }
