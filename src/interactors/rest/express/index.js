@@ -4,7 +4,7 @@
 const app = require('express')()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-const httpStatusCodes = require('http-status-codes')
+const { NO_CONTENT } = require('http-status-codes')
 const routes = require('./routes')
 const dependencies = require('../../../dependencies')
 const { loggerController: logger } = require('../../../utils/logger')
@@ -16,7 +16,7 @@ app.use(morgan('dev'))
 // Router
 // Inyección de dependencias en cascada desde el inicio de la aplicación, en este caso un servidor de express
 app.use('/ping', (req, res) => {
-  res.status(httpStatusCodes.NO_CONTENT).end()
+  res.status(NO_CONTENT).end()
 })
 app.use('/', routes(dependencies))
 
