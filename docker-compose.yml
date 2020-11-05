@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-    PROJECT_NAME:
+    hexadecimal:
         build:
             context: .
             dockerfile: Dockerfile
@@ -11,10 +11,10 @@ services:
             - mongo
         stdin_open: true
         tty: true
-        container_name: PROJECT_NAME
+        container_name: hexadecimal
         volumes:
             - ./:/app
-            - PROJECT_NAME_node_modules:/app/node_modules
+            - hexadecimal_node_modules:/app/node_modules
         ports:
             - 8080:8080
             - 9229:9229
@@ -43,7 +43,7 @@ services:
 
 
 volumes:
-    PROJECT_NAME_node_modules:
+    hexadecimal_node_modules:
 networks:
     default:
-        name: PROJECT_NAME-environment-network
+        name: hexadecimal-environment-network
