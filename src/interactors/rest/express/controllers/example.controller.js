@@ -1,6 +1,8 @@
-const ExampleService = require('../../../../services/example.service')
 const { loggerController: logger } = require('../../../../utils/logger')
 const { StatusCodes } = require('http-status-codes')
+const addExample = require('../../../../use-cases/add-example/add-example')
+const getAllExamples = require('../../../../use-cases/get-all-examples/get-all-examples')
+const updateExample = require('../../../../use-cases/update-example/update-example')
 
 // Dependency injection
 module.exports = (dependencies) => {
@@ -11,28 +13,20 @@ module.exports = (dependencies) => {
     try {
       // Inject the comming repository into the service
       // In case you want more repositories just add them as params
-      // Example => const exampleService = ExampleService(exampleMongoRepository, pubsubRepository, exampleMysqlRepository, externalServiceRepository)
-      const exampleService = ExampleService(exampleRepository)
+      const example = await addExample(exampleRepository)(req.body)
 
-      const response = await exampleService.save(req.body)
-
-      return res.status(StatusCodes.OK).json(response)
+      return res.status(StatusCodes.OK).json(example)
     } catch (error) {
       logger.error(error)
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error)
+      return res.status(StatusCodes.BAD_REQUEST).json(error)
     }
   }
 
   const getAll = async (req, res) => {
     try {
-      // Inject the comming repository into the service
-      // In case you want more repositories just add them as params
-      // Example => const exampleService = ExampleService(exampleMongoRepository, pubsubRepository, exampleMysqlRepository, externalServiceRepository)
-      const exampleService = ExampleService(exampleRepository)
+      const examples = await getAllExamples(exampleRepository)()
 
-      const response = await exampleService.getAll()
-
-      return res.status(StatusCodes.OK).json(response)
+      return res.status(StatusCodes.OK).json(examples)
     } catch (error) {
       logger.error(error)
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error)
@@ -41,20 +35,17 @@ module.exports = (dependencies) => {
 
   const update = async (req, res) => {
     try {
-      // Inject the comming repository into the service
-      // In case you want more repositories just add them as params
-      // Example => const exampleService = ExampleService(exampleMongoRepository, pubsubRepository, exampleMysqlRepository, externalServiceRepository)
-      const exampleService = ExampleService(exampleRepository)
+      const example = await updateExample(exampleRepository)(
+        req.params.id,
+        req.body
+      )
 
-      const response = await exampleService.update(req.params.id, req.body)
-
-      return res.status(StatusCodes.OK).json(response)
+      return res.status(StatusCodes.OK).json(example)
     } catch (error) {
       logger.error(error)
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error)
     }
   }
-
 
   return { save, getAll, update }
 }
