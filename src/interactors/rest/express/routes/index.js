@@ -1,8 +1,12 @@
 const router = require('express').Router()
-const todoRouter = require('./todo.router')
+const examplesRouter = require('./examples.router')
+
+const apiRouter = (dependencies) => {
+  // Inject dependencies into the router
+  router.use('/examples', examplesRouter(dependencies))
+
+  return router
+}
 
 
-router.use('/todos', todoRouter)
-
-
-module.exports = router
+module.exports = apiRouter

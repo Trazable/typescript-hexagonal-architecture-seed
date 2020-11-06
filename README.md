@@ -2,20 +2,16 @@
 
 ## Before run
 
-- You need a MongoDB instance:  
-`docker run --name hexagonal-architecture-example-mongo --network host -d mongo:4.2-bionic`.
+- Remove the existing .git file and create a new one for your project with the following commands:  
+`rm -rf .git`  
+`git init`  
+`git add .`  
+`git commit -m "Initial commit"`
 
-___
+- Find and change globally `PROJECT_NAME` to the corret project name
 
-Install dependencies:  
-`npm i`
+- Change in `package.json` the project informacion (name, description, repository...)
 
-___
+- Install dependencies:  `npm i`
 
-Now you can run this example ( ensure your node version is >= 12.18 ):  
-`npm start`
-
-___
-
-Run unitary test:  
-`npm run test`
+- Run the environment with docker-compose:  `docker-compose up`.

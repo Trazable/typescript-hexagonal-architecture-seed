@@ -1,0 +1,13 @@
+{
+  "ignore": [
+    "./.git",
+    "./node_modules/",
+    "./src/contracts"
+  ],
+  "watch": [
+    "./src/"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
