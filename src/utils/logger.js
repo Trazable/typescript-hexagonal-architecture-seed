@@ -48,12 +48,12 @@ for (const key in loggerLabels) {
   loggerContainer.add(loggerLabels[key], {
     format: process.env.NODE_ENV === 'development'
       ? combine(
-        label({ label: loggerLabels[key].toLowerCase() }),
-        splat(),
-        timestamp(),
-        json(),
-        prettyPrint(),
-      )
+          label({ label: loggerLabels[key].toLowerCase() }),
+          splat(),
+          timestamp(),
+          json(),
+          prettyPrint(),
+        )
       : combine(
         label({ label: loggerLabels[key].toLowerCase() }),
         splat(),
