@@ -12,6 +12,10 @@ services:
         stdin_open: true
         tty: true
         container_name: hexadecimal
+        environment:
+            - DB_USER=mongoadmin
+            - DB_PASSWORD=secret
+            - DB_URI=mongodb://mongo:27017/hexadecimal?authSource=admin
         volumes:
             - ./:/app
             - hexadecimal_node_modules:/app/node_modules
