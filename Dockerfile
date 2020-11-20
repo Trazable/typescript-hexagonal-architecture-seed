@@ -41,7 +41,6 @@ ENV NODE_ENV=development
 ENV GOOGLE_APPLICATION_CREDENTIALS="/app/google_service_account.json"
 
 RUN \
-  npm install --only=development && \
-  npm run test:unit
+  npm install --only=development
 
 CMD ["npm", "run", "dev"]
