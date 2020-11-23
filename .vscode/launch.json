@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Attach to Node",
+      "port": 9229,
+      "address": "localhost",
+      "remoteRoot": "/app",
+      "localRoot": "${workspaceFolder}",
+      "protocol": "inspector",
+      "skipFiles": [
+        "app/node_modules/**/*.js"
+      ]
+    }
+  ]
+}
