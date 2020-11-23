@@ -17,13 +17,13 @@ class MongoManager {
         password,
       },
     })
-    this.connect()
+    this.#connect()
   }
 
   /**
    * @return {Promise<void>}
    */
-  async connect () {
+  async #connect () {
     try {
       await this.client.connect()
     } catch (error) {

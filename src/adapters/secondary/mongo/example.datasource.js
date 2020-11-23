@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 const { MongoClient } = require('mongodb')
-const Example = require('../../entities/example')
-const ExampleRepository = require('../../repositories/example.repository')
+const Example = require('../../../entities/example')
+const ExampleRepository = require('../../../repositories/example.repository')
 
 class ExampleMongoDataSource extends ExampleRepository {
   /**
@@ -28,7 +28,7 @@ class ExampleMongoDataSource extends ExampleRepository {
    */
   async getAll () {
     const result = await this.client.db().collection('example').find().toArray()
-    return result.map(document => new Example(document))
+    return result.length > 0 ? result.map(document => new Example(document)) : []
   }
 
   /**
@@ -36,8 +36,18 @@ class ExampleMongoDataSource extends ExampleRepository {
    * @return {Promise<Example>}
    */
   async update (example) {
-    const { value } = await this.client.db().collection('example').findOneAndUpdate({ name: example.name }, { $set: example }, { returnOriginal: false })
-    return new Example(value)
+    const { value } = await this.client.db().collection('example').updateOne({ id: example.id }, { $set: example }, { returnOriginal: false })
+    return value ? new Example(value) : undefined
+  }
+
+  /**
+   *
+   * @param {string} id
+   * @return {Promise<Example>}
+   */
+  async getById (id) {
+    const result = await this.client.db().collection('example').findOne({ id: id })
+    return result ? new Example(result) : undefined
   }
 }
 

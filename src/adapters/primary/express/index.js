@@ -1,10 +1,11 @@
 const app = require('express')()
+const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-const { loggerController: logger } = require('../../utils/logger')
+const { loggerController: logger } = require('../../../utils/logger')
 // eslint-disable-next-line no-unused-vars
-const ExampleManager = require('../../interactors/example')
-const ExampleRoutes = require('../../adapters/express/routes/examples.router')
+const ExampleManager = require('../../../interactors/example')
+const ExampleRoutes = require('./routes/examples.router')
 
 
 /*
@@ -23,9 +24,12 @@ class ExpressApi {
     this.#setupRoutes()
   }
 
+  /**
+   *
+   * @param {number} port
+   */
   start (port = process.env.SERVER_PORT) {
     app.listen(port, () => {
-      // eslint-disable-next-line no-console
       logger.info(`Server is listening on port ${port}`)
     })
   }
@@ -36,8 +40,11 @@ class ExpressApi {
   }
 
   #setupRoutes () {
+    const router = express.Router()
+
     // Example routes
-    new ExampleRoutes(this.exampleManager).setupExampleRoutes(app)
+    const exampleRoutes = new ExampleRoutes(this.exampleManager)
+    app.use(exampleRoutes.setupExampleRoutes(router))
   }
 }
 
