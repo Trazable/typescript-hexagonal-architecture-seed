@@ -1,9 +1,7 @@
 class Example {
   /**
    *
-   * @param {string} name
-   * @param {string} lastName
-   * @param {number} phone
+   * @param {{ id: string, name: string, lastName: string, phone: number, createdAt: Date}}
    */
   constructor ({ name, lastName, phone, createdAt }) {
     this.name = name
