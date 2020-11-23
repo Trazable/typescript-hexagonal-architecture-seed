@@ -2,6 +2,7 @@
 const ExampleRepository = require('../../../repositories/example.repository')
 // eslint-disable-next-line no-unused-vars
 const Example = require('../../../entities/example')
+const { ObjectId } = require('mongodb')
 
 class Add {
   /**
@@ -18,7 +19,7 @@ class Add {
    * @return {Promise<Example>}
    */
   async execute (example) {
-    const newExample = await this.repository.save(new Example({ ...example, createdAt: new Date() }))
+    const newExample = await this.repository.save(new Example({ id: new ObjectId().toHexString(), ...example, createdAt: new Date() }))
     return newExample
   }
 }
