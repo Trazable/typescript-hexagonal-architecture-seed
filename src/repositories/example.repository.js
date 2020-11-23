@@ -19,6 +19,14 @@ class ExampleRepository {
   }
 
   /**
+   * @param {string}
+   * @return {Promise<Example>}
+   */
+  async getById (id) {
+    return Promise.reject(new Error('Method getByName not implemented'))
+  }
+
+  /**
    * @param {Example} example
    * @return {Promise<Example>}
    */
