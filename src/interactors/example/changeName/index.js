@@ -3,7 +3,7 @@ const ExampleRepository = require('../../../repositories/example.repository')
 // eslint-disable-next-line no-unused-vars
 const Example = require('../../../entities/example')
 
-class Update {
+class ChangeName {
   /**
    *
    * @param {ExampleRepository} repository
@@ -18,9 +18,17 @@ class Update {
    * @return {Promise<Example>}
    */
   async execute (example) {
-    const updatedExample = await this.repository.update(new Example(example))
-    return updatedExample
+    // REPOSITORY
+    // Retrieve the entity with all data
+    const updateExample = await this.repository.getById(example.id)
+    // ENTITY LOGIC
+    // Change only the necessary field in the useCase
+    updateExample.changeName(example.name)
+    // REPOSITORY
+    // Update the entity
+    await this.repository.update(example)
+    return example
   }
 }
 
-module.exports = Update
+module.exports = ChangeName
