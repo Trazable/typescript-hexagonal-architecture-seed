@@ -2,14 +2,22 @@
 const ExampleRepository = require('../../../repositories/example.repository')
 // eslint-disable-next-line no-unused-vars
 const Example = require('../../../entities/example')
+// eslint-disable-next-line no-unused-vars
+const winston = require('winston')
+
+const ExampleNotFound = require('../../../exceptions/example-not-found')
 
 class ChangeName {
   /**
    *
    * @param {ExampleRepository} repository
+   * @param {winston.Logger} logger
    */
-  constructor (repository) {
+  constructor (repository, logger) {
     this.repository = repository
+    this.logger = logger
+
+    this.execute = this.execute.bind(this)
   }
 
   /**
@@ -17,17 +25,23 @@ class ChangeName {
    * @param {Example} example
    * @return {Promise<Example>}
    */
-  async execute (example) {
+  async execute (id, example) {
+    this.logger.info('Changing the example name')
     // REPOSITORY
     // Retrieve the entity with all data
-    const updateExample = await this.repository.getById(example.id)
+    const updatedExample = await this.repository.getById(id)
+
+    if (!updatedExample) throw new ExampleNotFound()
     // ENTITY LOGIC
     // Change only the necessary field in the useCase
-    updateExample.changeName(example.name)
+    updatedExample.changeName(example.name)
     // REPOSITORY
     // Update the entity
-    await this.repository.update(example)
-    return example
+    await this.repository.update(updatedExample)
+
+    this.logger.info('The name has been successfully changed')
+
+    return updatedExample
   }
 }
 
