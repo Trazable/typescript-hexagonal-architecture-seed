@@ -8,13 +8,15 @@ class ExampleRoutes {
   /**
    *
    * @param {ExampleManager} exampleManager
+   * @param {{ addUseCaseLogger: any, getAllUseCaseLogger: any, changeNameUseCaseLogger: any }} containerLoggers
    */
-  constructor (exampleManager) {
+  constructor (exampleManager, containerLoggers) {
     this.exampleManager = exampleManager
+    this.containerLoggers = containerLoggers
   }
 
   setupExampleRoutes (router) {
-    const exampleController = new ExampleController(this.exampleManager)
+    const exampleController = new ExampleController(this.exampleManager, this.containerLoggers)
 
     router.route('/examples/')
       .post(exampleController.add)
