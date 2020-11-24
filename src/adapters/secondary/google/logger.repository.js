@@ -14,7 +14,17 @@ const {
   prettyPrint,
 } = format
 
-const { LOGGER_LABELS } = require('../../../constants')
+const LOGGER_LABELS = {
+  DEFAULT: 'DEFAULT',
+  ROUTER: 'ROUTER',
+  CONTROLLER: 'CONTROLLER',
+  SERVICE: 'SERVICE',
+  ADD_USE_CASE: 'ADD_USE_CASE',
+  GET_ALL_USE_CASE: 'GET_ALL_USE_CASE',
+  CHANGE_NAME_USE_CASE: 'CHANGE_NAME_USE_CASE',
+  DATA_SOURCE: 'DATA_SOURCE',
+}
+
 const { LoggingWinston } = require('@google-cloud/logging-winston')
 
 class GoogleWinstonLogger extends Logger {
