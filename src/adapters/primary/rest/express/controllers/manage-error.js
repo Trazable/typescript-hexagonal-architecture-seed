@@ -1,7 +1,7 @@
-const NameAlreadyExists = require('../../../../exceptions/name-already-exists')
+const NameAlreadyExists = require('../../../../../exceptions/name-already-exists')
 
 const { BAD_REQUEST, INTERNAL_SERVER_ERROR } = require('http-status-codes')
-const ExampleNotFound = require('../../../../exceptions/example-not-found')
+const ExampleNotFound = require('../../../../../exceptions/example-not-found')
 
 module.exports = (error, res) => {
   let response

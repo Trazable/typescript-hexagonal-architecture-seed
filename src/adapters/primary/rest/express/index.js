@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 // eslint-disable-next-line no-unused-vars
-const ExampleManager = require('../../../interactors/example')
+const ExampleManager = require('../../../../interactors/example')
 const ExampleRoutes = require('./routes/examples.router')
 // eslint-disable-next-line no-unused-vars
 const winston = require('winston')

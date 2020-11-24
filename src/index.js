@@ -29,7 +29,7 @@ const exampleManager = new ExampleManager(exampleRepository, {
 /// //// PRIMARY ADAPTERS (INPUT) \\\\ \\\
 
 // Express configuration
-const ExpressApi = require('./adapters/primary/express')
+const ExpressApi = require('./adapters/primary/rest/express')
 // Dependency injection
 const api = new ExpressApi(exampleManager, {
   addUseCaseLogger: googleContainerLogger.getAddUseCaseContainer(),

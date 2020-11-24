@@ -1,7 +1,7 @@
 
 const ExampleController = require('../controllers/example.controller.js')
 // eslint-disable-next-line no-unused-vars
-const ExampleManager = require('../../../../interactors/example')
+const ExampleManager = require('../../../../../interactors/example')
 
 
 class ExampleRoutes {

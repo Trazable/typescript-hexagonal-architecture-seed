@@ -1,6 +1,6 @@
 const { OK, CREATED } = require('http-status-codes')
 // eslint-disable-next-line no-unused-vars
-const ExampleManager = require('../../../../interactors/example')
+const ExampleManager = require('../../../../../interactors/example')
 // eslint-disable-next-line no-unused-vars
 const winston = require('winston')
 
