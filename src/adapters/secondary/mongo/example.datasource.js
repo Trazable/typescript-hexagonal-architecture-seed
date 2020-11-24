@@ -28,7 +28,7 @@ class ExampleMongoDataSource extends ExampleRepository {
    */
   async getAll () {
     const result = await this.client.db().collection('example').find().toArray()
-    return result.length > 0 ? result.map(document => new Example(document)) : []
+    return result.map(document => new Example(document))
   }
 
   /**
@@ -47,6 +47,16 @@ class ExampleMongoDataSource extends ExampleRepository {
    */
   async getById (id) {
     const result = await this.client.db().collection('example').findOne({ id: id })
+    return result ? new Example(result) : undefined
+  }
+
+  /**
+   *
+   * @param {string} name
+   * @return {Promise<Example>}
+   */
+  async getByName (name) {
+    const result = await this.client.db().collection('example').findOne({ name: name })
     return result ? new Example(result) : undefined
   }
 }

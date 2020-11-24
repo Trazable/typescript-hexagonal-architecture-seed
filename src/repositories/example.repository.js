@@ -23,6 +23,14 @@ class ExampleRepository {
    * @return {Promise<Example>}
    */
   async getById (id) {
+    return Promise.reject(new Error('Method getById not implemented'))
+  }
+
+  /**
+   * @param {string} name
+   * @return {Promise<Example>}
+   */
+  async getByName (name) {
     return Promise.reject(new Error('Method getByName not implemented'))
   }
 
