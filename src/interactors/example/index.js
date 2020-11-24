@@ -9,13 +9,14 @@ class ExampleManager {
   /**
    *
    * @param {ExampleRepository} repository
+   * @param {{ addUseCaseLogger: any, getAllUseCaseLogger: any, changeNameUseCaseLogger: any }} containerLoggers
    */
-  constructor (repository) {
+  constructor (repository, containerLoggers) {
     this.repository = repository
 
-    this.add = new AddUseCase(this.repository).execute
-    this.changeName = new ChangeNameUseCase(this.repository).execute
-    this.getAll = new GetAllUseCase(this.repository).execute
+    this.add = new AddUseCase(this.repository, containerLoggers.addUseCaseLogger).execute
+    this.changeName = new ChangeNameUseCase(this.repository, containerLoggers.changeNameUseCaseLogger).execute
+    this.getAll = new GetAllUseCase(this.repository, containerLoggers.getAllUseCaseLogger).execute
   }
 }
 
