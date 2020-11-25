@@ -19,14 +19,19 @@ const changeNameUseCaseExampleRepository = new MongoExampleRepository(mongoClien
 
 /// //// PRIMARY PORTS (CORE) \\\\ \\\
 
-// Managers
-const ExampleManager = require('./interactors/example')
-// Dependencies injection
-const exampleManager = new ExampleManager(exampleRepository, {
-  addUseCaseLogger: googleContainerLogger.getAddUseCaseContainer(),
-  getAllUseCaseLogger: googleContainerLogger.getGetAllUseCaseContainer(),
-  changeNameUseCaseLogger: googleContainerLogger.getChangeNameUseCaseContainer(),
-})
+// Use Cases \\
+
+// ADD
+const AddUseCase = require('./use-cases/add')
+const addUseCase = new AddUseCase(addUseCasExampleRepository, googleContainerLogger.getAddUseCaseContainer())
+
+// GET ALL
+const GetAllUseCase = require('./use-cases/getAll')
+const getAllUseCase = new GetAllUseCase(getAllUseCaseExampleRepository, googleContainerLogger.getGetAllUseCaseContainer())
+
+// CHANGE NAME
+const ChangeNameUseCase = require('./use-cases/changeName')
+const changeNameUseCase = new ChangeNameUseCase(changeNameUseCaseExampleRepository, googleContainerLogger.getChangeNameUseCaseContainer())
 
 /// //// PRIMARY ADAPTERS (INPUT) \\\\ \\\
 
