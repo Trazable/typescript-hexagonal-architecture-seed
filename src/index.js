@@ -38,12 +38,8 @@ const changeNameUseCase = new ChangeNameUseCase(changeNameUseCaseExampleReposito
 // Express configuration
 const ExpressApi = require('./adapters/primary/rest/express')
 // Dependency injection
-const api = new ExpressApi(exampleManager, {
-  addUseCaseLogger: googleContainerLogger.getAddUseCaseContainer(),
-  getAllUseCaseLogger: googleContainerLogger.getGetAllUseCaseContainer(),
-  changeNameUseCaseLogger: googleContainerLogger.getChangeNameUseCaseContainer(),
-  defaultLogger: googleContainerLogger.getDefaultContainer(),
-})
+const api = new ExpressApi({ addUseCase, getAllUseCase, changeNameUseCase }, googleContainerLogger.getDefaultContainer())
 
+// Start api at por 8080
 api.start(8080)
 
