@@ -10,8 +10,8 @@ const googleContainerLogger = new GoogleWinstonLogger()
 const MongoManager = require('./adapters/secondary/mongo')
 const mongoClient = new MongoManager(process.env.DB_URI, process.env.DB_USER, process.env.DB_PASSWORD).getClient()
 
-// Mongo datasource injectionclear
-const MongoExampleDataSource = require('./adapters/secondary/mongo/example.datasource')
+// Mongo repository injection
+const MongoExampleRepository = require('./adapters/secondary/mongo/example.repository')
 // Repositories
 const exampleRepository = new MongoExampleDataSource(mongoClient, googleContainerLogger.getDataSourceContainer())
 
