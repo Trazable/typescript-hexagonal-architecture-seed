@@ -3,7 +3,7 @@
 /// //// SECONDARY ADAPTERS (OUTPUT) \\\\ \\\
 
 // Google dependencies
-const GoogleWinstonLogger = require('./adapters/secondary/google/logger.repository')
+const GoogleWinstonLogger = require('./adapters/secondary/google/third-party-services/logger')
 const googleContainerLogger = new GoogleWinstonLogger()
 
 // Mongo database configuration
