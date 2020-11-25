@@ -3,11 +3,16 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 // eslint-disable-next-line no-unused-vars
-const ExampleManager = require('../../../../interactors/example')
-const ExampleRoutes = require('./routes/examples.router')
+const ExampleController = require('./controllers/example.controller')
 // eslint-disable-next-line no-unused-vars
 const winston = require('winston')
 const { OK } = require('http-status-codes')
+// eslint-disable-next-line no-unused-vars
+const Add = require('../../../../use-cases/add')
+// eslint-disable-next-line no-unused-vars
+const GetAll = require('../../../../use-cases/getAll')
+// eslint-disable-next-line no-unused-vars
+const ChangeName = require('../../../../use-cases/changeName')
 
 
 /*
@@ -17,18 +22,15 @@ const { OK } = require('http-status-codes')
 class ExpressApi {
   /**
    *
-   * @param {ExampleManager} exampleManager
-   * @param {{ addUseCaseLogger: any, getAllUseCaseLogger: any, changeNameUseCaseLogger: any, defaultLogger: any}} containerLoggers
+   * @param {{ addUseCase: Add, getAllUseCase: GetAll, changeNameUseCase: ChangeName }} useCases
+   *
    */
 
-  constructor (exampleManager, containerLoggers) {
-    this.exampleManager = exampleManager
-    this.containerLoggers = containerLoggers
-
-    /**
-     * @type {winston.Logger}
-     */
-    this.logger = this.containerLoggers.defaultLogger
+  constructor ({ addUseCase, getAllUseCase, changeNameUseCase }, logger) {
+    this.addUseCase = addUseCase
+    this.getAllUseCase = getAllUseCase
+    this.changeNameUseCase = changeNameUseCase
+    this.logger = logger
 
     this.#serverConfiguration()
     this.#setupRoutes()
@@ -53,11 +55,24 @@ class ExpressApi {
     const router = express.Router()
 
     // Ping route
-    app.get('/ping', (req, res) => { res.status(OK).end() })
+    router.route('/ping')
+      .get((req, res) => { res.status(OK).end() })
 
-    // Example routes
-    const exampleRoutes = new ExampleRoutes(this.exampleManager, this.containerLoggers)
-    app.use(exampleRoutes.setupExampleRoutes(router))
+
+    const exampleController = new ExampleController({
+      addUseCase: this.addUseCase,
+      getAllUseCase: this.getAllUseCase,
+      changeNameUseCase: this.changeNameUseCase,
+    })
+
+    router.route('/examples/')
+      .post(exampleController.add)
+      .get(exampleController.getAll)
+
+    router.route('/examples/changeName/:id')
+      .patch(exampleController.changeName)
+
+    app.use(router)
   }
 }
 
