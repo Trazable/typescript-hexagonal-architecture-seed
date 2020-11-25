@@ -1,7 +1,7 @@
 const expect = require('expect')
-const UpdateUseCase = require('.')
-const ExampleRepository = require('../../../repositories/example.repository')
-const Example = require('../../../entities/example')
+const ChangeName = require('.')
+const ExampleRepository = require('../../ports/secondary/example.repository')
+const Example = require('../../entities/example')
 const sinon = require('sinon')
 
 
@@ -11,26 +11,23 @@ describe('updateExample use-case', () => {
   })
 
   it('should update the example successfully', async () => {
-    const entryExampleData = new Example({
-      name: 'Example Name',
-    })
-
     sinon.stub(ExampleRepository.prototype, 'getById').returns(new Example({
-      name: 'Example Name',
+      name: 'Old Name',
     }
     ))
     const stubUpdate = sinon.stub(ExampleRepository.prototype, 'update').returns(Promise.resolve(89))
 
     const logger = {
-      info: function () {},
+      // eslint-disable-next-line no-console
+      info: function (message) { console.log(message) },
     }
 
-    const updateUseCase = new UpdateUseCase(new ExampleRepository(), logger)
+    const changeName = new ChangeName(new ExampleRepository(), logger)
 
-    await updateUseCase.execute('id', entryExampleData)
+    await changeName.execute('id', 'New Name')
 
     expect(stubUpdate.calledOnce).toBeTruthy()
-    expect(stubUpdate.calledWithExactly(entryExampleData)).toBeTruthy()
+    expect(stubUpdate.calledWithExactly(new Example({ name: 'New Name' }))).toBeTruthy()
   })
 
   it('should fail creating a new example with incorrect parameters')

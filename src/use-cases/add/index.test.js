@@ -1,9 +1,9 @@
 const expect = require('expect')
 const AddUseCase = require('.')
 const sinon = require('sinon')
-const Example = require('../../../entities/example')
+const Example = require('../../entities/example')
 const { ObjectId } = require('mongodb')
-const ExampleRepository = require('../../../repositories/example.repository')
+const ExampleRepository = require('../../ports/secondary/example.repository')
 
 describe('addExample use-case', () => {
   const now = new Date()
