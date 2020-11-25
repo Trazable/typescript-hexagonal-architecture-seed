@@ -5,6 +5,7 @@
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  }
+  },
 
+  "files.enableTrash": false
 }
