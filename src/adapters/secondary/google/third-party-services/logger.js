@@ -1,4 +1,3 @@
-const Logger = require('../../../ports/logger')
 const {
   Container,
   transports,
@@ -27,9 +26,8 @@ const LOGGER_LABELS = {
 
 const { LoggingWinston } = require('@google-cloud/logging-winston')
 
-class GoogleWinstonLogger extends Logger {
+class GoogleWinstonLogger {
   constructor () {
-    super()
     this.loggerContainer = new Container()
     this.developmentTransport = this.#initializeDevelopmentTransport()
     this.productionTransport = this.#initializeProductionTransport()

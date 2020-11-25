@@ -1,10 +1,10 @@
-const { Storage } = require('@google-cloud/storage')
-const StorageRepository = require('../../../ports/storage')
+const GoogleCloudStorage = require('@google-cloud/storage')
+const Storage = require('../../../../ports/secondary/storage')
 
-class GoogleStorage extends StorageRepository {
+class GoogleStorage extends Storage {
   constructor () {
     super()
-    this.storage = new Storage()
+    this.storage = new GoogleCloudStorage.Storage()
   }
 
 

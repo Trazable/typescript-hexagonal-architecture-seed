@@ -1,8 +1,10 @@
-const GoogleKms = require('./kms.repository')
-const GoogleStorage = require('./storage.repository')
+const Secret = require('../../../../ports/secondary/secret')
+const GoogleKms = require('../third-party-services/kms')
+const GoogleStorage = require('../third-party-services/storage')
 
-class GoogleCloudManager {
+class GoogleCloudSecret extends Secret {
   constructor () {
+    super()
     this.kmsClient = new GoogleKms()
     this.storage = new GoogleStorage()
   }
@@ -24,4 +26,4 @@ class GoogleCloudManager {
   }
 }
 
-module.exports = GoogleCloudManager
+module.exports = GoogleCloudSecret
