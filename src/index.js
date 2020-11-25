@@ -13,7 +13,9 @@ const mongoClient = new MongoManager(process.env.DB_URI, process.env.DB_USER, pr
 // Mongo repository injection
 const MongoExampleRepository = require('./adapters/secondary/mongo/example.repository')
 // Repositories
-const exampleRepository = new MongoExampleDataSource(mongoClient, googleContainerLogger.getDataSourceContainer())
+const addUseCasExampleRepository = new MongoExampleRepository(mongoClient, googleContainerLogger.getAddUseCaseContainer())
+const getAllUseCaseExampleRepository = new MongoExampleRepository(mongoClient, googleContainerLogger.getGetAllUseCaseContainer())
+const changeNameUseCaseExampleRepository = new MongoExampleRepository(mongoClient, googleContainerLogger.getChangeNameUseCaseContainer())
 
 /// //// PRIMARY PORTS (CORE) \\\\ \\\
 
