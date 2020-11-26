@@ -1,6 +1,6 @@
 const expect = require('expect')
 const ChangeName = require('.')
-const ExampleRepository = require('../../ports/secondary/example.repository')
+const ExampleRepository = require('../../repositories/example.repository')
 const Example = require('../../entities/example')
 const sinon = require('sinon')
 

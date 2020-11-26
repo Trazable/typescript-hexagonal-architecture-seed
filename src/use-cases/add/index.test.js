@@ -3,7 +3,7 @@ const AddUseCase = require('.')
 const sinon = require('sinon')
 const Example = require('../../entities/example')
 const { ObjectId } = require('mongodb')
-const ExampleRepository = require('../../ports/secondary/example.repository')
+const ExampleRepository = require('../../repositories/example.repository')
 
 describe('addExample use-case', () => {
   const now = new Date()

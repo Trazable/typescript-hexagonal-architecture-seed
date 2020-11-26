@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-const ExampleRepository = require('../../ports/secondary/example.repository')
+const ExampleRepository = require('../../repositories/example.repository')
 // eslint-disable-next-line no-unused-vars
 const Example = require('../../entities/example')
 // eslint-disable-next-line no-unused-vars
@@ -7,16 +7,14 @@ const winston = require('winston')
 const { ObjectId } = require('mongodb') // ONLY EXAMPLE USE
 const NameAlreadyExists = require('../../exceptions/example-name-already-exists')
 const ExampleNameRequired = require('../../exceptions/example-name-is-required')
-const IAdd = require('../../ports/primary/add')
 
-class Add extends IAdd {
+class Add {
   /**
    *
    * @param {ExampleRepository} repository
    * @param {winston.Logger} logger
    */
   constructor (repository, logger) {
-    super()
     this.repository = repository
     this.logger = logger
 

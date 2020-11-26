@@ -1,6 +1,6 @@
 const expect = require('expect')
 const GetAllUseCase = require('.')
-const ExampleRepository = require('../../ports/secondary/example.repository')
+const ExampleRepository = require('../../repositories/example.repository')
 const sinon = require('sinon')
 
 
