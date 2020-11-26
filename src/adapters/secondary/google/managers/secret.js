@@ -1,4 +1,4 @@
-const Secret = require('../../../../ports/secondary/secret')
+const Secret = require('../../../../ports/secret')
 const GoogleKms = require('../third-party-services/kms')
 const GoogleStorage = require('../third-party-services/storage')
 

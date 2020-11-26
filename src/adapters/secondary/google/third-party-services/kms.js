@@ -1,4 +1,4 @@
-const KeyManagement = require('../../../../ports/secondary/kms')
+const KeyManagement = require('../../../../ports/kms')
 const { KeyManagementServiceClient } = require('@google-cloud/kms')
 
 class GoogleKMS extends KeyManagement {

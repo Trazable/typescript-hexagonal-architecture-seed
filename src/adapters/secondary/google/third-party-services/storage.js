@@ -1,5 +1,5 @@
 const GoogleCloudStorage = require('@google-cloud/storage')
-const Storage = require('../../../../ports/secondary/storage')
+const Storage = require('../../../../ports/storage')
 
 class GoogleStorage extends Storage {
   constructor () {
