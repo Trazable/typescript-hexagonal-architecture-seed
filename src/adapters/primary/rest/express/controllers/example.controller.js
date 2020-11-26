@@ -8,7 +8,7 @@ const GetAll = require('../../../../../use-cases/getAll')
 // eslint-disable-next-line no-unused-vars
 const ChangeName = require('../../../../../use-cases/changeName')
 
-const ManageError = require('./manage-error')
+const ManageError = require('../manage-error')
 
 class ExampleController {
   /**

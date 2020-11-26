@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 const { MongoClient } = require('mongodb')
 const Example = require('../../../entities/example')
-const ExampleRepository = require('../../../ports/secondary/example.repository')
+const ExampleRepository = require('../../../repositories/example.repository')
 
 class MongoExampleRepository extends ExampleRepository {
   /**

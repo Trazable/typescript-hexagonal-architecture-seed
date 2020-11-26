@@ -1,7 +1,7 @@
 // EXCEPTIONS
-const ExampleNameAlreadyExists = require('../../../../../exceptions/example-name-already-exists')
-const ExampleNotFound = require('../../../../../exceptions/example-not-found')
-const ExampleNameRequired = require('../../../../../exceptions/example-name-is-required')
+const ExampleNameAlreadyExists = require('../../../../exceptions/example-name-already-exists')
+const ExampleNotFound = require('../../../../exceptions/example-not-found')
+const ExampleNameRequired = require('../../../../exceptions/example-name-is-required')
 
 // HTTP CODES
 const { BAD_REQUEST, INTERNAL_SERVER_ERROR } = require('http-status-codes')
