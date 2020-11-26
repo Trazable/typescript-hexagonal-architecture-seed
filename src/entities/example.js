@@ -1,3 +1,5 @@
+// BUSINESS ENTITY EXAMPLE
+// NOT ONLY A DATA STORE
 class Example {
   /**
    *

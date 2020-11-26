@@ -10,6 +10,7 @@ const ChangeName = require('../../../../../use-cases/changeName')
 
 const ManageError = require('../manage-error')
 
+// This secondary adapter calls directly the useCases.
 class ExampleController {
   /**
    *
