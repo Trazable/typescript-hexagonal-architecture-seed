@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-const Example = require('../../entities/example.js')
+const Example = require('../entities/example.js')
 
 class ExampleRepository {
   /**
