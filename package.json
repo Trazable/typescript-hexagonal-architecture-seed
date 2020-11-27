@@ -1,7 +1,7 @@
 {
-  "name": "hexagonal-architecture-seed",
+  "name": "project_name",
   "version": "1.0.0",
-  "description": "An hexagonal architecture template for the Trazable's microservices.",
+  "description": "project_name description",
   "main": "./src/index.js",
   "scripts": {
     "start": "node .",

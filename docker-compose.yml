@@ -2,43 +2,43 @@ version: '3.7'
 
 services:
 
-    hexadecimal:
+    project_name:
         build:
             context: .
             dockerfile: Dockerfile
             target: development
         depends_on:
-            - mongo
+            - project_name_mongo
         stdin_open: true
         tty: true
-        container_name: hexadecimal
+        container_name: project_name
         environment:
             - DB_USER=mongoadmin
             - DB_PASSWORD=secret
-            - DB_URI=mongodb://mongo:27017/hexadecimal?authSource=admin
+            - DB_URI=mongodb://mongo:27017/project_name?authSource=admin
         volumes:
             - ./:/app
-            - hexadecimal_node_modules:/app/node_modules
+            - project_name_node_modules:/app/node_modules
         ports:
             - 8080:8080
             - 9229:9229
 
-    mongo:
+    project_name_mongo:
         image: mongo:4.4-bionic
-        container_name: mongo
+        container_name: project_name_mongo
         environment:
             - MONGO_INITDB_ROOT_USERNAME=mongoadmin
             - MONGO_INITDB_ROOT_PASSWORD=secret
         ports:
             - 27017:27017
 
-    mongo_express:
+    project_name_mongo_express:
         image: mongo-express
-        container_name: mongo_express
+        container_name: project_name_mongo_express
         logging:
             driver: none
         depends_on:
-            - mongo
+            - project_name_mongo
         environment:
             - ME_CONFIG_MONGODB_ADMINUSERNAME=mongoadmin
             - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
@@ -47,7 +47,7 @@ services:
 
 
 volumes:
-    hexadecimal_node_modules:
+    project_name_node_modules:
 networks:
     default:
-        name: hexadecimal-environment-network
+        name: project_name-environment-network
