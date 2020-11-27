@@ -42,11 +42,11 @@
 - Install dependencies:  `npm i`
 - Run the environment with docker-compose:  `docker-compose up`.
   - Services:
-    - hexagonal: Example application using the trazable hexagonal architecture.
+    - project_name: Example application using the trazable hexagonal architecture.
       - localhost:8080
-    - mongo: Mongo DB Database
+    - project_name_mongo: Mongo DB Database
       - localhost:27017
-    - mongo_express: Dashboard for Mongo DB
+    - project_name_mongo_express: Dashboard for Mongo DB
       - localhost:8081
 
 ## How it works
