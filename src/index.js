@@ -40,6 +40,6 @@ const ExpressApi = require('./adapters/primary/rest/express')
 // Dependency injection
 const api = new ExpressApi({ addUseCase, getAllUseCase, changeNameUseCase }, googleContainerLogger.getDefaultContainer())
 
-// Start api at por 8080
+// Start api at port 8080
 api.start(8080)
 
