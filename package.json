@@ -8,6 +8,7 @@
     "dev": "./node_modules/.bin/nodemon --inspect=0.0.0.0:9229 .",
     "test": "npm run lint",
     "test:unit": "./node_modules/.bin/mocha ./src/**/*.test.js",
+    "test:coverage": "./node_modules/.bin/nyc --reporter=text --reporter=lcov --temp-dir=./coverage/.nyc_output npm run test:unit",
     "test:happy": "./node_modules/.bin/mocha ./__tests__/happy-path/happy-path.test.js",
     "lint": "npm run lint:eslint",
     "lint:eslint": "./node_modules/.bin/eslint ."
@@ -62,6 +63,7 @@
     "husky": "^4.3.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
+    "nyc": "^15.1.0",
     "sinon": "^9.2.1",
     "supertest": "^6.0.1"
   },
