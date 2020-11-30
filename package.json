@@ -11,7 +11,8 @@
     "test:coverage": "./node_modules/.bin/nyc --reporter=text --reporter=lcov --temp-dir=./coverage/.nyc_output npm run test:unit",
     "test:happy": "./node_modules/.bin/mocha ./__tests__/happy-path/happy-path.test.js",
     "lint": "npm run lint:eslint",
-    "lint:eslint": "./node_modules/.bin/eslint ."
+    "lint:eslint": "./node_modules/.bin/eslint .",
+    "changelog": "./node_modules/.bin/changelog-generator"
   },
   "author": {
     "name": "Trazable",
@@ -58,6 +59,7 @@
     "@babel/plugin-syntax-class-properties": "^7.12.1",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@trazable/changelog-generator": "^2.0.0",
     "@trazable/eslint-config": "^2.0.0",
     "expect": "^26.6.2",
     "husky": "^4.3.0",
