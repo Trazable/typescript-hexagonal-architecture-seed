@@ -8,6 +8,8 @@ const GetAll = require('../../../../../use-cases/getAll')
 // eslint-disable-next-line no-unused-vars
 const ChangeName = require('../../../../../use-cases/changeName')
 
+const ExampleDTO = require('../DTOs/example.dto')
+
 const ManageError = require('../manage-error')
 
 // This secondary adapter calls directly the useCases.
@@ -65,7 +67,10 @@ class ExampleController {
    */
   async getAll (req, res) {
     try {
-      res.status(OK).json(await this.getAllUseCase.execute())
+      const examples = await this.getAllUseCase.execute()
+      const examplesDTO = examples.map(example => new ExampleDTO(example))
+
+      res.status(OK).json(examplesDTO)
     } catch (error) {
       this.getAllLogger.error(error.stack)
       ManageError(error, res)
