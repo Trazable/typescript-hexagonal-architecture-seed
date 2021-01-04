@@ -11,7 +11,7 @@ class GetAll {
    * @param {ExampleRepository} repository
    * @param {winston.Logger} logger
    */
-  constructor (repository, logger) {
+  constructor(repository, logger) {
     this.repository = repository
     this.logger = logger
 
@@ -23,7 +23,7 @@ class GetAll {
    *
    * @return {Promise<Example[]>}
    */
-  async execute () {
+  async execute() {
     this.logger.info('Retrieving all examples')
     return this.repository.getAll()
   }
@@ -31,7 +31,7 @@ class GetAll {
   /**
    * @return {winston.Logger}
    */
-  getLoggerContainer () {
+  getLoggerContainer() {
     return this.logger
   }
 }

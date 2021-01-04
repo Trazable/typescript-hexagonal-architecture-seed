@@ -1,6 +1,5 @@
 const ERROR = 2
 
-
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {

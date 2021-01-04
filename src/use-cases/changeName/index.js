@@ -13,7 +13,7 @@ class ChangeName {
    * @param {ExampleRepository} repository
    * @param {winston.Logger} logger
    */
-  constructor (repository, logger) {
+  constructor(repository, logger) {
     this.repository = repository
     this.logger = logger
 
@@ -26,7 +26,7 @@ class ChangeName {
    * @param {string} name
    * @return {Promise<Example>}
    */
-  async execute (id, name) {
+  async execute(id, name) {
     this.logger.info('Changing the example name')
     // REPOSITORY
     // Retrieve the entity with all data
@@ -49,7 +49,7 @@ class ChangeName {
   /**
    * @return {winston.Logger}
    */
-  getLoggerContainer () {
+  getLoggerContainer() {
     return this.logger
   }
 }
