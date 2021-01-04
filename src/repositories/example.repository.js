@@ -1,44 +1,53 @@
-/**
- * Example Repository Interface
- * This "interface" is the contract repository, must have all datasource methods and serve as a template.
- * The datasources must extend from it.
- *
- * In case of calling a method and it is not "implemented" or extended in the datasource, the repository will thrown an error.
- */
-function ExampleRepository () {}
+// PORTS => THE PORTS ARE INTERFACES IMPLEMENTED BY THE ADAPTERS
+// These interfaces is all of the business logic know, business logic dont know the implementation.
+// The implementation must return the data defined here.
 
-/**
- * @name save
- * @description save a new example document
- *
- * @param {any} example
- * @returns {Promise<any>} the example document saved in db
- */
-ExampleRepository.prototype.save = function (example) {
-  return Promise.reject(new Error('Method save not implemented'))
-}
+// eslint-disable-next-line no-unused-vars
+const Example = require('../entities/example.js')
 
-/**
- * @name getAll
- * @description Get all example documents
- *
- *
- * @returns {Promise<any[]>} all example documents
- */
-ExampleRepository.prototype.getAll = function () {
-  return Promise.reject(new Error('Method getAll not implemented'))
-}
+// REPOSITORY
+// This interface (secondary port) follow the repository pattern instead the hexagonal architecture naming.
+class ExampleRepository {
+  /**
+   *
+   * @param {Example} example
+   * @return {Promise<Example>} example
+   */
+  async save (example) {
+    return Promise.reject(new Error('Method save not implemented'))
+  }
 
-/**
- * @name update
- * @description Atomic update
- *
- * @param {string} exampleId document id
- * @param {any} example
- * @returns {Promise<any>} the full document updated
- */
-ExampleRepository.prototype.update = function (exampleId, example) {
-  return Promise.reject(new Error('Method update not implemented'))
+  /**
+   * @return {Promise<Example[]>}
+   */
+  async getAll () {
+    return Promise.reject(new Error('Method getAll not implemented'))
+  }
+
+  /**
+   * @param {string}
+   * @return {Promise<Example>}
+   */
+  async getById (id) {
+    return Promise.reject(new Error('Method getById not implemented'))
+  }
+
+  /**
+   * @param {string} name
+   * @return {Promise<Example>}
+   */
+  async getByName (name) {
+    return Promise.reject(new Error('Method getByName not implemented'))
+  }
+
+  /**
+   * @param {string} id
+   * @param {string} name
+   * @return {Promise<Example>}
+   */
+  async update (id, name) {
+    return Promise.reject(new Error('Method update not implemented'))
+  }
 }
 
 module.exports = ExampleRepository
