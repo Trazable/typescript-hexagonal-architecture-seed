@@ -9,7 +9,7 @@ class Secret {
    * @param {string} kmsKey
    * @return {Promise<any>} secret
    */
-  async getSecret (bucketName, fileName, kmsKey) {
+  async getSecret(bucketName, fileName, kmsKey) {
     return Promise.reject(new Error('Method getSecret not implemented'))
   }
 }

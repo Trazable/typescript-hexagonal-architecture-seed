@@ -14,7 +14,6 @@ const GetAll = require('../../../../use-cases/getAll')
 // eslint-disable-next-line no-unused-vars
 const ChangeName = require('../../../../use-cases/changeName')
 
-
 /*
  * Express configuration
  */
@@ -26,7 +25,7 @@ class ExpressApi {
    *
    */
 
-  constructor ({ addUseCase, getAllUseCase, changeNameUseCase }, logger) {
+  constructor({ addUseCase, getAllUseCase, changeNameUseCase }, logger) {
     this.addUseCase = addUseCase
     this.getAllUseCase = getAllUseCase
     this.changeNameUseCase = changeNameUseCase
@@ -40,24 +39,24 @@ class ExpressApi {
    *
    * @param {number} port
    */
-  start (port = process.env.SERVER_PORT) {
+  start(port = process.env.SERVER_PORT) {
     app.listen(port, () => {
       this.logger.info(`Server is listening on port ${port}`)
     })
   }
 
-  #serverConfiguration () {
+  #serverConfiguration() {
     app.use(bodyParser.json())
     app.use(morgan('dev'))
   }
 
-  #setupRoutes () {
+  #setupRoutes() {
     const router = express.Router()
 
     // Ping route
-    router.route('/ping')
-      .get((req, res) => { res.status(OK).end() })
-
+    router.route('/ping').get((req, res) => {
+      res.status(OK).end()
+    })
 
     const exampleController = new ExampleController({
       addUseCase: this.addUseCase,
@@ -65,12 +64,9 @@ class ExpressApi {
       changeNameUseCase: this.changeNameUseCase,
     })
 
-    router.route('/examples/')
-      .post(exampleController.add)
-      .get(exampleController.getAll)
+    router.route('/examples/').post(exampleController.add).get(exampleController.getAll)
 
-    router.route('/examples/changeName/:id')
-      .patch(exampleController.changeName)
+    router.route('/examples/changeName/:id').patch(exampleController.changeName)
 
     app.use(router)
   }

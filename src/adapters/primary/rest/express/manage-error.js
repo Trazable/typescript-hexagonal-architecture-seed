@@ -6,7 +6,6 @@ const ExampleNameRequired = require('../../../../exceptions/example-name-is-requ
 // HTTP CODES
 const { BAD_REQUEST, INTERNAL_SERVER_ERROR } = require('http-status-codes')
 
-
 module.exports = (error, res) => {
   let response
 

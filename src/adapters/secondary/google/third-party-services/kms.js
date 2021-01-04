@@ -2,19 +2,19 @@ const KeyManagement = require('../../../../ports/kms')
 const { KeyManagementServiceClient } = require('@google-cloud/kms')
 
 class GoogleKMS extends KeyManagement {
-  constructor () {
+  constructor() {
     super()
     this.kmsClient = new KeyManagementServiceClient()
   }
 
   /**
- * Encrypts an element
- * @async
- * @param {string | Buffer | ArrayBuffer | Array | Array-like} plaintext
- * @param {string} keyName any of kms.KMS_KEY
- * @returns {Promise<string>} element digested in base64
- */
-  async encrypt (plaintext, keyName) {
+   * Encrypts an element
+   * @async
+   * @param {string | Buffer | ArrayBuffer | Array | Array-like} plaintext
+   * @param {string} keyName any of kms.KMS_KEY
+   * @returns {Promise<string>} element digested in base64
+   */
+  async encrypt(plaintext, keyName) {
     // Key name to use
     const name = this.kmsClient.cryptoKeyPath(
       process.env.GCLOUD_PROJECT_ID,
@@ -35,26 +35,21 @@ class GoogleKMS extends KeyManagement {
   }
 
   /**
-  *
-  * @async
-  * @param {Buffer} chiperText as base64 string
-  * @param {string} keyName
-  * @param {{ project: string, location: string, keyRing: string }}
-  * @returns {Promise<string>} element digested in ascii
-  */
-  async decrypt (chiperText, keyName, {
-    project = process.env.GCLOUD_PROJECT_ID,
-    location = process.env.KMS_LOCATION,
-    keyRing = process.env.KMS_KEYRING,
-  }) {
+   *
+   * @async
+   * @param {Buffer} chiperText as base64 string
+   * @param {string} keyName
+   * @param {{ project: string, location: string, keyRing: string }}
+   * @returns {Promise<string>} element digested in ascii
+   */
+  async decrypt(
+    chiperText,
+    keyName,
+    { project = process.env.GCLOUD_PROJECT_ID, location = process.env.KMS_LOCATION, keyRing = process.env.KMS_KEYRING }
+  ) {
     try {
       // Key name to use
-      const name = this.kmsClient.cryptoKeyPath(
-        project,
-        location,
-        keyRing,
-        keyName
-      )
+      const name = this.kmsClient.cryptoKeyPath(project, location, keyRing, keyName)
 
       // Decrypts the element using the specified crypto key
       const [result] = await this.kmsClient.decrypt({ name, chiperText })

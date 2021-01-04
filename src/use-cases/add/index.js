@@ -14,7 +14,7 @@ class Add {
    * @param {ExampleRepository} repository
    * @param {winston.Logger} logger
    */
-  constructor (repository, logger) {
+  constructor(repository, logger) {
     this.repository = repository
     this.logger = logger
 
@@ -27,7 +27,7 @@ class Add {
    * @param {Example} example
    * @return {Promise<Example>}
    */
-  async execute (example) {
+  async execute(example) {
     this.logger.info('Adding new example')
 
     // REPOSITORY
@@ -36,7 +36,9 @@ class Add {
     if (!example.name) throw new ExampleNameRequired()
     if (nameAlreadyExist) throw new NameAlreadyExists()
     // REPOSITORY
-    const newExample = await this.repository.save(new Example({ id: new ObjectId().toHexString(), ...example, createdAt: new Date() }))
+    const newExample = await this.repository.save(
+      new Example({ id: new ObjectId().toHexString(), ...example, createdAt: new Date() })
+    )
 
     this.logger.info('New example added succesfully')
 
@@ -46,7 +48,7 @@ class Add {
   /**
    * @return {winston.Logger}
    */
-  getLoggerContainer () {
+  getLoggerContainer() {
     return this.logger
   }
 }

@@ -3,7 +3,6 @@ const GetAllUseCase = require('.')
 const ExampleRepository = require('../../repositories/example.repository')
 const sinon = require('sinon')
 
-
 describe('getAllExamples use-case', () => {
   beforeEach(() => {
     sinon.restore()

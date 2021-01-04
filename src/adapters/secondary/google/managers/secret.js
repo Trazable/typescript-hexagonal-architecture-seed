@@ -3,7 +3,7 @@ const GoogleKms = require('../third-party-services/kms')
 const GoogleStorage = require('../third-party-services/storage')
 
 class GoogleCloudSecret extends Secret {
-  constructor () {
+  constructor() {
     super()
     this.kmsClient = new GoogleKms()
     this.storage = new GoogleStorage()
@@ -16,7 +16,7 @@ class GoogleCloudSecret extends Secret {
    * @param {string} kmsKey
    * @return {Promise<any>} secret
    */
-  async getSecret (bucketName, fileName, kmsKey) {
+  async getSecret(bucketName, fileName, kmsKey) {
     // Download file
     const bufferSecret = await this.storage.downloadFile(bucketName, fileName)
     // Decrypt secret

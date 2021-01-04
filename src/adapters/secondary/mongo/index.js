@@ -9,7 +9,7 @@ class MongoManager {
    * @param {string} user
    * @param {string} password
    */
-  constructor (uri, user, password) {
+  constructor(uri, user, password) {
     this.client = new MongoClient(uri, {
       useUnifiedTopology: true,
       auth: {
@@ -23,7 +23,7 @@ class MongoManager {
   /**
    * @return {Promise<void>}
    */
-  async #connect () {
+  async #connect() {
     try {
       await this.client.connect()
     } catch (error) {
@@ -34,7 +34,7 @@ class MongoManager {
   /**
    * @return {Promise<void>}
    */
-  async closeConnection () {
+  async closeConnection() {
     try {
       this.client.close()
       this.client = undefined
@@ -46,21 +46,21 @@ class MongoManager {
   /**
    * @return {MongoClient}
    */
-  getClient () {
+  getClient() {
     return this.client
   }
 
   /**
    * @return {Db}
    */
-  getDatabase () {
+  getDatabase() {
     return this.client.db()
   }
 
   /**
    * @return {boolean}
    */
-  isConnected () {
+  isConnected() {
     let isConnected = false
     if (this.client) {
       isConnected = this.client.isConnected()

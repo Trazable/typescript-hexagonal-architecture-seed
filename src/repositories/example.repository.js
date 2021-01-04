@@ -13,14 +13,14 @@ class ExampleRepository {
    * @param {Example} example
    * @return {Promise<Example>} example
    */
-  async save (example) {
+  async save(example) {
     return Promise.reject(new Error('Method save not implemented'))
   }
 
   /**
    * @return {Promise<Example[]>}
    */
-  async getAll () {
+  async getAll() {
     return Promise.reject(new Error('Method getAll not implemented'))
   }
 
@@ -28,7 +28,7 @@ class ExampleRepository {
    * @param {string}
    * @return {Promise<Example>}
    */
-  async getById (id) {
+  async getById(id) {
     return Promise.reject(new Error('Method getById not implemented'))
   }
 
@@ -36,7 +36,7 @@ class ExampleRepository {
    * @param {string} name
    * @return {Promise<Example>}
    */
-  async getByName (name) {
+  async getByName(name) {
     return Promise.reject(new Error('Method getByName not implemented'))
   }
 
@@ -45,7 +45,7 @@ class ExampleRepository {
    * @param {string} name
    * @return {Promise<Example>}
    */
-  async update (id, name) {
+  async update(id, name) {
     return Promise.reject(new Error('Method update not implemented'))
   }
 }

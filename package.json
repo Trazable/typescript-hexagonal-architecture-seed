@@ -60,7 +60,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@trazable/changelog-generator": "^2.0.0",
-    "@trazable/eslint-config": "^2.0.0",
+    "@trazable/eslint-config": "^2.1.0",
     "expect": "^26.6.2",
     "husky": "^4.3.0",
     "mocha": "^8.2.1",
