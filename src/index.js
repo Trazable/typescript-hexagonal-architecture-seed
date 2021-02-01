@@ -1,45 +1,69 @@
 // APPLICATION INDEX
 
-/// //// SECONDARY ADAPTERS (OUTPUT) \\\\ \\\
+;(async () => {
+  /// //// SECONDARY ADAPTERS (OUTPUT) \\\\ \\\
 
-// Google dependencies
-const GoogleWinstonLogger = require('./adapters/secondary/google/third-party-services/logger')
-const googleContainerLogger = new GoogleWinstonLogger()
+  // Google dependencies
+  const GoogleWinstonLogger = require('./adapters/secondary/google/third-party-services/logger')
+  const googleContainerLogger = new GoogleWinstonLogger()
 
-// Mongo database configuration
-const MongoManager = require('./adapters/secondary/mongo')
-const mongoClient = new MongoManager(process.env.DB_URI, process.env.DB_USER, process.env.DB_PASSWORD).getClient()
+  const GoogleCloudSecret = require('../src/adapters/secondary/google/managers/secret')
+  const googleCloudSecretManager = new GoogleCloudSecret()
 
-// Mongo repository injection
-const MongoExampleRepository = require('./adapters/secondary/mongo/example.repository')
-// Repositories
-const addUseCasExampleRepository = new MongoExampleRepository(mongoClient, googleContainerLogger.getAddUseCaseContainer())
-const getAllUseCaseExampleRepository = new MongoExampleRepository(mongoClient, googleContainerLogger.getGetAllUseCaseContainer())
-const changeNameUseCaseExampleRepository = new MongoExampleRepository(mongoClient, googleContainerLogger.getChangeNameUseCaseContainer())
+  // Mongo database configuration
+  const MongoManager = require('./adapters/secondary/mongo')
+  const mongoManager = new MongoManager(googleContainerLogger.getDatabaseContainer(), googleCloudSecretManager)
+  // Connect database and retrieve the client
+  const mongoClient = await mongoManager.connect()
 
-/// //// PRIMARY PORTS (CORE) \\\\ \\\
+  // Mongo repository injection
+  const MongoExampleRepository = require('./adapters/secondary/mongo/example.repository')
+  // Repositories
+  const addUseCasExampleRepository = new MongoExampleRepository(
+    mongoClient,
+    googleContainerLogger.getAddUseCaseContainer()
+  )
+  const getAllUseCaseExampleRepository = new MongoExampleRepository(
+    mongoClient,
+    googleContainerLogger.getGetAllUseCaseContainer()
+  )
+  const changeNameUseCaseExampleRepository = new MongoExampleRepository(
+    mongoClient,
+    googleContainerLogger.getChangeNameUseCaseContainer()
+  )
 
-// Use Cases \\
+  /// //// PRIMARY PORTS (CORE) \\\\ \\\
 
-// ADD
-const AddUseCase = require('./use-cases/add')
-const addUseCase = new AddUseCase(addUseCasExampleRepository, googleContainerLogger.getAddUseCaseContainer())
+  // Use Cases \\
 
-// GET ALL
-const GetAllUseCase = require('./use-cases/getAll')
-const getAllUseCase = new GetAllUseCase(getAllUseCaseExampleRepository, googleContainerLogger.getGetAllUseCaseContainer())
+  // ADD
+  const AddUseCase = require('./use-cases/add')
+  const addUseCase = new AddUseCase(addUseCasExampleRepository, googleContainerLogger.getAddUseCaseContainer())
 
-// CHANGE NAME
-const ChangeNameUseCase = require('./use-cases/changeName')
-const changeNameUseCase = new ChangeNameUseCase(changeNameUseCaseExampleRepository, googleContainerLogger.getChangeNameUseCaseContainer())
+  // GET ALL
+  const GetAllUseCase = require('./use-cases/getAll')
+  const getAllUseCase = new GetAllUseCase(
+    getAllUseCaseExampleRepository,
+    googleContainerLogger.getGetAllUseCaseContainer()
+  )
 
-/// //// PRIMARY ADAPTERS (INPUT) \\\\ \\\
+  // CHANGE NAME
+  const ChangeNameUseCase = require('./use-cases/changeName')
+  const changeNameUseCase = new ChangeNameUseCase(
+    changeNameUseCaseExampleRepository,
+    googleContainerLogger.getChangeNameUseCaseContainer()
+  )
 
-// Express configuration
-const ExpressApi = require('./adapters/primary/rest/express')
-// Dependency injection
-const api = new ExpressApi({ addUseCase, getAllUseCase, changeNameUseCase }, googleContainerLogger.getDefaultContainer())
+  /// //// PRIMARY ADAPTERS (INPUT) \\\\ \\\
 
-// Start api at port 8080
-api.start(8080)
+  // Express configuration
+  const ExpressApi = require('./adapters/primary/rest/express')
+  // Dependency injection
+  const api = new ExpressApi(
+    { addUseCase, getAllUseCase, changeNameUseCase },
+    googleContainerLogger.getDefaultContainer()
+  )
 
+  // Start api at port 8080
+  api.start(process.env.PORT || 8080)
+})()
