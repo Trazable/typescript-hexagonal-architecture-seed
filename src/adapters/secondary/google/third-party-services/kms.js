@@ -37,27 +37,24 @@ class GoogleKMS extends KeyManagement {
   /**
    *
    * @async
-   * @param {Buffer} chiperText as base64 string
+   * @param {Buffer} ciphertext as base64 string
    * @param {string} keyName
    * @param {{ project: string, location: string, keyRing: string }}
    * @returns {Promise<string>} element digested in ascii
    */
-  async decrypt(
-    chiperText,
-    keyName,
-    { project = process.env.GCLOUD_PROJECT_ID, location = process.env.KMS_LOCATION, keyRing = process.env.KMS_KEYRING }
-  ) {
-    try {
-      // Key name to use
-      const name = this.kmsClient.cryptoKeyPath(project, location, keyRing, keyName)
+  async decrypt(ciphertext, keyName) {
+    // Key name to use
+    const name = this.kmsClient.cryptoKeyPath(
+      process.env.GCLOUD_PROJECT_ID,
+      process.env.KMS_LOCATION,
+      process.env.KMS_KEYRING,
+      keyName
+    )
 
-      // Decrypts the element using the specified crypto key
-      const [result] = await this.kmsClient.decrypt({ name, chiperText })
+    // Decrypts the element using the specified crypto key
+    const [result] = await this.kmsClient.decrypt({ name, ciphertext })
 
-      return result.plaintext.toString()
-    } catch (error) {
-      throw new Error('Error in kms Decrypt, check the ciphertext or keyname', error)
-    }
+    return result.plaintext.toString()
   }
 }
 

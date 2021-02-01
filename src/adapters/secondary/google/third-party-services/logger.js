@@ -11,6 +11,7 @@ const LOGGER_LABELS = {
   GET_ALL_USE_CASE: 'GET_ALL_USE_CASE',
   CHANGE_NAME_USE_CASE: 'CHANGE_NAME_USE_CASE',
   DATA_SOURCE: 'DATA_SOURCE',
+  DATABASE: 'DATABASE',
 }
 
 const { LoggingWinston } = require('@google-cloud/logging-winston')
@@ -103,6 +104,10 @@ class GoogleWinstonLogger {
    */
   getDefaultContainer() {
     return this.loggerContainer.get(LOGGER_LABELS.DEFAULT)
+  }
+
+  getDatabaseContainer() {
+    return this.loggerContainer.get(LOGGER_LABELS.DATABASE)
   }
 }
 
