@@ -19,7 +19,7 @@ class ExampleController {
    * @param {{ addUseCase: Add, getAllUseCase: GetAll, changeNameUseCase: ChangeName }} useCases
    *
    */
-  constructor ({ addUseCase, getAllUseCase, changeNameUseCase }) {
+  constructor({ addUseCase, getAllUseCase, changeNameUseCase }) {
     this.addUseCase = addUseCase
     this.getAllUseCase = getAllUseCase
     this.changeNameUseCase = changeNameUseCase
@@ -49,7 +49,7 @@ class ExampleController {
    * @param {*} req
    * @param {*} res
    */
-  async add (req, res) {
+  async add(req, res) {
     const example = req.body
     try {
       await this.addUseCase.execute(example)
@@ -65,7 +65,7 @@ class ExampleController {
    * @param {*} req
    * @param {*} res
    */
-  async getAll (req, res) {
+  async getAll(req, res) {
     try {
       const examples = await this.getAllUseCase.execute()
       const examplesDTO = examples.map(example => new ExampleDTO(example))
@@ -82,7 +82,7 @@ class ExampleController {
    * @param {*} req
    * @param {*} res
    */
-  async changeName (req, res) {
+  async changeName(req, res) {
     const { id } = req.params
     const { name } = req.body
     try {

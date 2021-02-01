@@ -1,17 +1,6 @@
-const {
-  Container,
-  transports,
-  format,
-} = require('winston')
+const { Container, transports, format } = require('winston')
 
-const {
-  combine,
-  timestamp,
-  label,
-  json,
-  splat,
-  prettyPrint,
-} = format
+const { combine, timestamp, label, json, splat, prettyPrint } = format
 
 const LOGGER_LABELS = {
   DEFAULT: 'DEFAULT',
@@ -22,12 +11,13 @@ const LOGGER_LABELS = {
   GET_ALL_USE_CASE: 'GET_ALL_USE_CASE',
   CHANGE_NAME_USE_CASE: 'CHANGE_NAME_USE_CASE',
   DATA_SOURCE: 'DATA_SOURCE',
+  DATABASE: 'DATABASE',
 }
 
 const { LoggingWinston } = require('@google-cloud/logging-winston')
 
 class GoogleWinstonLogger {
-  constructor () {
+  constructor() {
     this.loggerContainer = new Container()
     this.developmentTransport = this.#initializeDevelopmentTransport()
     this.productionTransport = this.#initializeProductionTransport()
@@ -35,9 +25,9 @@ class GoogleWinstonLogger {
   }
 
   /**
- *
- */
-  #initializeDevelopmentTransport () {
+   *
+   */
+  #initializeDevelopmentTransport() {
     // Transports sets
     const developmentTransports = [
       new transports.Console({
@@ -51,7 +41,7 @@ class GoogleWinstonLogger {
   /**
    *
    */
-  #initializeProductionTransport () {
+  #initializeProductionTransport() {
     const productionTransports = [
       ...this.developmentTransport,
       new LoggingWinston({
@@ -62,27 +52,15 @@ class GoogleWinstonLogger {
     return productionTransports
   }
 
-  #initializeLoggers () {
+  #initializeLoggers() {
     // Dynamically creates all loggers using the labels defined above
     for (const key in LOGGER_LABELS) {
       this.loggerContainer.add(LOGGER_LABELS[key], {
-        format: process.env.NODE_ENV === 'development'
-          ? combine(
-              label({ label: LOGGER_LABELS[key].toLowerCase() }),
-              splat(),
-              timestamp(),
-              json(),
-              prettyPrint(),
-            )
-          : combine(
-            label({ label: LOGGER_LABELS[key].toLowerCase() }),
-            splat(),
-            timestamp(),
-            json(),
-          ),
-        transports: process.env.NODE_ENV === 'production'
-          ? this.productionTransport
-          : this.developmentTransport,
+        format:
+          process.env.NODE_ENV === 'development'
+            ? combine(label({ label: LOGGER_LABELS[key].toLowerCase() }), splat(), timestamp(), json(), prettyPrint())
+            : combine(label({ label: LOGGER_LABELS[key].toLowerCase() }), splat(), timestamp(), json()),
+        transports: process.env.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
       })
     }
   }
@@ -92,21 +70,21 @@ class GoogleWinstonLogger {
   /**
    * @return {Container}
    */
-  getAddUseCaseContainer () {
+  getAddUseCaseContainer() {
     return this.loggerContainer.get(LOGGER_LABELS.ADD_USE_CASE)
   }
 
   /**
    * @return {Container}
    */
-  getGetAllUseCaseContainer () {
+  getGetAllUseCaseContainer() {
     return this.loggerContainer.get(LOGGER_LABELS.GET_ALL_USE_CASE)
   }
 
   /**
    * @return {Container}
    */
-  getChangeNameUseCaseContainer () {
+  getChangeNameUseCaseContainer() {
     return this.loggerContainer.get(LOGGER_LABELS.CHANGE_NAME_USE_CASE)
   }
 
@@ -115,7 +93,7 @@ class GoogleWinstonLogger {
   /**
    * @return {Container}
    */
-  getDataSourceContainer () {
+  getDataSourceContainer() {
     return this.loggerContainer.get(LOGGER_LABELS.DATA_SOURCE)
   }
 
@@ -124,8 +102,12 @@ class GoogleWinstonLogger {
   /**
    * @return {Container}
    */
-  getDefaultContainer () {
+  getDefaultContainer() {
     return this.loggerContainer.get(LOGGER_LABELS.DEFAULT)
+  }
+
+  getDatabaseContainer() {
+    return this.loggerContainer.get(LOGGER_LABELS.DATABASE)
   }
 }
 

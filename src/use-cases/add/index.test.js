@@ -17,7 +17,6 @@ describe('addExample use-case', () => {
     clock.restore()
   })
 
-
   it('should create a new example successfully', async () => {
     const entryExampleData = {
       name: 'Example Name',
@@ -44,11 +43,13 @@ describe('addExample use-case', () => {
 
     expect(example).toStrictEqual(expectedResult)
     expect(
-      stubSave.calledOnceWith(new Example({
-        id: '123',
-        name: 'Example Name',
-        createdAt: now,
-      }))
+      stubSave.calledOnceWith(
+        new Example({
+          id: '123',
+          name: 'Example Name',
+          createdAt: now,
+        })
+      )
     ).toBeTruthy()
   })
 

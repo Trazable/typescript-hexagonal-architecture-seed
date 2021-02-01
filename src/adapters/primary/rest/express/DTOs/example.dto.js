@@ -6,14 +6,14 @@ const Example = require('../../../../../entities/example')
  */
 class ExampleDTO {
   /**
-  *
-  * @param {Example} example
-  */
-  constructor (example) {
+   *
+   * @param {Example} example
+   */
+  constructor(example) {
     this.example = example
   }
 
-  toJSON () {
+  toJSON() {
     return {
       ...this.example,
       id: undefined,

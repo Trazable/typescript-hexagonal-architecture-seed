@@ -5,7 +5,7 @@ class Example {
    *
    * @param {{ id: string, name: string, lastName: string, phone: number, hobbies: <string,number>[], createdAt: Date}}
    */
-  constructor ({ id, name, lastName, phone, hobbies = [], createdAt }) {
+  constructor({ id, name, lastName, phone, hobbies = [], createdAt }) {
     this.id = id
     this.name = name
     this.lastName = lastName
@@ -17,7 +17,7 @@ class Example {
   /**
    * @return {string}
    */
-  get nameAndLastName () {
+  get nameAndLastName() {
     return `${this.name} ${this.lastName}`
   }
 
@@ -25,10 +25,11 @@ class Example {
    *
    * @return {string[]}
    */
-  get favoriteHobbies () {
-    return this.hobbies.filter(hobby => Object.values(hobby)
-      .some(value => value === Math.max(...this.hobbies
-        .flatMap(hobby => Object.values(hobby)))))
+  get favoriteHobbies() {
+    return this.hobbies
+      .filter(hobby =>
+        Object.values(hobby).some(value => value === Math.max(...this.hobbies.flatMap(hobby => Object.values(hobby))))
+      )
       .map(favoriteHobby => Object.keys(favoriteHobby))
   }
 
@@ -36,7 +37,7 @@ class Example {
    *
    * @param {string} name
    */
-  changeName (name) {
+  changeName(name) {
     this.name = name
   }
 }
