@@ -35,7 +35,11 @@ class GoogleStorage extends Storage {
    * @return {Promise<void>}
    */
   async createBucket(bucketName) {
-    await this.storage.createBucket(bucketName)
+    await this.storage.createBucket(bucketName, {
+      multiRegional: false,
+      regional: false,
+      location: 'europe-west1',
+    })
   }
 
   /**
