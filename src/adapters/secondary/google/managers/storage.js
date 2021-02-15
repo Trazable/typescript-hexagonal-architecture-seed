@@ -6,8 +6,8 @@ class GoogleCloudStorageManager {
    *
    * @param {GoogleStorage} storage
    */
-  constructor(storage) {
-    this.storage = storage
+  constructor() {
+    this.storage = new GoogleStorage()
   }
 
   /**
@@ -20,7 +20,7 @@ class GoogleCloudStorageManager {
    * @return {Promise<void>}
    */
   async uploadFile(fileName, mimeType, fileBuffer, bucketName) {
-    if (!this.#verifyBucketExists(bucketName)) await this.storage.createBucket(bucketName)
+    if (!(await this.#verifyBucketExists(bucketName))) await this.storage.createBucket(bucketName)
     await this.storage.uploadFile(fileName, mimeType, fileBuffer, bucketName)
   }
 
@@ -32,7 +32,7 @@ class GoogleCloudStorageManager {
    * @return {Promise<void>}
    */
   async uploadObject(bucketName, fileName, serviceName) {
-    if (!this.#verifyBucketExists(bucketName)) await this.storage.createBucket(bucketName)
+    if (!(await this.#verifyBucketExists(bucketName))) await this.storage.createBucket(bucketName)
     await this.storage.uploadObject(bucketName, fileName, serviceName)
   }
 
@@ -43,7 +43,7 @@ class GoogleCloudStorageManager {
    */
   async #verifyBucketExists(bucketName) {
     const buckets = await this.storage.getBuckets()
-    return buckets.includes(bucketName)
+    return buckets.map(({ name }) => name).includes(bucketName)
   }
 }
 
