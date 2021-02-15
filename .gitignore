@@ -79,3 +79,10 @@ coverage
 
 .env
 .env.production
+
+
+################################################
+# ignore google service account
+################################################
+
+google_service_account.json

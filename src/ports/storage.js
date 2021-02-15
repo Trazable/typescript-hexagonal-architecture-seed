@@ -19,12 +19,42 @@ class Storage {
 
   /**
    *
+   * @param {string} bucketName
+   * @return {Promise<void>}
+   */
+  async createBucket(bucketName) {
+    return Promise.reject(new Error('Method createBucket not implemented'))
+  }
+
+  /**
+   *
    * @param {string} bucket
    * @param {string} fileName
    * @return {Promise<Buffer>}
    */
   async downloadFile(bucket, fileName) {
     return Promise.reject(new Error('Method downloadFile not implemented'))
+  }
+
+  /**
+   * Uploads an object to a storage bucket
+   * @async
+   * @param {string} bucketName
+   */
+  async uploadObject(bucketName, fileName, serviceName) {
+    return Promise.reject(new Error('Method uploadObject not implemented'))
+  }
+
+  /**
+   * Upload fileBuffer
+   * @param {strin} filePath
+   * @param {string} fileName
+   * @param {string} mimeType
+   * @param {Buffer} fileBuffer
+   * @param {string} bucketName
+   */
+  async uploadFile(fileName, mimeType, fileBuffer, bucketName) {
+    return Promise.reject(new Error('Method uploadFile not implemented'))
   }
 }
 
