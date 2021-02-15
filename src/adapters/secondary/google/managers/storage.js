@@ -17,10 +17,23 @@ class GoogleCloudStorageManager {
    * @param {string} mimeType
    * @param {Buffer} fileBuffer
    * @param {string} bucketName
+   * @return {Promise<void>}
    */
   async uploadFile(fileName, mimeType, fileBuffer, bucketName) {
     if (!this.#verifyBucketExists(bucketName)) await this.storage.createBucket(bucketName)
     await this.storage.uploadFile(fileName, mimeType, fileBuffer, bucketName)
+  }
+
+  /**
+   *
+   * @param {string} bucketName
+   * @param {string} fileName
+   * @param {string} serviceName
+   * @return {Promise<void>}
+   */
+  async uploadObject(bucketName, fileName, serviceName) {
+    if (!this.#verifyBucketExists(bucketName)) await this.storage.createBucket(bucketName)
+    await this.storage.uploadObject(bucketName, fileName, serviceName)
   }
 
   /**
