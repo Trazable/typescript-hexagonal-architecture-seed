@@ -10,6 +10,13 @@ export interface IExample {
   createdAt: Date
 }
 export class Example implements IExample {
+  id: string
+  name: string
+  lastName: string
+  phone: string
+  hobbies: string[]
+  createdAt: Date
+
   constructor({ id, name, lastName, phone, hobbies = [], createdAt }: IExample) {
     this.id = id
     this.name = name
@@ -18,13 +25,6 @@ export class Example implements IExample {
     this.hobbies = hobbies
     this.createdAt = createdAt
   }
-
-  id: string
-  name: string
-  lastName: string
-  phone: string
-  hobbies: string[]
-  createdAt: Date
 
   get nameAndLastName(): string {
     return `${this.name} ${this.lastName}`
