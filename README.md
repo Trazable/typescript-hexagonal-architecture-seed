@@ -52,8 +52,8 @@
 ## How it works
 
 - This application works with the theory before explained but now we go to explain how works this example with the trazable implementation.
-- The isolation of our core is achieved with the structure obtained with the hexagonal architecture and the dependency injection orchestred in the index.js of our example application.
-  - Explaining the index.js (Dependency orchestrator).
+- The isolation of our core is achieved with the structure obtained with the hexagonal architecture and the dependency injection orchestred in the index.ts of our example application.
+  - Explaining the index.ts (Dependency orchestrator).
     - With the perspective of the hexagonal architecture (LEFT<=>RIGHT) the dependencies are `initialized` from the RIGHT to the LEFT and `needed/injected` from the LEFT to the RIGHT
       - SECONDARY ADAPTER MONGO EXAMPLE
         - We need initialize the database configuration because our repositories `needs` a database to do the database operations. (Remember that our repository don't know where is stored only know the methods that the business logic need).
@@ -69,19 +69,19 @@
 - Domain Zone (Business Logic)
   - The business logic must contain a single responsability of a specific operation representing the logic defined by business (use-case).
     - The use-case must have in their initialization all of the dependencies needed for acomplish their objective (repositories, ports...)
-      - Example: `Add` use case (src/use-cases/add/index.js)
+      - Example: `Add` use case (src/use-cases/add/index.ts)
         - This use case have two dependencies, the repository to acces to the necessary data of the entity `Example` and their loggerContainer.
         - The method execute (command pattern) realize the behaviour of the name that have the use-case, in this case `Add` a `Example`.
         - Bussines say that is not possible add a `Example` with the same name, for manage this, we go to the `repository` to ask if any `Example` exist with the name received (the input and output of these methods are defined in the interface, MUST return a businnes entity not a container data), if the name exist, we throw a business exception called `NameAlreadyExists` (manage the exception and return a custom message its a responsability from the primary adapter).
 - Details/Dependencies
   - When you start creating the use-case, you need create the dependencies necessaries to call your logic and the dependencies of the logic.
-    - Example: `Add` use case (src/use-cases/add-index.js)
+    - Example: `Add` use case (src/use-cases/add-index.ts)
       - Primary Adapter:
-        - This use-case have from primary adapter a REST API, let go to create the necessary API routes for call the endpoint where our logic are waiting to start their objective. (src/adapters/primary/rest/express/index.js => setupRoutes()).
-        - This route needs a controller to execute the use-case. (src/adapters/primary/rest/express/controllers/example.controller.js)
+        - This use-case have from primary adapter a REST API, let go to create the necessary API routes for call the endpoint where our logic are waiting to start their objective. (src/adapters/primary/rest/express/index.ts => setupRoutes()).
+        - This route needs a controller to execute the use-case. (src/adapters/primary/rest/express/controllers/example.controller.ts)
         - In this implementation of the hexagonal architecture the primary adapters call directly to the business logic instead creating a previous interface.
       - Secondary port:
-        - The secondary port in this example is the `repository`, the repository its a interface that "say" to the secondary adapters the methods that the business logic need. (src/repositories/example.repository.js)
+        - The secondary port in this example is the `repository`, the repository its a interface that "say" to the secondary adapters the methods that the business logic need. (src/repositories/example.repository.ts)
       - Secondary Adapter:
         - The secondary adapter is the `technology` (In this example a Mongo DB database) that `implements` the interfaces defined, must return the data typed in the interface (in this example a `Example` business entity).
     - At this point you should think which order is the most easier to implement the components necessaries for your use-case (From the primary adapter => INPUT or from the secondary adapter => OUTPUT)
