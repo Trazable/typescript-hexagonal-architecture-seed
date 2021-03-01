@@ -18,6 +18,7 @@ services:
             - DB_URI=mongodb://mongo:27017/example?authSource=admin
         volumes:
             - ./:/app
+            - project_name_dist:/app/dist
             - project_name_node_modules:/app/node_modules
         ports:
             - 8080:8080
@@ -48,6 +49,7 @@ services:
 
 volumes:
     project_name_node_modules:
+    project_name_dist:
 networks:
     default:
         name: project_name-environment-network
