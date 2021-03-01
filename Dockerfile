@@ -9,16 +9,13 @@ HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/ping || ex
 
 ENV PATH=/app/node_modules/.bin:$PATH
 
-EXPOSE 8080
-
 COPY package*.json ./
 
-RUN npm install --only=production
+RUN npm install
 
 COPY . /app
 
-
-
+RUN npm run compile
 
 ############################
 # PRODUCTION CONFIGURATION #
