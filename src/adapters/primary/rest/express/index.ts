@@ -41,7 +41,15 @@ export class ExpressApi {
   private serverConfiguration(): void {
     app.use(bodyParser.json())
     app.use(helmet())
-    app.use(morgan('combined'))
+    app.use(
+      morgan('combined', {
+        stream: {
+          write: text => {
+            this.logger.info(text)
+          },
+        },
+      })
+    )
   }
 
   private setupRoutes() {
