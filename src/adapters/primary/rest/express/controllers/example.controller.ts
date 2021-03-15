@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 
 import { StatusCodes } from 'http-status-codes'
 
-import ManageError from '../manage-error'
+import { ManageError } from '../manage-error'
 import { GetAll } from '../../../../../use-cases/getAll'
 import { ChangeName } from '../../../../../use-cases/changeName'
 import { ExampleDTO } from '../DTOs/example.dto'

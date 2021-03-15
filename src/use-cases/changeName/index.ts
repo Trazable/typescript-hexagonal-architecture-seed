@@ -1,6 +1,6 @@
 import { IExampleRepository } from '../../repositories/example.repository'
 import { Example } from '../../entities/example'
-import { ExampleNotFound } from '../../exceptions/example-not-found'
+import { NotFoundError } from '../../exceptions/not-found'
 import { ILogger } from '../../ports/logger'
 
 export class ChangeName {
@@ -13,13 +13,13 @@ export class ChangeName {
   }
 
   async execute(id: string, name: string): Promise<Example> {
-    this.logger.info(`Changing the name of the example ${name}`)
+    this.logger.info(`Changing the name of the example ${id} to ${name}`)
     // REPOSITORY
     // Retrieve the entity with all data
     const example = await this.repository.getByName(name)
 
     // BUSINESS EXCEPTIONS
-    if (!example) throw new ExampleNotFound()
+    if (!example) throw new NotFoundError()
     // ENTITY LOGIC
     // Change only the necessary field in the useCase
     example.changeName(name)
