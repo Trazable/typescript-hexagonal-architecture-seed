@@ -1,7 +1,7 @@
 ######################
 # BASE CONFIGURATION #
 ######################
-FROM node:14.15-alpine AS base
+FROM node:14-alpine AS base
 
 WORKDIR /app
 
@@ -17,15 +17,28 @@ COPY . /app
 
 RUN npm run compile
 
+
 ############################
 # PRODUCTION CONFIGURATION #
 ############################
-FROM base AS production
+FROM node:14-alpine AS production
 
-ENV NODE_ENV=production
+WORKDIR /app
+
+HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/ping || exit 1
+
+ENV \
+  PATH=/app/node_modules/.bin:$PATH \
+  NODE_ENV=production
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+# Copy the dist build
+COPY --from=base /app/dist /app/dist
 
 CMD ["npm", "start"]
-
 
 
 #############################
@@ -34,8 +47,5 @@ CMD ["npm", "start"]
 FROM base AS development
 
 ENV NODE_ENV=development
-
-RUN \
-  npm install --only=development
 
 CMD ["npm", "run", "dev"]
