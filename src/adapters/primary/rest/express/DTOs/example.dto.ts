@@ -4,7 +4,8 @@ import { Example, IExample } from '../../../../../entities/example'
  *
  */
 export class ExampleDTO {
-  example: Example
+  private readonly example: Example
+
   constructor(example: Example) {
     this.example = example
   }

@@ -7,8 +7,8 @@ import { ILogger } from '../../ports/logger'
  * @namespace Example
  */
 export class GetAll {
-  repository: IExampleRepository
-  logger: ILogger
+  private readonly repository: IExampleRepository
+  private readonly logger: ILogger
 
   constructor(repository: IExampleRepository, logger: ILogger) {
     this.repository = repository

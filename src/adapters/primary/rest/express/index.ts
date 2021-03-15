@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Express } from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import { StatusCodes } from 'http-status-codes'
@@ -8,17 +8,16 @@ import { Add } from '../../../../use-cases/add'
 import { GetAll } from '../../../../use-cases/getAll'
 import { ChangeName } from '../../../../use-cases/changeName'
 import { ILogger } from '../../../../ports/logger'
-const app = express()
 
 /*
  * Express configuration
  */
-
 export class ExpressApi {
-  addUseCase: Add
-  getAllUseCase: GetAll
-  changeNameUseCase: ChangeName
-  logger: ILogger
+  private readonly addUseCase: Add
+  private readonly getAllUseCase: GetAll
+  private readonly changeNameUseCase: ChangeName
+  private readonly logger: ILogger
+  private readonly app: Express
 
   constructor(addUseCase: Add, getAllUseCase: GetAll, changeNameUseCase: ChangeName, logger: ILogger) {
     this.addUseCase = addUseCase
@@ -27,6 +26,7 @@ export class ExpressApi {
 
     this.logger = logger
 
+    this.app = express()
     this.serverConfiguration()
     this.setupRoutes()
   }
@@ -37,7 +37,7 @@ export class ExpressApi {
    * @param port - Public port on serve the api
    */
   start(port: string): void {
-    app.listen(port, () => {
+    this.app.listen(port, () => {
       this.logger.info(`App listening on port ${port} `)
     })
   }
@@ -46,9 +46,9 @@ export class ExpressApi {
    * Setup server configuration middlewares
    */
   private serverConfiguration(): void {
-    app.use(express.json())
-    app.use(helmet())
-    app.use(
+    this.app.use(express.json())
+    this.app.use(helmet())
+    this.app.use(
       morgan('combined', {
         stream: {
           write: text => {
@@ -72,12 +72,10 @@ export class ExpressApi {
 
     const exampleController = new ExampleController(this.addUseCase, this.getAllUseCase, this.changeNameUseCase)
 
-    router.route('/examples/').post(exampleController.add)
-
     router.route('/examples/').post(exampleController.add).get(exampleController.getAll)
 
     router.route('/examples/changeName/:id').patch(exampleController.changeName)
 
-    app.use(router)
+    this.app.use(router)
   }
 }

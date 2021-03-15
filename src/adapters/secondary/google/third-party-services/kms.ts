@@ -2,7 +2,8 @@ import { IKeyManagement } from '../../../../ports/kms'
 import { KeyManagementServiceClient } from '@google-cloud/kms'
 
 export class GoogleKMS implements IKeyManagement {
-  kmsClient: KeyManagementServiceClient
+  private readonly kmsClient: KeyManagementServiceClient
+
   constructor() {
     this.kmsClient = new KeyManagementServiceClient()
   }

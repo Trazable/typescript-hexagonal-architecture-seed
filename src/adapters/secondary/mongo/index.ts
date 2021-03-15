@@ -3,9 +3,9 @@ import { ILogger } from '../../../ports/logger'
 import { ISecret } from '../../../ports/secret'
 
 export class MongoManager {
-  client: MongoClient | undefined
-  logger: ILogger
-  secretManager: ISecret
+  private client: MongoClient | undefined
+  private readonly logger: ILogger
+  private readonly secretManager: ISecret
 
   constructor(secretManager: ISecret, logger: ILogger) {
     this.client = undefined
