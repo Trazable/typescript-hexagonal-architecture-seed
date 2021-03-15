@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { MongoClient } from 'mongodb'
 import { IExampleRepository } from '../../../repositories/example.repository'
 import { Example } from '../../../entities/example'

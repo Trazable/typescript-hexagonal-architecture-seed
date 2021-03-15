@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { GoogleStorage } from '../third-party-services/storage'
 
 export class GoogleCloudStorageManager {

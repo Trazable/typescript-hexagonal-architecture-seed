@@ -1,8 +1,6 @@
-// eslint-disable-next-line no-unused-vars
 import { MongoClient, Db } from 'mongodb'
 import { ILogger } from '../../../ports/logger'
 import { ISecret } from '../../../ports/secret'
-// eslint-disable-next-line no-unused-vars
 
 export class MongoManager {
   client: MongoClient | undefined

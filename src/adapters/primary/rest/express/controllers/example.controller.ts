@@ -1,8 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-
-// eslint-disable-next-line no-unused-vars
 import { Add } from '../../../../../use-cases/add'
-// eslint-disable-next-line no-unused-vars
 import { Request, Response } from 'express'
 
 import { StatusCodes } from 'http-status-codes'

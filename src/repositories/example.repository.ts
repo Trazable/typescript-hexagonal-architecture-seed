@@ -2,8 +2,6 @@
 // These interfaces is all of the business logic know, business logic dont know the implementation.
 // The implementation must return the data defined here.
 
-// eslint-disable-next-line no-unused-vars
-
 import { Example } from '../entities/example'
 
 // REPOSITORY
