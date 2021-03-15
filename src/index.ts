@@ -16,6 +16,7 @@ const ADD_USE_CASE_LOGGER = 'addUseCase'
 const GET_ALL_USE_CASE_LOGGER = 'getAllUseCase'
 const CHANGE_NAME_USE_CASE_LOGGER = 'changeNameUseCase'
 const EXPRESS_API_LOGGER = 'express'
+
 ;(async () => {
   // Source mapping => compiled js
   install()

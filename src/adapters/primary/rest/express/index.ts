@@ -1,5 +1,4 @@
 import express from 'express'
-import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import { StatusCodes } from 'http-status-codes'
@@ -39,7 +38,7 @@ export class ExpressApi {
   }
 
   private serverConfiguration(): void {
-    app.use(bodyParser.json())
+    app.use(express.json())
     app.use(helmet())
     app.use(
       morgan('combined', {
