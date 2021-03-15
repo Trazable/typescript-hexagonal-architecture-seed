@@ -31,12 +31,20 @@ export class ExpressApi {
     this.setupRoutes()
   }
 
+  /**
+   * Start the express server api
+   *
+   * @param port - Public port on serve the api
+   */
   start(port: string): void {
     app.listen(port, () => {
       this.logger.info(`App listening on port ${port} `)
     })
   }
 
+  /**
+   * Setup server configuration middlewares
+   */
   private serverConfiguration(): void {
     app.use(express.json())
     app.use(helmet())
@@ -51,6 +59,9 @@ export class ExpressApi {
     )
   }
 
+  /**
+   * Setup server routes
+   */
   private setupRoutes() {
     const router = express.Router()
 

@@ -3,6 +3,10 @@ import { Example } from '../../entities/example'
 import { NotFoundError } from '../../exceptions/not-found'
 import { ILogger } from '../../ports/logger'
 
+/**
+ * Change an example name by id UseCase
+ * @namespace Example
+ */
 export class ChangeName {
   repository: IExampleRepository
   logger: ILogger
@@ -12,6 +16,13 @@ export class ChangeName {
     this.logger = logger
   }
 
+  /**
+   * UseCase executer
+   *
+   * @param id - Example id to update
+   * @param name - New example name
+   * @returns The example updated
+   */
   async execute(id: string, name: string): Promise<Example> {
     this.logger.info(`Changing the name of the example ${id} to ${name}`)
     // REPOSITORY

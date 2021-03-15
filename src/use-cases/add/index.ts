@@ -5,6 +5,10 @@ import { AlreadyExistsError } from '../../exceptions/already-exists'
 import { PropretyIsRequiredError } from '../../exceptions/property-is-required'
 import { ILogger } from '../../ports/logger'
 
+/**
+ * Add new Example UseCase
+ * @namespace Example
+ */
 export class Add {
   repository: IExampleRepository
   logger: ILogger
@@ -14,6 +18,12 @@ export class Add {
     this.logger = logger
   }
 
+  /**
+   * UseCase executer
+   *
+   * @param example - New example to create
+   * @returns The new example created
+   */
   async execute(example: Example): Promise<Example> {
     this.logger.info('Creating a new example')
     // REPOSITORY

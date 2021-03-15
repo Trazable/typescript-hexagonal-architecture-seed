@@ -7,7 +7,7 @@ export class GoogleKMS implements IKeyManagement {
     this.kmsClient = new KeyManagementServiceClient()
   }
 
-  async encrypt(plaintext: string): Promise<string | undefined> {
+  async encrypt(plaintext: string | Uint8Array): Promise<string | Uint8Array | undefined> {
     // Key name to use
     if (
       process.env.KMS_KEY_CREDENTIALS &&
@@ -29,11 +29,11 @@ export class GoogleKMS implements IKeyManagement {
 
       // Encrypts the element using the specified crypto key
       const [result] = await this.kmsClient.encrypt({ name, plaintext })
-      return result && result.ciphertext ? result.ciphertext.toString() : undefined
+      return result.ciphertext || undefined
     }
   }
 
-  async decrypt(ciphertext: Buffer): Promise<string | undefined> {
+  async decrypt(ciphertext: string | Uint8Array): Promise<string | Uint8Array | undefined> {
     if (
       process.env.KMS_KEY_CREDENTIALS &&
       process.env.GCLOUD_PROJECT_ID &&
@@ -50,7 +50,7 @@ export class GoogleKMS implements IKeyManagement {
       // Decrypts the element using the specified crypto key
       const [result] = await this.kmsClient.decrypt({ name, ciphertext })
 
-      return result && result.plaintext ? result.plaintext.toString() : undefined
+      return result.plaintext || undefined
     }
   }
 }
