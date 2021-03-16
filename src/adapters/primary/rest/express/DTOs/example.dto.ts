@@ -10,8 +10,9 @@ export class ExampleDTO {
     this.example = example
   }
 
-  toJSON(): Pick<IExample, 'name'> {
+  toJSON(): Pick<IExample, '_id' | 'name'> {
     return {
+      _id: this.example._id,
       name: this.example.name,
     }
   }

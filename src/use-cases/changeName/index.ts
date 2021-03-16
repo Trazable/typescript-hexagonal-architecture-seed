@@ -27,7 +27,7 @@ export class ChangeName {
     this.logger.info(`Changing the name of the example ${id} to ${name}`)
     // REPOSITORY
     // Retrieve the entity with all data
-    const example = await this.repository.getByName(name)
+    const example = await this.repository.getById(id)
 
     // BUSINESS EXCEPTIONS
     if (!example) throw new NotFoundError()

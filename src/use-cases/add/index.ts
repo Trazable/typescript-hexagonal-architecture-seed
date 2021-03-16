@@ -32,7 +32,7 @@ export class Add {
     if (!example.name) throw new PropertyRequiredError('name')
     if (nameAlreadyExist) throw new AlreadyExistsError()
     // REPOSITORY
-    const newExample = new Example({ ...example, id: new ObjectId().toHexString(), createdAt: new Date() })
+    const newExample = new Example({ ...example, _id: new ObjectId().toHexString(), createdAt: new Date() })
 
     await this.repository.save(newExample)
 

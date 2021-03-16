@@ -26,12 +26,12 @@ export class MongoExampleRepository implements IExampleRepository {
 
   async update(example: Example): Promise<void> {
     this.logger.info('Update exmaple in the database')
-    await this.client.db().collection(this.COLLECTION).updateOne({ id: example.id }, { $set: example })
+    await this.client.db().collection(this.COLLECTION).updateOne({ _id: example._id }, { $set: example })
   }
 
-  async getById(id: string): Promise<Example | undefined> {
+  async getById(_id: string): Promise<Example | undefined> {
     this.logger.info('Retrieving entity by id from the database')
-    const result = await this.client.db().collection(this.COLLECTION).findOne({ id: id })
+    const result = await this.client.db().collection(this.COLLECTION).findOne({ _id })
     return result ? new Example(result) : undefined
   }
 

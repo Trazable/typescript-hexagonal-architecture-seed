@@ -2,7 +2,7 @@
 // NOT ONLY A DATA STORE
 
 export interface IExample {
-  id: string
+  _id: string
   name: string
   lastName: string
   phone: string
@@ -10,15 +10,15 @@ export interface IExample {
   createdAt: Date
 }
 export class Example implements IExample {
-  id: string
+  _id: string
   name: string
   lastName: string
   phone: string
   hobbies: string[]
   createdAt: Date
 
-  constructor({ id, name, lastName, phone, hobbies = [], createdAt }: IExample) {
-    this.id = id
+  constructor({ _id, name, lastName, phone, hobbies = [], createdAt }: IExample) {
+    this._id = _id
     this.name = name
     this.lastName = lastName
     this.phone = phone
