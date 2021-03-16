@@ -2,7 +2,7 @@ import { IExampleRepository } from '../../repositories/example.repository'
 import { Example } from '../../entities/example'
 import { ObjectId } from 'mongodb' // ONLY EXAMPLE USE
 import { AlreadyExistsError } from '../../exceptions/already-exists'
-import { PropretyIsRequiredError } from '../../exceptions/property-is-required'
+import { PropertyRequiredError } from '../../exceptions/property-required'
 import { ILogger } from '../../ports/logger'
 
 /**
@@ -29,7 +29,7 @@ export class Add {
     // REPOSITORY
     const nameAlreadyExist = await this.repository.getByName(example.name)
     // BUSINESS EXCEPTIONS
-    if (!example.name) throw new PropretyIsRequiredError('name')
+    if (!example.name) throw new PropertyRequiredError('name')
     if (nameAlreadyExist) throw new AlreadyExistsError()
     // REPOSITORY
     const newExample = new Example({ ...example, id: new ObjectId().toHexString(), createdAt: new Date() })
