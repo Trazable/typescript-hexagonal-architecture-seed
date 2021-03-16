@@ -4,7 +4,7 @@ import { Add } from './use-cases/add'
 import { ExpressApi } from './adapters/primary/rest/express'
 import { MongoManager } from './adapters/secondary/mongo'
 import { MongoExampleRepository } from './adapters/secondary/mongo/example.repository'
-import { install } from 'source-map-support'
+import { install as installSourceMapSupport } from 'source-map-support'
 import { GetAll } from './use-cases/getAll'
 import { ChangeName } from './use-cases/changeName'
 import { GoogleWinstonLogger } from './adapters/secondary/google/third-party-services/logger'
@@ -16,9 +16,11 @@ const ADD_USE_CASE_LOGGER = 'addUseCase'
 const GET_ALL_USE_CASE_LOGGER = 'getAllUseCase'
 const CHANGE_NAME_USE_CASE_LOGGER = 'changeNameUseCase'
 const EXPRESS_API_LOGGER = 'express'
+
 ;(async () => {
   // Source mapping => compiled js
-  install()
+  installSourceMapSupport()
+
   /// //// SECONDARY ADAPTERS (OUTPUT) \\\\ \\\
 
   // Mongo database configuration

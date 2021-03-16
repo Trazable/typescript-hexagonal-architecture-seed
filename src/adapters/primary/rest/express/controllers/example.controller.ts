@@ -1,22 +1,18 @@
-// eslint-disable-next-line no-unused-vars
-
-// eslint-disable-next-line no-unused-vars
 import { Add } from '../../../../../use-cases/add'
-// eslint-disable-next-line no-unused-vars
 import { Request, Response } from 'express'
 
 import { StatusCodes } from 'http-status-codes'
 
-import ManageError from '../manage-error'
+import { ManageError } from '../manage-error'
 import { GetAll } from '../../../../../use-cases/getAll'
 import { ChangeName } from '../../../../../use-cases/changeName'
 import { ExampleDTO } from '../DTOs/example.dto'
 
 // This secondary adapter calls directly the useCases.
 export class ExampleController {
-  addUseCase: Add
-  getAllUseCase: GetAll
-  changeNameUseCase: ChangeName
+  private readonly addUseCase: Add
+  private readonly getAllUseCase: GetAll
+  private readonly changeNameUseCase: ChangeName
 
   constructor(addUseCase: Add, getAllUseCase: GetAll, changeNameUseCase: ChangeName) {
     this.addUseCase = addUseCase

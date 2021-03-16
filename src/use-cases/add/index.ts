@@ -1,28 +1,38 @@
 import { IExampleRepository } from '../../repositories/example.repository'
 import { Example } from '../../entities/example'
 import { ObjectId } from 'mongodb' // ONLY EXAMPLE USE
-import { NameAlreadyExists } from '../../exceptions/example-name-already-exists'
-import { ExampleNameRequired } from '../../exceptions/example-name-is-required'
+import { AlreadyExistsError } from '../../exceptions/already-exists'
+import { PropertyRequiredError } from '../../exceptions/property-required'
 import { ILogger } from '../../ports/logger'
 
+/**
+ * Add new Example UseCase
+ * @namespace Example
+ */
 export class Add {
-  repository: IExampleRepository
-  logger: ILogger
+  private readonly repository: IExampleRepository
+  private readonly logger: ILogger
 
   constructor(repository: IExampleRepository, logger: ILogger) {
     this.repository = repository
     this.logger = logger
   }
 
+  /**
+   * UseCase executer
+   *
+   * @param example - New example to create
+   * @returns The new example created
+   */
   async execute(example: Example): Promise<Example> {
     this.logger.info('Creating a new example')
     // REPOSITORY
     const nameAlreadyExist = await this.repository.getByName(example.name)
     // BUSINESS EXCEPTIONS
-    if (!example.name) throw new ExampleNameRequired()
-    if (nameAlreadyExist) throw new NameAlreadyExists()
+    if (!example.name) throw new PropertyRequiredError('name')
+    if (nameAlreadyExist) throw new AlreadyExistsError()
     // REPOSITORY
-    const newExample = new Example({ ...example, id: new ObjectId().toHexString(), createdAt: new Date() })
+    const newExample = new Example({ ...example, _id: new ObjectId().toHexString(), createdAt: new Date() })
 
     await this.repository.save(newExample)
 

@@ -1,8 +1,8 @@
-// eslint-disable-next-line no-unused-vars
 import { GoogleStorage } from '../third-party-services/storage'
 
 export class GoogleCloudStorageManager {
-  storage: GoogleStorage
+  private readonly storage: GoogleStorage
+
   constructor() {
     this.storage = new GoogleStorage()
   }

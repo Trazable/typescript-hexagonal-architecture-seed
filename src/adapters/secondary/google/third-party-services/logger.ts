@@ -6,9 +6,9 @@ import { ILogger } from '../../../../ports/logger'
 const { combine, timestamp, label, json, splat, prettyPrint } = format
 
 export class GoogleWinstonLogger implements ILogger {
-  private loggerName: string
-  private developmentTransport: transports.ConsoleTransportInstance[]
-  private productionTransport: (transports.ConsoleTransportInstance | LoggingWinston)[]
+  private readonly loggerName: string
+  private readonly developmentTransport: transports.ConsoleTransportInstance[]
+  private readonly productionTransport: (transports.ConsoleTransportInstance | LoggingWinston)[]
 
   constructor(loggerName: string) {
     this.developmentTransport = this.initializeDevelopmentTransport()

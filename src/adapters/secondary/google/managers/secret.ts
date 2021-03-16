@@ -3,8 +3,9 @@ import { GoogleKMS } from '../third-party-services/kms'
 import { GoogleStorage } from '../third-party-services/storage'
 
 export class GoogleCloudSecret implements ISecret {
-  kmsClient: GoogleKMS
-  storage: GoogleStorage
+  private readonly kmsClient: GoogleKMS
+  private readonly storage: GoogleStorage
+
   constructor() {
     this.kmsClient = new GoogleKMS()
     this.storage = new GoogleStorage()
@@ -19,7 +20,7 @@ export class GoogleCloudSecret implements ISecret {
         const secret = await this.kmsClient.decrypt(bufferSecret)
 
         // Parse JSON the configuration file
-        return secret ? JSON.parse(secret) : undefined
+        return secret ? JSON.parse(secret.toString()) : undefined
       }
     }
   }

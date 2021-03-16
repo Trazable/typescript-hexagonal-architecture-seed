@@ -2,7 +2,8 @@ import { Storage } from '@google-cloud/storage'
 import { IStorage } from '../../../../ports/storage'
 
 export class GoogleStorage implements IStorage {
-  storage: Storage
+  private readonly storage: Storage
+
   constructor() {
     this.storage = new Storage()
   }

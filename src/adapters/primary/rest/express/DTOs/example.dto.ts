@@ -1,17 +1,18 @@
-// eslint-disable-next-line no-unused-vars
 import { Example, IExample } from '../../../../../entities/example'
 
 /**
  *
  */
 export class ExampleDTO {
-  example: Example
+  private readonly example: Example
+
   constructor(example: Example) {
     this.example = example
   }
 
-  toJSON(): Pick<IExample, 'name'> {
+  toJSON(): Pick<IExample, '_id' | 'name'> {
     return {
+      _id: this.example._id,
       name: this.example.name,
     }
   }

@@ -2,9 +2,13 @@ import { IExampleRepository } from '../../repositories/example.repository'
 import { Example } from '../../entities/example'
 import { ILogger } from '../../ports/logger'
 
+/**
+ * Get all examples UseCase
+ * @namespace Example
+ */
 export class GetAll {
-  repository: IExampleRepository
-  logger: ILogger
+  private readonly repository: IExampleRepository
+  private readonly logger: ILogger
 
   constructor(repository: IExampleRepository, logger: ILogger) {
     this.repository = repository
@@ -12,8 +16,9 @@ export class GetAll {
   }
 
   /**
+   * UseCase executer
    *
-   * @return {Promise<Example[]>}
+   * @returns All the examples
    */
   async execute(): Promise<Example[]> {
     this.logger.info('Retrieving the examples')
