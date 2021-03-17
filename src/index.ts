@@ -9,6 +9,9 @@ import { GetAll } from './use-cases/getAll'
 import { ChangeName } from './use-cases/changeName'
 import { GoogleWinstonLogger } from './adapters/secondary/google/third-party-services/logger'
 import { GoogleCloudSecret } from './adapters/secondary/google/managers/secret'
+import { NanoIdGenerator } from './adapters/secondary/nanoid-generator'
+import { AxiosHttp } from './adapters/secondary/http/axios-http'
+import { TrazableAuth } from './adapters/secondary/trazable/trazable-auth'
 
 // LOGGER CONSTANTS
 const DATABASE_LOGGER = 'database'
@@ -42,7 +45,7 @@ const EXPRESS_API_LOGGER = 'express'
     /// //// PRIMARY PORTS (CORE) \\\\ \\\
 
     // ADD
-    const addUseCase = new Add(exampleAddRepository, addUseCaseLogger)
+    const addUseCase = new Add(exampleAddRepository, addUseCaseLogger, new NanoIdGenerator())
 
     // GET ALL
     const getAllUseCase = new GetAll(exampleGetAllRepository, getAllUseCaseLogger)
@@ -55,7 +58,8 @@ const EXPRESS_API_LOGGER = 'express'
       addUseCase,
       getAllUseCase,
       changeNameUseCase,
-      new GoogleWinstonLogger(EXPRESS_API_LOGGER)
+      new GoogleWinstonLogger(EXPRESS_API_LOGGER),
+      new TrazableAuth(new AxiosHttp(), process.env.AUTH_URL) // TODO: add aurl as env variable
     )
 
     // Start api at port 8080

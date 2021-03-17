@@ -26,7 +26,7 @@ export class ExampleController {
       await this.addUseCase.execute(example)
       res.status(StatusCodes.CREATED).end()
     } catch (error) {
-      this.addUseCase.getUseCaseLogger().error(error.stack)
+      this.addUseCase.logger.error(error.stack)
       ManageError(error, res)
     }
   }
@@ -37,7 +37,7 @@ export class ExampleController {
       const examplesDTO = examples.map(example => new ExampleDTO(example))
       examplesDTO.length > 0 ? res.status(StatusCodes.OK).json(examplesDTO) : res.status(StatusCodes.NO_CONTENT).end()
     } catch (error) {
-      this.getAllUseCase.getUseCaseLogger().error(error.stack)
+      this.getAllUseCase.logger.error(error.stack)
       ManageError(error, res)
     }
   }
@@ -49,7 +49,7 @@ export class ExampleController {
       await this.changeNameUseCase.execute(id, name)
       res.status(StatusCodes.OK).end()
     } catch (error) {
-      this.changeNameUseCase.getUseCaseLogger().error(error.stack)
+      this.changeNameUseCase.logger.error(error.stack)
       ManageError(error, res)
     }
   }

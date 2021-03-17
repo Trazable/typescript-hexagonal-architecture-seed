@@ -92,3 +92,28 @@
   - Life cycle of your implementation
     - Express API => USE-CASE => REPOSITORY => MONGO REPOSITORY => MONGO CLIENT => MONGO DB `NEEDS`
     - EXPRESS API <= USE-CASE <= REPOSITORY <= MONGO REPOSITORY <= MONGO CLIENT <= MONGO DB `INITIALIZATION`
+
+## CI Environment-variables
+
+### Generic
+
+### Staging
+  
+### Production
+
+### Playground
+
+### Project
+
+- AUTH_URL: Trazable Microservice Auth URL
+- PORT?: Port on serve htt primary adapter // default 8080
+- GCLOUD_PROJECT_ID: Google Cloud project id
+- SECRETS_BUCKET: Google Bucket name with the secrets
+- KMS_KEYRING: Google cloud keyring
+- KMS_KEY_CREDENTIALS: Key for the environment variables (environment-variables)
+- KMS_LOCATION: Keyring location
+- KMS_KEY_WALLETS: Wallets key (wallets)
+- MONGO_VARIABLES_FILENAME: Name of the mongo environment variables file encrypted (mongo-variables.json.encrypted)
+- DB_URI?: Optional env variable if no secret is provided
+- DB_USER?: Optional env variable if no secret is provided
+- DB_PASSWORD?: Optional env variable if no secret is provided

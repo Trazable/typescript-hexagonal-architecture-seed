@@ -8,7 +8,7 @@ import { ILogger } from '../../ports/logger'
  */
 export class GetAll {
   private readonly repository: IExampleRepository
-  private readonly logger: ILogger
+  public readonly logger: ILogger
 
   constructor(repository: IExampleRepository, logger: ILogger) {
     this.repository = repository
@@ -23,9 +23,5 @@ export class GetAll {
   async execute(): Promise<Example[]> {
     this.logger.info('Retrieving the examples')
     return this.repository.getAll()
-  }
-
-  getUseCaseLogger(): ILogger {
-    return this.logger
   }
 }

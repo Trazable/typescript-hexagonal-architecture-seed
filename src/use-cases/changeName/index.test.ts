@@ -5,11 +5,20 @@ import { ChangeName } from '.'
 import { IExampleRepository } from '../../repositories/example.repository'
 import { Example } from '../../entities/example'
 import { ILogger } from '../../ports/logger'
-import sinon from 'sinon'
+import sinon, { SinonFakeTimers } from 'sinon'
 
 describe('updateExample use-case', () => {
+  const now = new Date()
+  let clock: SinonFakeTimers
+
   beforeEach(() => {
     sinon.resetHistory()
+    clock = sinon.useFakeTimers(now.getTime())
+  })
+
+  afterEach(() => {
+    clock.restore()
+    sinon.restore()
   })
 
   it('should update the example successfully', async () => {
@@ -52,12 +61,12 @@ describe('updateExample use-case', () => {
     sinon.stub(FakeImpl.prototype, 'getById').returns(
       Promise.resolve(
         new Example({
-          id: '123',
+          _id: '123',
           name: 'Old Name',
           lastName: 'lastName',
           phone: '789',
           hobbies: [],
-          createdAt: new Date(),
+          createdAt: now,
         })
       )
     )
@@ -70,12 +79,12 @@ describe('updateExample use-case', () => {
     expect(
       stubUpdate.calledWithExactly(
         new Example({
-          id: '123',
+          _id: '123',
           name: 'New Name',
           lastName: 'lastName',
           phone: '789',
           hobbies: [],
-          createdAt: new Date(),
+          createdAt: now,
         })
       )
     ).toBeTruthy()
