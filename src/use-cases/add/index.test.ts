@@ -4,9 +4,9 @@ import expect from 'expect'
 import { Add } from '.'
 import sinon, { SinonFakeTimers } from 'sinon'
 import { Example } from '../../entities/example'
-import { ObjectId } from 'mongodb'
 import { IExampleRepository } from '../../repositories/example.repository'
 import { ILogger } from '../../ports/logger'
+import { IIDGenerator } from '../../ports/id-generator'
 
 describe('addExample use-case', () => {
   const now = new Date()
@@ -30,7 +30,7 @@ describe('addExample use-case', () => {
       createdAt: now,
     })
 
-    class FakeImpl implements IExampleRepository {
+    class FakeExampleRepository implements IExampleRepository {
       save(example: Example): Promise<void> {
         throw new Error('Method not implemented.')
       }
@@ -66,6 +66,12 @@ describe('addExample use-case', () => {
       }
     }
 
+    class FakeIdGenerator implements IIDGenerator {
+      generate(): string {
+        throw new Error('Method not implemented.')
+      }
+    }
+
     const expectedResult = new Example({
       _id: '123',
       name: 'Example Name',
@@ -75,12 +81,12 @@ describe('addExample use-case', () => {
       createdAt: now,
     })
 
-    sinon.stub(ObjectId.prototype, 'toHexString').returns('123')
+    const stubSave = sinon.stub(FakeExampleRepository.prototype, 'save')
 
-    const stubSave = sinon.stub(FakeImpl.prototype, 'save')
-    sinon.stub(FakeImpl.prototype, 'getByName').returns(Promise.resolve(undefined))
+    sinon.stub(FakeExampleRepository.prototype, 'getByName').returns(Promise.resolve(undefined))
+    sinon.stub(FakeIdGenerator.prototype, 'generate').returns('123')
 
-    const addUseCase = new Add(new FakeImpl(), new FakeLogger())
+    const addUseCase = new Add(new FakeExampleRepository(), new FakeLogger(), new FakeIdGenerator())
 
     const example = await addUseCase.execute(entryExampleData)
 

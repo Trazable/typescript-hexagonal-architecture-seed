@@ -1,9 +1,9 @@
 import { IExampleRepository } from '../../repositories/example.repository'
 import { Example } from '../../entities/example'
-import { ObjectId } from 'mongodb' // ONLY EXAMPLE USE
 import { AlreadyExistsError } from '../../exceptions/already-exists'
 import { PropertyRequiredError } from '../../exceptions/property-required'
 import { ILogger } from '../../ports/logger'
+import { IIDGenerator } from '../../ports/id-generator'
 
 /**
  * Add new Example UseCase
@@ -12,10 +12,12 @@ import { ILogger } from '../../ports/logger'
 export class Add {
   private readonly repository: IExampleRepository
   public readonly logger: ILogger
+  private readonly idGenerator: IIDGenerator
 
-  constructor(repository: IExampleRepository, logger: ILogger) {
+  constructor(repository: IExampleRepository, logger: ILogger, idGenerator: IIDGenerator) {
     this.repository = repository
     this.logger = logger
+    this.idGenerator = idGenerator
   }
 
   /**
@@ -32,7 +34,7 @@ export class Add {
     if (!example.name) throw new PropertyRequiredError('name')
     if (nameAlreadyExist) throw new AlreadyExistsError()
     // REPOSITORY
-    const newExample = new Example({ ...example, _id: new ObjectId().toHexString(), createdAt: new Date() })
+    const newExample = new Example({ ...example, _id: this.idGenerator.generate(), createdAt: new Date() })
 
     await this.repository.save(newExample)
 
