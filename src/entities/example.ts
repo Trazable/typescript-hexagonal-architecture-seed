@@ -10,7 +10,7 @@ export interface IExample {
   createdAt: Date
 }
 export class Example implements IExample {
-  _id: string
+  readonly _id: string
   name: string
   lastName: string
   phone: string
