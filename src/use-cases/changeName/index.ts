@@ -9,7 +9,7 @@ import { ILogger } from '../../ports/logger'
  */
 export class ChangeName {
   private readonly repository: IExampleRepository
-  private readonly logger: ILogger
+  public readonly logger: ILogger
 
   constructor(repository: IExampleRepository, logger: ILogger) {
     this.repository = repository
@@ -40,9 +40,5 @@ export class ChangeName {
 
     this.logger.info(`Changed the name from the example ${name}`)
     return example
-  }
-
-  getUseCaseLogger(): ILogger {
-    return this.logger
   }
 }

@@ -22,7 +22,7 @@ describe('addExample use-case', () => {
 
   it('should create a new example successfully', async () => {
     const entryExampleData = new Example({
-      id: '123',
+      _id: '123',
       name: 'Example Name',
       lastName: 'Example lastName',
       phone: '123',
@@ -67,7 +67,7 @@ describe('addExample use-case', () => {
     }
 
     const expectedResult = new Example({
-      id: '123',
+      _id: '123',
       name: 'Example Name',
       lastName: 'Example lastName',
       phone: '123',
@@ -88,7 +88,7 @@ describe('addExample use-case', () => {
     expect(
       stubSave.calledOnceWith(
         new Example({
-          id: '123',
+          _id: '123',
           name: 'Example Name',
           lastName: 'Example lastName',
           phone: '123',

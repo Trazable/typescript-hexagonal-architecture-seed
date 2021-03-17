@@ -11,7 +11,7 @@ import { ILogger } from '../../ports/logger'
  */
 export class Add {
   private readonly repository: IExampleRepository
-  private readonly logger: ILogger
+  public readonly logger: ILogger
 
   constructor(repository: IExampleRepository, logger: ILogger) {
     this.repository = repository
@@ -39,9 +39,5 @@ export class Add {
     this.logger.info('New example created succesfully')
 
     return newExample
-  }
-
-  getUseCaseLogger(): ILogger {
-    return this.logger
   }
 }

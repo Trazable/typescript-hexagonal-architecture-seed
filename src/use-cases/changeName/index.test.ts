@@ -52,7 +52,7 @@ describe('updateExample use-case', () => {
     sinon.stub(FakeImpl.prototype, 'getById').returns(
       Promise.resolve(
         new Example({
-          id: '123',
+          _id: '123',
           name: 'Old Name',
           lastName: 'lastName',
           phone: '789',
@@ -70,7 +70,7 @@ describe('updateExample use-case', () => {
     expect(
       stubUpdate.calledWithExactly(
         new Example({
-          id: '123',
+          _id: '123',
           name: 'New Name',
           lastName: 'lastName',
           phone: '789',
