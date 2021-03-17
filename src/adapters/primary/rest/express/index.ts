@@ -8,6 +8,8 @@ import { Add } from '../../../../use-cases/add'
 import { GetAll } from '../../../../use-cases/getAll'
 import { ChangeName } from '../../../../use-cases/changeName'
 import { ILogger } from '../../../../ports/logger'
+import { AuthenticationMiddleware } from './middlewares/authentication'
+import { IAuth } from '../../../../ports/auth'
 
 /*
  * Express configuration
@@ -18,15 +20,19 @@ export class ExpressApi {
   private readonly changeNameUseCase: ChangeName
   private readonly logger: ILogger
   private readonly app: Express
+  private readonly auth: IAuth
+  private readonly authMiddleware: AuthenticationMiddleware
 
-  constructor(addUseCase: Add, getAllUseCase: GetAll, changeNameUseCase: ChangeName, logger: ILogger) {
+  constructor(addUseCase: Add, getAllUseCase: GetAll, changeNameUseCase: ChangeName, logger: ILogger, auth: IAuth) {
     this.addUseCase = addUseCase
     this.getAllUseCase = getAllUseCase
     this.changeNameUseCase = changeNameUseCase
+    this.auth = auth
 
     this.logger = logger
 
     this.app = express()
+    this.authMiddleware = new AuthenticationMiddleware(this.auth)
     this.serverConfiguration()
     this.setupRoutes()
   }
@@ -72,9 +78,12 @@ export class ExpressApi {
 
     const exampleController = new ExampleController(this.addUseCase, this.getAllUseCase, this.changeNameUseCase)
 
-    router.route('/examples/').post(exampleController.add).get(exampleController.getAll)
+    router
+      .route('/examples/')
+      .post(this.authMiddleware.authenticate, exampleController.add)
+      .get(exampleController.getAll)
 
-    router.route('/examples/changeName/:id').patch(exampleController.changeName)
+    router.route('/examples/changeName/:id').patch(this.authMiddleware.authenticate, exampleController.changeName)
 
     this.app.use(router)
   }
