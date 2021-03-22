@@ -1,6 +1,6 @@
-import { ISecret } from '../../../../ports/secret'
-import { IKeyManagement } from '../../../../ports/kms'
-import { IStorage } from '../../../../ports/storage'
+import { ISecret } from '../../../ports/secret'
+import { IKeyManagement } from '../../../ports/kms'
+import { IStorage } from '../../../ports/storage'
 export class GoogleCloudSecret implements ISecret {
   private readonly kmsClient: IKeyManagement
   private readonly storage: IStorage

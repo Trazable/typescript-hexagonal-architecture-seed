@@ -1,7 +1,7 @@
 import { Container, transports, format, Logform } from 'winston'
 import { LoggingWinston } from '@google-cloud/logging-winston'
 
-import { ILogger } from '../../../../ports/logger'
+import { ILogger } from '../../../ports/logger'
 
 const { combine, timestamp, label, json, splat, prettyPrint } = format
 

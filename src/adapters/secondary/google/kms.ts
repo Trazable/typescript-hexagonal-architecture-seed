@@ -1,4 +1,4 @@
-import { IKeyManagement } from '../../../../ports/kms'
+import { IKeyManagement } from '../../../ports/kms'
 import { KeyManagementServiceClient } from '@google-cloud/kms'
 
 export class GoogleKMS implements IKeyManagement {
