@@ -1,7 +1,7 @@
 import { Container, transports, format, Logform } from 'winston'
 import { LoggingWinston } from '@google-cloud/logging-winston'
 
-import { ILogger } from '../../../../ports/logger'
+import { ILogger } from '../../../ports/logger'
 
 const { combine, timestamp, label, json, splat, prettyPrint } = format
 
@@ -67,6 +67,6 @@ export class GoogleWinstonLogger implements ILogger {
   }
 
   private winstonLoggerFormatter(): Logform.Format {
-    return combine(label({ label: this.loggerName.toLowerCase() }), splat(), timestamp(), json(), prettyPrint())
+    return combine(label({ label: this.loggerName }), splat(), timestamp(), json(), prettyPrint())
   }
 }

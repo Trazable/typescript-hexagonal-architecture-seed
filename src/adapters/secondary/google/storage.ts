@@ -41,6 +41,8 @@ export class GoogleStorage implements IStorage {
   }
 
   async uploadObject(bucketName: string, fileName: string, serviceName: string): Promise<void> {
+    if (!(await this.verifyBucketExists(bucketName))) await this.createBucket(bucketName)
+
     const fileNameSplitted = fileName.split('/')
     const fileNameWithoutPath = fileName.split('/')[fileNameSplitted.length - 1]
     // Uploads a local file to the bucket
@@ -61,6 +63,8 @@ export class GoogleStorage implements IStorage {
   }
 
   async uploadFile(fileName: string, mimeType: string, fileBuffer: Buffer, bucketName: string): Promise<void> {
+    if (!(await this.verifyBucketExists(bucketName))) await this.createBucket(bucketName)
+
     const bucket = this.storage.bucket(bucketName)
     const file = bucket.file(fileName)
     return new Promise((resolve, reject) => {
@@ -80,5 +84,10 @@ export class GoogleStorage implements IStorage {
       })
       stream.end(fileBuffer)
     })
+  }
+
+  private async verifyBucketExists(bucketName: string): Promise<boolean> {
+    const buckets = await this.storage.getBuckets()
+    return buckets.includes(bucketName)
   }
 }

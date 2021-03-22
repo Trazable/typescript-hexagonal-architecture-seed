@@ -21,7 +21,7 @@ export class MongoManager {
       if (dataBaseSecrets) this.logger.info('Database variables downloaded from google cloud')
 
       this.client = new MongoClient(
-        dataBaseSecrets?.DB_URI || process.env.DB_URI || 'mongodb://mongo:27017/example?authSource=admin',
+        dataBaseSecrets?.DB_URI || process.env.DB_URI || 'mongodb://mongo:27017/project_name?authSource=admin',
         {
           useUnifiedTopology: true,
           auth: {

@@ -1,14 +1,13 @@
-import { ISecret } from '../../../../ports/secret'
-import { GoogleKMS } from '../third-party-services/kms'
-import { GoogleStorage } from '../third-party-services/storage'
-
+import { ISecret } from '../../../ports/secret'
+import { IKeyManagement } from '../../../ports/kms'
+import { IStorage } from '../../../ports/storage'
 export class GoogleCloudSecret implements ISecret {
-  private readonly kmsClient: GoogleKMS
-  private readonly storage: GoogleStorage
+  private readonly kmsClient: IKeyManagement
+  private readonly storage: IStorage
 
-  constructor() {
-    this.kmsClient = new GoogleKMS()
-    this.storage = new GoogleStorage()
+  constructor(googleKMS: IKeyManagement, googleStorage: IStorage) {
+    this.kmsClient = googleKMS
+    this.storage = googleStorage
   }
 
   async getSecret(bucketName: string, fileName: string): Promise<Record<string, string> | undefined> {

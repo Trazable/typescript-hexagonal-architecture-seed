@@ -15,7 +15,7 @@ services:
         environment:
             - DB_USER=mongoadmin
             - DB_PASSWORD=secret
-            - DB_URI=mongodb://mongo:27017/example?authSource=admin
+            - DB_URI=mongodb://mongo:27017/project_name?authSource=admin
         volumes:
             - ./:/app
             - project_name_dist:/app/dist
