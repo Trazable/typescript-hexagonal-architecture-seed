@@ -67,6 +67,6 @@ export class GoogleWinstonLogger implements ILogger {
   }
 
   private winstonLoggerFormatter(): Logform.Format {
-    return combine(label({ label: this.loggerName.toLowerCase() }), splat(), timestamp(), json(), prettyPrint())
+    return combine(label({ label: this.loggerName }), splat(), timestamp(), json(), prettyPrint())
   }
 }
