@@ -1,7 +1,10 @@
 import { Message, PubSub } from '@google-cloud/pubsub'
-import { ILogger } from '../../../../../ports/logger'
+import { ILogger } from '../../../../ports/logger'
 
-export class ExampleSubscription {
+/**
+ * General abstraction to connect to subscriptions and execute a handler on message
+ */
+export class Subscription {
   private readonly pubSubClient: PubSub
   private readonly messageHandler: (message: Message) => Promise<void>
   private readonly logger: ILogger

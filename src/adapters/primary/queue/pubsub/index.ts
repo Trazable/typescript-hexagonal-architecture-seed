@@ -4,8 +4,7 @@ import { ExampleHandler } from './message-handlers/example.handler'
 import { ShowMessage } from '../../../../use-cases/showMessage'
 import { ILogger } from '../../../../ports/logger'
 
-// Subscriptions
-import { ExampleSubscription } from './subscriptions/example.subscription'
+import { Subscription } from './subscription'
 
 /*
  * Google PubSub configuration
@@ -28,7 +27,7 @@ export class GooglePubSub {
   async startSubscriptions(): Promise<void> {
     const exampleHandler = new ExampleHandler(this.showMessageUseCase)
 
-    await new ExampleSubscription(
+    await new Subscription(
       this.pubSubClient,
       exampleHandler.showMessageHandler,
       this.logger,
