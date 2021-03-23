@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes'
 import { ManageError } from '../manage-error'
 import { GetAll } from '../../../../../use-cases/getAll'
 import { ChangeName } from '../../../../../use-cases/changeName'
-import { ExampleDTO } from '../DTOs/example.dto'
+import { ExampleDTO } from '../../../DTOs/example.dto'
 
 // This secondary adapter calls directly the useCases.
 export class ExampleController {
