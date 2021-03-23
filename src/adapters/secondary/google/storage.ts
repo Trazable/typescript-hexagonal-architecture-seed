@@ -1,5 +1,5 @@
 import { Storage } from '@google-cloud/storage'
-import { IStorage } from '../../../../ports/storage'
+import { IStorage } from '../../../ports/storage'
 
 export class GoogleStorage implements IStorage {
   private readonly storage: Storage
