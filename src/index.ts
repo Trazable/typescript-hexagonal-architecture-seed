@@ -44,7 +44,7 @@ import { GooglePubSub } from './adapters/primary/queue/pubsub'
   const addUseCaseLogger = new GoogleWinstonLogger(ADD_USE_CASE_LOGGER)
   const getAllUseCaseLogger = new GoogleWinstonLogger(GET_ALL_USE_CASE_LOGGER)
   const changeNameUseCaseLogger = new GoogleWinstonLogger(CHANGE_NAME_USE_CASE_LOGGER)
-  const logCreationUseCaseLogger = new GoogleWinstonLogger(SHOW_MESSAGE_USE_CASE_LOGGER)
+  const showMessageUseCaseLogger = new GoogleWinstonLogger(SHOW_MESSAGE_USE_CASE_LOGGER)
 
   if (mongoClient) {
     // Repositories
@@ -69,9 +69,11 @@ import { GooglePubSub } from './adapters/primary/queue/pubsub'
     const changeNameUseCase = new ChangeName(exampleChangeNameRepository, changeNameUseCaseLogger)
 
     // LOG CREATION
-    const logCreationUseCase = new ShowMessage(logCreationUseCaseLogger)
+    const showMessageUseCase = new ShowMessage(showMessageUseCaseLogger)
 
     /// //// PRIMARY ADAPTERS (INPUT) \\\\ \\\
+
+    // EXPRESS API
     const api = new ExpressApi(
       addUseCase,
       getAllUseCase,
@@ -82,11 +84,13 @@ import { GooglePubSub } from './adapters/primary/queue/pubsub'
     // Start api at port 8080
     api.start(process.env.PORT || '8080')
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const pubSub = new GooglePubSub(
+    // GOOGLE PUBSUB
+    const googlePubSub = new GooglePubSub(
       process.env.GCLOUD_PROJECT_ID || '',
-      logCreationUseCase,
+      showMessageUseCase,
       new GoogleWinstonLogger(PUBSUB_LOGGER)
     )
+    // Start pubsub subscriptions
+    await googlePubSub.startSubscriptions()
   }
 })()

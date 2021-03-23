@@ -20,14 +20,12 @@ export class GooglePubSub {
     this.logger = logger
 
     this.pubSubClient = new PubSub({ projectId })
-
-    this.setupSubscriptions()
   }
 
   /**
-   * Setup pubsub subscriptions
+   * START pubsub subscriptions
    */
-  private async setupSubscriptions() {
+  async startSubscriptions(): Promise<void> {
     const exampleHandler = new ExampleHandler(this.showMessageUseCase)
 
     await new ExampleSubscription(
