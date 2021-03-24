@@ -16,6 +16,9 @@ services:
             - DB_USER=mongoadmin
             - DB_PASSWORD=secret
             - DB_URI=mongodb://mongo:27017/project_name?authSource=admin
+            - GCLOUD_PROJECT_ID=gloud_project_id
+            - SUBSCRIPTION_NAME=subscription_name
+            - GOOGLE_APPLICATION_CREDENTIALS=./google_service_account.json
         volumes:
             - ./:/app
             - project_name_dist:/app/dist

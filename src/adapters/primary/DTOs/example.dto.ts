@@ -1,4 +1,4 @@
-import { Example, IExample } from '../../../../../entities/example'
+import { Example, IExample } from '../../../entities/example'
 
 /**
  *

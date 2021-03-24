@@ -7,6 +7,7 @@ import { Example } from '../../entities/example'
 import { IExampleRepository } from '../../repositories/example.repository'
 import { ILogger } from '../../ports/logger'
 import { IIDGenerator } from '../../ports/id-generator'
+import { IQueue } from '../../ports/queue'
 
 describe('addExample use-case', () => {
   const now = new Date()
@@ -72,6 +73,12 @@ describe('addExample use-case', () => {
       }
     }
 
+    class FakeQueue implements IQueue {
+      publish(topicName: string, message: string): Promise<string> {
+        throw new Error('Method not implemented.')
+      }
+    }
+
     const expectedResult = new Example({
       _id: '123',
       name: 'Example Name',
@@ -85,8 +92,9 @@ describe('addExample use-case', () => {
 
     sinon.stub(FakeExampleRepository.prototype, 'getByName').returns(Promise.resolve(undefined))
     sinon.stub(FakeIdGenerator.prototype, 'generate').returns('123')
+    sinon.stub(FakeQueue.prototype, 'publish').resolves()
 
-    const addUseCase = new Add(new FakeExampleRepository(), new FakeLogger(), new FakeIdGenerator())
+    const addUseCase = new Add(new FakeExampleRepository(), new FakeLogger(), new FakeIdGenerator(), new FakeQueue())
 
     const example = await addUseCase.execute(entryExampleData)
 

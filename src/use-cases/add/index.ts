@@ -4,6 +4,8 @@ import { AlreadyExistsError } from '../../exceptions/already-exists'
 import { PropertyRequiredError } from '../../exceptions/property-required'
 import { ILogger } from '../../ports/logger'
 import { IIDGenerator } from '../../ports/id-generator'
+import { IQueue } from '../../ports/queue'
+import { EXAMPLE_CREATED_EVENT } from '../../constants'
 
 /**
  * Add new Example UseCase
@@ -13,11 +15,13 @@ export class Add {
   private readonly repository: IExampleRepository
   public readonly logger: ILogger
   private readonly idGenerator: IIDGenerator
+  private readonly queue: IQueue
 
-  constructor(repository: IExampleRepository, logger: ILogger, idGenerator: IIDGenerator) {
+  constructor(repository: IExampleRepository, logger: ILogger, idGenerator: IIDGenerator, queue: IQueue) {
     this.repository = repository
     this.logger = logger
     this.idGenerator = idGenerator
+    this.queue = queue
   }
 
   /**
@@ -39,6 +43,8 @@ export class Add {
     await this.repository.save(newExample)
 
     this.logger.info('New example created succesfully')
+
+    this.queue.publish(EXAMPLE_CREATED_EVENT, JSON.stringify(newExample))
 
     return newExample
   }
