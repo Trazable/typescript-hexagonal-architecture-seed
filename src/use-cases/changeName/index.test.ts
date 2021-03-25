@@ -7,6 +7,9 @@ import { Example } from '../../entities/example'
 import { ILogger } from '../../ports/logger'
 import sinon, { SinonFakeTimers } from 'sinon'
 
+import ExampleDataInJSON from '../../../__mocks__/example/changeName/example-data-in.json'
+import ExampleDataOutJSON from '../../../__mocks__/example/changeName/example-data-out.json'
+
 describe('updateExample use-case', () => {
   const now = new Date()
   let clock: SinonFakeTimers
@@ -58,36 +61,15 @@ describe('updateExample use-case', () => {
       }
     }
 
-    sinon.stub(FakeImpl.prototype, 'getById').returns(
-      Promise.resolve(
-        new Example({
-          _id: '123',
-          name: 'Old Name',
-          lastName: 'lastName',
-          phone: '789',
-          hobbies: [],
-          createdAt: now,
-        })
-      )
-    )
-    const stubUpdate = sinon.stub(FakeImpl.prototype, 'update').returns(Promise.resolve())
+    sinon
+      .stub(FakeImpl.prototype, 'getById')
+      .resolves(new Example({ ...ExampleDataOutJSON, createdAt: now, updatedAt: now }))
+    sinon.stub(FakeImpl.prototype, 'update').resolves()
     const changeName = new ChangeName(new FakeImpl(), new FakeLogger())
 
-    await changeName.execute('id', 'New Name')
+    const result = await changeName.execute(ExampleDataInJSON.id, ExampleDataInJSON.name)
 
-    expect(stubUpdate.calledOnce).toBeTruthy()
-    expect(
-      stubUpdate.calledWithExactly(
-        new Example({
-          _id: '123',
-          name: 'New Name',
-          lastName: 'lastName',
-          phone: '789',
-          hobbies: [],
-          createdAt: now,
-        })
-      )
-    ).toBeTruthy()
+    expect({ ...result }).toStrictEqual({ ...ExampleDataOutJSON, createdAt: now, updatedAt: now })
   })
 
   it('should fail creating a new example with incorrect parameters')

@@ -30,15 +30,33 @@ export class Add {
    * @param example - New example to create
    * @returns The new example created
    */
-  async execute(example: Example): Promise<Example> {
+  async execute({
+    name,
+    lastName,
+    phone,
+    hobbies,
+  }: {
+    name: string
+    lastName: string
+    phone: string
+    hobbies: string[]
+  }): Promise<Example> {
     this.logger.info('Creating a new example')
     // REPOSITORY
-    const nameAlreadyExist = await this.repository.getByName(example.name)
+    const nameAlreadyExist = await this.repository.getByName(name)
     // BUSINESS EXCEPTIONS
-    if (!example.name) throw new PropertyRequiredError('name')
+    if (!name) throw new PropertyRequiredError('name')
     if (nameAlreadyExist) throw new AlreadyExistsError()
     // REPOSITORY
-    const newExample = new Example({ ...example, _id: this.idGenerator.generate(), createdAt: new Date() })
+    const newExample = new Example({
+      _id: this.idGenerator.generate(),
+      name,
+      lastName,
+      phone,
+      hobbies,
+      updatedAt: new Date(),
+      createdAt: new Date(),
+    })
 
     await this.repository.save(newExample)
 
