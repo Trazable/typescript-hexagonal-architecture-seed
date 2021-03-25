@@ -34,6 +34,7 @@ export class ChangeName {
     // ENTITY LOGIC
     // Change only the necessary field in the useCase
     example.changeName(name)
+    example.updatedAt = new Date()
     // REPOSITORY
     // Update the entity
     await this.repository.update(example)

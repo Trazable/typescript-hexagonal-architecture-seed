@@ -1,4 +1,5 @@
 import { MongoClient, Db } from 'mongodb'
+import { Config } from '../../../config'
 import { ILogger } from '../../../ports/logger'
 import { ISecret } from '../../../ports/secret'
 
@@ -21,12 +22,12 @@ export class MongoManager {
       if (dataBaseSecrets) this.logger.info('Database variables downloaded from google cloud')
 
       this.client = new MongoClient(
-        dataBaseSecrets?.DB_URI || process.env.DB_URI || 'mongodb://mongo:27017/project_name?authSource=admin',
+        dataBaseSecrets?.DB_URI || Config.DB_URI || 'mongodb://mongo:27017/project_name?authSource=admin',
         {
           useUnifiedTopology: true,
           auth: {
-            user: dataBaseSecrets?.DB_USER || process.env.DB_USER || 'mongoadmin',
-            password: dataBaseSecrets?.DB_PASSWORD || process.env.DB_PASSWORD || 'secret',
+            user: dataBaseSecrets?.DB_USER || Config.DB_USER || 'mongoadmin',
+            password: dataBaseSecrets?.DB_PASSWORD || Config.DB_PASSWORD || 'secret',
           },
         }
       )
@@ -73,6 +74,6 @@ export class MongoManager {
   }
 
   private async getDataBaseSecrets(): Promise<Record<string, string> | undefined> {
-    return this.secretManager.getSecret(process.env.SECRETS_BUCKET, process.env.MONGO_VARIABLES_FILENAME)
+    return this.secretManager.getSecret(Config.SECRETS_BUCKET, Config.MONGO_VARIABLES_FILENAME)
   }
 }

@@ -7,18 +7,17 @@ import sinon from 'sinon'
 import { IExample, Example } from '../../entities/example'
 import { ILogger } from '../../ports/logger'
 
+import ExampleDataInJSON from '../../../__mocks__/example/getAll/example-data-in.json'
+import ExampleDataOutJSON from '../../../__mocks__/example/getAll/example-data-out.json'
+
 describe('getAllExamples use-case', () => {
+  const now = new Date('2000-01-01')
+
   beforeEach(() => {
     sinon.restore()
   })
 
   it('should get all examples successfully', async () => {
-    const expectedResult = [
-      new Example({ name: 'Name1' } as IExample),
-      new Example({ name: 'Name2' } as IExample),
-      new Example({ name: 'Name3' } as IExample),
-    ]
-
     class FakeImpl implements IExampleRepository {
       save(example: Example): Promise<void> {
         throw new Error('Method not implemented.')
@@ -55,13 +54,16 @@ describe('getAllExamples use-case', () => {
       }
     }
 
-    const stub = sinon.stub(FakeImpl.prototype, 'getAll').returns(Promise.resolve(expectedResult))
+    sinon
+      .stub(FakeImpl.prototype, 'getAll')
+      .resolves(ExampleDataOutJSON.map(example => new Example({ ...example, createdAt: now, updatedAt: now })))
     const getAllUseCase = new GetAll(new FakeImpl(), new FakeLogger())
 
     const examples = await getAllUseCase.execute()
 
-    expect(examples).toStrictEqual(expectedResult)
-    expect(stub.calledOnceWith()).toBeTruthy()
+    expect(examples.map(example => ({ ...example }))).toStrictEqual(
+      ExampleDataOutJSON.map(example => ({ ...example, createdAt: now, updatedAt: now }))
+    )
   })
 
   it('should fail creating a new example with incorrect parameters')

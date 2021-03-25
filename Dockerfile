@@ -15,7 +15,9 @@ RUN npm install
 
 COPY . /app
 
-RUN npm run compile
+RUN npm run test && \
+  npm run test:unit && \
+  npm run compile
 
 
 ############################

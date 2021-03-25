@@ -26,6 +26,7 @@ import {
   PUBSUB_LOGGER,
 } from './constants'
 import { GooglePubSub } from './adapters/primary/queue/pubsub'
+import { Config } from './config'
 ;(async () => {
   // Source mapping => compiled js
   installSourceMapSupport()
@@ -59,7 +60,7 @@ import { GooglePubSub } from './adapters/primary/queue/pubsub'
       exampleAddRepository,
       addUseCaseLogger,
       new NanoIdGenerator(),
-      new GoogleQueue(process.env.GCLOUD_PROJECT_ID || '')
+      new GoogleQueue(Config.GCLOUD_PROJECT_ID || '')
     )
 
     // GET ALL
@@ -79,14 +80,14 @@ import { GooglePubSub } from './adapters/primary/queue/pubsub'
       getAllUseCase,
       changeNameUseCase,
       new GoogleWinstonLogger(EXPRESS_API_LOGGER),
-      new TrazableAuth(new AxiosHttp(), process.env.AUTH_URL)
+      new TrazableAuth(new AxiosHttp(), Config.AUTH_URL)
     )
     // Start api at port 8080
-    api.start(process.env.PORT || '8080')
+    api.start(Config.PORT || '8080')
 
     // GOOGLE PUBSUB
     const googlePubSub = new GooglePubSub(
-      process.env.GCLOUD_PROJECT_ID || '',
+      Config.GCLOUD_PROJECT_ID || '',
       showMessageUseCase,
       new GoogleWinstonLogger(PUBSUB_LOGGER)
     )

@@ -9,8 +9,11 @@ import { ILogger } from '../../ports/logger'
 import { IIDGenerator } from '../../ports/id-generator'
 import { IQueue } from '../../ports/queue'
 
+import ExampleDataInJSON from '../../../__mocks__/example/add/example-data-in.json'
+import ExampleDataOutJSON from '../../../__mocks__/example/add/example-data-out.json'
+
 describe('addExample use-case', () => {
-  const now = new Date()
+  const now = new Date('2000-01-01')
   let clock: SinonFakeTimers
 
   beforeEach(() => {
@@ -22,15 +25,6 @@ describe('addExample use-case', () => {
   })
 
   it('should create a new example successfully', async () => {
-    const entryExampleData = new Example({
-      _id: '123',
-      name: 'Example Name',
-      lastName: 'Example lastName',
-      phone: '123',
-      hobbies: [],
-      createdAt: now,
-    })
-
     class FakeExampleRepository implements IExampleRepository {
       save(example: Example): Promise<void> {
         throw new Error('Method not implemented.')
@@ -79,38 +73,17 @@ describe('addExample use-case', () => {
       }
     }
 
-    const expectedResult = new Example({
-      _id: '123',
-      name: 'Example Name',
-      lastName: 'Example lastName',
-      phone: '123',
-      hobbies: [],
-      createdAt: now,
-    })
-
     const stubSave = sinon.stub(FakeExampleRepository.prototype, 'save')
 
-    sinon.stub(FakeExampleRepository.prototype, 'getByName').returns(Promise.resolve(undefined))
+    sinon.stub(FakeExampleRepository.prototype, 'getByName').resolves()
     sinon.stub(FakeIdGenerator.prototype, 'generate').returns('123')
     sinon.stub(FakeQueue.prototype, 'publish').resolves()
 
     const addUseCase = new Add(new FakeExampleRepository(), new FakeLogger(), new FakeIdGenerator(), new FakeQueue())
 
-    const example = await addUseCase.execute(entryExampleData)
+    const result = await addUseCase.execute(ExampleDataInJSON)
 
-    expect(example).toStrictEqual(expectedResult)
-    expect(
-      stubSave.calledOnceWith(
-        new Example({
-          _id: '123',
-          name: 'Example Name',
-          lastName: 'Example lastName',
-          phone: '123',
-          hobbies: [],
-          createdAt: now,
-        })
-      )
-    ).toBeTruthy()
+    expect({ ...result }).toStrictEqual({ ...ExampleDataOutJSON, createdAt: now, updatedAt: now })
   })
 
   it('should fail creating a new example with incorrect parameters')

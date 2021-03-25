@@ -1,0 +1,9 @@
+{
+  "_id": "123",
+  "name": "Example Name",
+  "lastName": "Example lastName",
+  "phone": "123",
+  "hobbies": [],
+  "createdAt": "2000-01-01",
+  "updatedAt": "2000-01-01"
+}

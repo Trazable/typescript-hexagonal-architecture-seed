@@ -7,6 +7,7 @@ export interface IExample {
   lastName: string
   phone: string
   hobbies: string[]
+  updatedAt: Date
   readonly createdAt: Date
 }
 export class Example implements IExample {
@@ -15,14 +16,16 @@ export class Example implements IExample {
   lastName: string
   phone: string
   hobbies: string[]
+  updatedAt: Date
   readonly createdAt: Date
 
-  constructor({ _id, name, lastName, phone, hobbies = [], createdAt }: IExample) {
+  constructor({ _id, name, lastName, phone, hobbies = [], updatedAt, createdAt }: IExample) {
     this._id = _id
     this.name = name
     this.lastName = lastName
     this.phone = phone
     this.hobbies = hobbies
+    this.updatedAt = updatedAt
     this.createdAt = createdAt
   }
 
