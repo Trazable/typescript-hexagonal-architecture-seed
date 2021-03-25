@@ -5,6 +5,7 @@ import { ShowMessage } from '../../../../use-cases/showMessage'
 import { ILogger } from '../../../../ports/logger'
 
 import { Subscription } from './subscription'
+import { Config } from '../../../../config'
 
 /*
  * Google PubSub configuration
@@ -31,7 +32,7 @@ export class GooglePubSub {
       this.pubSubClient,
       exampleHandler.showMessageHandler,
       this.logger,
-      process.env.SUBSCRIPTION_NAME
+      Config.SUBSCRIPTION_NAME
     ).initSubscription()
   }
 }

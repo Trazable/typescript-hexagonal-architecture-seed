@@ -13,7 +13,7 @@ export class GoogleCloudSecret implements ISecret {
   async getSecret(bucketName: string, fileName: string): Promise<Record<string, string> | undefined> {
     if (bucketName && fileName) {
       // Download file
-      const bufferSecret = await this.storage.downloadFile(bucketName, fileName)
+      const bufferSecret = await this.storage.downloadFile(fileName, bucketName)
       // Decrypt secret
       if (bufferSecret) {
         const secret = await this.kmsClient.decrypt(bufferSecret)

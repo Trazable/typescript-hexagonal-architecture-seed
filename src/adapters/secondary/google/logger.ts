@@ -2,6 +2,7 @@ import { Container, transports, format, Logform } from 'winston'
 import { LoggingWinston } from '@google-cloud/logging-winston'
 
 import { ILogger } from '../../../ports/logger'
+import { Config } from '../../../config'
 
 const { combine, timestamp, label, json, splat, prettyPrint } = format
 
@@ -20,7 +21,7 @@ export class GoogleWinstonLogger implements ILogger {
     new Container()
       .add(this.loggerName, {
         format: this.winstonLoggerFormatter(),
-        transports: process.env.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
+        transports: Config.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
       })
       .info(message)
   }
@@ -29,7 +30,7 @@ export class GoogleWinstonLogger implements ILogger {
     new Container()
       .add(this.loggerName, {
         format: this.winstonLoggerFormatter(),
-        transports: process.env.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
+        transports: Config.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
       })
       .error(message)
   }
@@ -38,7 +39,7 @@ export class GoogleWinstonLogger implements ILogger {
     new Container()
       .add(this.loggerName, {
         format: this.winstonLoggerFormatter(),
-        transports: process.env.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
+        transports: Config.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
       })
       .warn(message)
   }
