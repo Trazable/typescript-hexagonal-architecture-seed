@@ -12,7 +12,7 @@ import { GoogleWinstonLogger } from './adapters/secondary/google/logger'
 import { GoogleCloudSecret } from './adapters/secondary/google/secret'
 import { GoogleKMS } from './adapters/secondary/google/kms'
 import { GoogleStorage } from './adapters/secondary/google/storage'
-import { GoogleQueue } from './adapters/secondary/google/queue'
+import { PubsubPublisher } from './adapters/secondary/google/queue'
 import { NanoIdGenerator } from './adapters/secondary/nanoid-generator'
 import { AxiosHttp } from './adapters/secondary/http/axios-http'
 import { TrazableAuth } from './adapters/secondary/trazable/trazable-auth'
@@ -24,6 +24,7 @@ import {
   EXPRESS_API_LOGGER,
   SHOW_MESSAGE_USE_CASE_LOGGER,
   PUBSUB_LOGGER,
+  EXAMPLE_CREATED_EVENT,
 } from './constants'
 import { GooglePubSub } from './adapters/primary/queue/pubsub'
 import { Config } from './config'
@@ -42,35 +43,31 @@ import { Config } from './config'
   const mongoClient = await mongoManager.connect()
 
   // USE-CASE LOGGERS
-  const addUseCaseLogger = new GoogleWinstonLogger(ADD_USE_CASE_LOGGER)
-  const getAllUseCaseLogger = new GoogleWinstonLogger(GET_ALL_USE_CASE_LOGGER)
-  const changeNameUseCaseLogger = new GoogleWinstonLogger(CHANGE_NAME_USE_CASE_LOGGER)
-  const showMessageUseCaseLogger = new GoogleWinstonLogger(SHOW_MESSAGE_USE_CASE_LOGGER)
-
   if (mongoClient) {
-    // Repositories
-    const exampleAddRepository = new MongoExampleRepository(mongoClient, addUseCaseLogger)
-    const exampleGetAllRepository = new MongoExampleRepository(mongoClient, getAllUseCaseLogger)
-    const exampleChangeNameRepository = new MongoExampleRepository(mongoClient, changeNameUseCaseLogger)
-
     /// //// PRIMARY PORTS (CORE) \\\\ \\\
 
     // ADD
+    const addUseCaseLogger = new GoogleWinstonLogger(ADD_USE_CASE_LOGGER)
     const addUseCase = new Add(
-      exampleAddRepository,
+      new MongoExampleRepository(mongoClient, addUseCaseLogger),
       addUseCaseLogger,
       new NanoIdGenerator(),
-      new GoogleQueue(Config.GCLOUD_PROJECT_ID || '')
+      new PubsubPublisher(EXAMPLE_CREATED_EVENT, Config.GCLOUD_PROJECT_ID || '', addUseCaseLogger)
     )
 
     // GET ALL
-    const getAllUseCase = new GetAll(exampleGetAllRepository, getAllUseCaseLogger)
+    const getAllUseCaseLogger = new GoogleWinstonLogger(GET_ALL_USE_CASE_LOGGER)
+    const getAllUseCase = new GetAll(new MongoExampleRepository(mongoClient, getAllUseCaseLogger), getAllUseCaseLogger)
 
     // CHANGE NAME
-    const changeNameUseCase = new ChangeName(exampleChangeNameRepository, changeNameUseCaseLogger)
+    const changeNameUseCaseLogger = new GoogleWinstonLogger(CHANGE_NAME_USE_CASE_LOGGER)
+    const changeNameUseCase = new ChangeName(
+      new MongoExampleRepository(mongoClient, changeNameUseCaseLogger),
+      changeNameUseCaseLogger
+    )
 
     // LOG CREATION
-    const showMessageUseCase = new ShowMessage(showMessageUseCaseLogger)
+    const showMessageUseCase = new ShowMessage(new GoogleWinstonLogger(SHOW_MESSAGE_USE_CASE_LOGGER))
 
     /// //// PRIMARY ADAPTERS (INPUT) \\\\ \\\
 

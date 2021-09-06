@@ -22,25 +22,16 @@ export class Subscription {
     this.subscriptionName = subscriptionName
   }
 
-  async initSubscription(): Promise<void> {
+  initSubscription(): void {
     if (this.subscriptionName) {
-      try {
-        // Subscriptions
-        const subscription = this.pubSubClient.subscription(this.subscriptionName)
-        const [exist] = await subscription.exists()
+      // Subscriptions
+      const subscription = this.pubSubClient.subscription(this.subscriptionName)
 
-        if (exist) {
-          // Subscription handler
-          subscription.on('message', this.messageHandler)
-        } else {
-          this.logger.error(`${this.subscriptionName} subscription not exist`)
-        }
-      } catch (error) {
-        this.logger.error(error.stack)
-        this.logger.error('Error setting up pubsub handlers')
-      }
-    } else {
-      this.logger.error('ExampleSubscription: subscriptionName not provided')
+      // Subscription handler
+      subscription.on('message', this.messageHandler)
+      subscription.on('error', error => {
+        this.logger.error(error.details)
+      })
     }
   }
 }

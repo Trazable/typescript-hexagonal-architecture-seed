@@ -23,11 +23,11 @@ export class ExampleController {
   add = async (req: Request, res: Response): Promise<void> => {
     const example = req.body
     try {
+      this.addUseCase.logger.setCorrelationId(req.headers?.['correlation-id'])
       await this.addUseCase.execute(example)
       res.status(StatusCodes.CREATED).end()
     } catch (error) {
-      this.addUseCase.logger.error(error.stack)
-      ManageError(error, res)
+      ManageError(error, res, this.addUseCase.logger)
     }
   }
 
@@ -37,8 +37,7 @@ export class ExampleController {
       const examplesDTO = examples.map(example => new ExampleDTO(example))
       examplesDTO.length > 0 ? res.status(StatusCodes.OK).json(examplesDTO) : res.status(StatusCodes.NO_CONTENT).end()
     } catch (error) {
-      this.getAllUseCase.logger.error(error.stack)
-      ManageError(error, res)
+      ManageError(error, res, this.getAllUseCase.logger)
     }
   }
 
@@ -49,8 +48,7 @@ export class ExampleController {
       await this.changeNameUseCase.execute(id, name)
       res.status(StatusCodes.OK).end()
     } catch (error) {
-      this.changeNameUseCase.logger.error(error.stack)
-      ManageError(error, res)
+      ManageError(error, res, this.changeNameUseCase.logger)
     }
   }
 }

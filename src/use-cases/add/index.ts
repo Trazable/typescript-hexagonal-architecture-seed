@@ -4,8 +4,7 @@ import { AlreadyExistsError } from '../../exceptions/already-exists'
 import { PropertyRequiredError } from '../../exceptions/property-required'
 import { ILogger } from '../../ports/logger'
 import { IIDGenerator } from '../../ports/id-generator'
-import { IQueue } from '../../ports/queue'
-import { EXAMPLE_CREATED_EVENT } from '../../constants'
+import { IQueue, MessageAttributeOperation } from '../../ports/queue'
 
 /**
  * Add new Example UseCase
@@ -62,7 +61,12 @@ export class Add {
 
     this.logger.info('New example created succesfully')
 
-    this.queue.publish(EXAMPLE_CREATED_EVENT, JSON.stringify(newExample))
+    this.queue.publish(JSON.stringify(newExample), {
+      version: '1',
+      companyId: '1',
+      collection: 'example',
+      operation: MessageAttributeOperation.CREATE,
+    })
 
     return newExample
   }

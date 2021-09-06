@@ -9,6 +9,8 @@ import { ILogger } from '../../ports/logger'
 
 import ExampleDataInJSON from '../../../__mocks__/example/getAll/example-data-in.json'
 import ExampleDataOutJSON from '../../../__mocks__/example/getAll/example-data-out.json'
+import { FakeExampleRepository } from '../../../__mocks__/repositories/example.repository'
+import { FakeLogger } from '../../../__mocks__/ports/logger'
 
 describe('getAllExamples use-case', () => {
   const now = new Date('2000-01-01')
@@ -18,46 +20,11 @@ describe('getAllExamples use-case', () => {
   })
 
   it('should get all examples successfully', async () => {
-    class FakeImpl implements IExampleRepository {
-      save(example: Example): Promise<void> {
-        throw new Error('Method not implemented.')
-      }
-
-      getAll(): Promise<Example[]> {
-        return Promise.resolve([])
-      }
-
-      getById(id: string): Promise<Example | undefined> {
-        throw new Error('Method not implemented.')
-      }
-
-      getByName(name: string): Promise<Example | undefined> {
-        throw new Error('Method not implemented.')
-      }
-
-      update(example: Example): Promise<void> {
-        throw new Error('Method not implemented.')
-      }
-    }
-
-    class FakeLogger implements ILogger {
-      info(message: string): void {
-        console.log(message)
-      }
-
-      error(message: string): void {
-        console.log(message)
-      }
-
-      warn(message: string): void {
-        console.log(message)
-      }
-    }
-
     sinon
-      .stub(FakeImpl.prototype, 'getAll')
+      .stub(FakeExampleRepository.prototype, 'getAll')
       .resolves(ExampleDataOutJSON.map(example => new Example({ ...example, createdAt: now, updatedAt: now })))
-    const getAllUseCase = new GetAll(new FakeImpl(), new FakeLogger())
+    sinon.stub(FakeLogger.prototype, 'info')
+    const getAllUseCase = new GetAll(new FakeExampleRepository(), new FakeLogger())
 
     const examples = await getAllUseCase.execute()
 

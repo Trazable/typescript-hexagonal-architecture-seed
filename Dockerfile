@@ -40,6 +40,8 @@ RUN npm install --only=production
 # Copy the dist build
 COPY --from=base /app/dist /app/dist
 
+USER node
+
 CMD ["npm", "start"]
 
 

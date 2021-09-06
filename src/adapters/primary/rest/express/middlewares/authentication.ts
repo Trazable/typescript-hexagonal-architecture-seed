@@ -14,12 +14,13 @@ export class AuthenticationMiddleware {
     if (!req.headers.authorization) return res.status(StatusCodes.UNAUTHORIZED).end()
 
     // Extract Bearer token
-    const bearerToken = req.headers.authorization.split('Bearer ')[1].trim()
+    const bearerToken = req.headers.authorization.match(/Bearer (.*)/)
     if (!bearerToken) return res.status(StatusCodes.UNAUTHORIZED).end()
 
     // Verify the Bearer token
     try {
-      const tokenPayload = await this.auth.verifyToken(bearerToken)
+      const tokenPayload = await this.auth.verifyToken(bearerToken[1])
+
       if (!tokenPayload) return res.status(StatusCodes.UNAUTHORIZED).end()
 
       req.company = tokenPayload

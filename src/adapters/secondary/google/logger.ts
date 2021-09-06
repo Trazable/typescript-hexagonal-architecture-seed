@@ -1,4 +1,4 @@
-import { Container, transports, format, Logform } from 'winston'
+import { Container, transports, format, Logform, Logger } from 'winston'
 import { LoggingWinston } from '@google-cloud/logging-winston'
 
 import { ILogger } from '../../../ports/logger'
@@ -10,38 +10,37 @@ export class GoogleWinstonLogger implements ILogger {
   private readonly loggerName: string
   private readonly developmentTransport: transports.ConsoleTransportInstance[]
   private readonly productionTransport: (transports.ConsoleTransportInstance | LoggingWinston)[]
+  private container: Logger
+  private correlationId?: string
 
   constructor(loggerName: string) {
     this.developmentTransport = this.initializeDevelopmentTransport()
     this.productionTransport = this.initializeProductionTransport()
     this.loggerName = loggerName
+    this.correlationId = undefined
+    this.container = new Container().add(this.loggerName, {
+      defaultMeta: {
+        correlationId: this.correlationId,
+        microservice: 'project_name',
+      },
+      format: this.winstonLoggerFormatter(),
+      transports: Config.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
+    })
   }
 
   info(message: string): void {
-    new Container()
-      .add(this.loggerName, {
-        format: this.winstonLoggerFormatter(),
-        transports: Config.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
-      })
-      .info(message)
+    this.container.defaultMeta = { ...this.container.defaultMeta, correlationId: this.correlationId }
+    this.container.info(message)
   }
 
   error(message: string): void {
-    new Container()
-      .add(this.loggerName, {
-        format: this.winstonLoggerFormatter(),
-        transports: Config.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
-      })
-      .error(message)
+    this.container.defaultMeta = { ...this.container.defaultMeta, correlationId: this.correlationId }
+    this.container.error(message)
   }
 
   warn(message: string): void {
-    new Container()
-      .add(this.loggerName, {
-        format: this.winstonLoggerFormatter(),
-        transports: Config.NODE_ENV === 'production' ? this.productionTransport : this.developmentTransport,
-      })
-      .warn(message)
+    this.container.defaultMeta = { ...this.container.defaultMeta, correlationId: this.correlationId }
+    this.container.warn(message)
   }
 
   private initializeDevelopmentTransport() {
@@ -60,7 +59,7 @@ export class GoogleWinstonLogger implements ILogger {
       ...this.developmentTransport,
       new LoggingWinston({
         level: 'debug',
-        logName: 'hex',
+        logName: 'project_name',
       }),
     ]
 
@@ -69,5 +68,13 @@ export class GoogleWinstonLogger implements ILogger {
 
   private winstonLoggerFormatter(): Logform.Format {
     return combine(label({ label: this.loggerName }), splat(), timestamp(), json(), prettyPrint())
+  }
+
+  setCorrelationId(correlationId: string | undefined): void {
+    this.correlationId = correlationId
+  }
+
+  getCorrelationId(): string | undefined {
+    return this.correlationId
   }
 }

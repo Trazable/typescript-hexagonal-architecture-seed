@@ -1,4 +1,5 @@
 import { Message } from '@google-cloud/pubsub'
+import { MessageAtributes } from '../../../../../ports/queue'
 
 import { ShowMessage } from '../../../../../use-cases/showMessage'
 
@@ -11,11 +12,12 @@ export class ExampleHandler {
   }
 
   showMessageHandler = async (message: Message): Promise<void> => {
-    const { data, ack } = message
-
     try {
-      await this.showMessageUseCase.execute(JSON.parse(data.toString()))
-      ack()
+      const messageAttributes = message.attributes as MessageAtributes
+
+      this.showMessageUseCase.logger.setCorrelationId(messageAttributes.correlationId)
+      await this.showMessageUseCase.execute(JSON.parse(message.data.toString()))
+      message.ack()
     } catch (error) {
       this.showMessageUseCase.logger.error(error.stack)
     }

@@ -27,4 +27,16 @@ export interface ILogger {
    * @param message - Message to log
    */
   warn(message: string): void
+
+  /**
+   *
+   * Set the correlationId gived by the input data
+   * @param correlationId
+   */
+  setCorrelationId(correlationId: string | undefined): void
+
+  /**
+   * Get the correlationId saved in the logger to send to another microservice
+   */
+  getCorrelationId(): string | undefined
 }

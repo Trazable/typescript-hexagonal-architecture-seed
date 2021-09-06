@@ -3,6 +3,7 @@ version: '3.7'
 services:
 
     project_name:
+        image: ${PROJECT_NAME_IMAGE_NAME:-project_name}
         build:
             context: .
             dockerfile: Dockerfile
@@ -18,7 +19,9 @@ services:
             - DB_URI=mongodb://mongo:27017/project_name?authSource=admin
             - GCLOUD_PROJECT_ID=gloud_project_id
             - SUBSCRIPTION_NAME=subscription_name
-            - GOOGLE_APPLICATION_CREDENTIALS=./google_service_account.json
+            - PUBSUB_EMULATOR_HOST=pubsub_emulator:8432
+            - PUBSUB_PROJECT_ID=fake_project
+
         volumes:
             - ./:/app
             - project_name_dist:/app/dist
@@ -48,6 +51,14 @@ services:
             - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
         ports:
             - 8081:8081
+
+    pubsub_emulator:
+        image: storytel/gcp-pubsub-emulator
+        container_name: pubsub_emulator
+        ports:
+            - 8432:8432
+        command: --host=0.0.0.0 --port=8432
+
 
 
 volumes:
