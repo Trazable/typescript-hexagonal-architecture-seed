@@ -10,9 +10,12 @@
     "test:unit": "./node_modules/.bin/mocha -r ts-node/register ./src/**/*.test.ts",
     "test:coverage": "./node_modules/.bin/nyc --reporter=text --reporter=lcov --temp-dir=./coverage/.nyc_output npm run test:unit",
     "test:happy": "./node_modules/.bin/mocha ./__tests__/happy-path/happy-path.test.js",
+    "test:types": "./node_modules/.bin/tsc --noEmit",
     "lint": "npm run lint:eslint",
     "lint:eslint": "./node_modules/.bin/eslint .",
-    "compile": "./node_modules/.bin/tsc"
+    "clean": "rm -rf dist",
+    "precompile": "npm run clean",
+    "compile": "./node_modules/.bin/tsc --project tsconfig.production.json"
   },
   "author": {
     "name": "Trazable",
