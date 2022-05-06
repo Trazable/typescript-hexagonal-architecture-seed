@@ -1,6 +1,5 @@
 // APPLICATION INDEX
-
-import { Add } from './use-cases/add'
+import 'reflect-metadata'
 import { ExpressApi } from './adapters/primary/rest/express'
 import { MongoManager } from './adapters/secondary/mongo'
 import { MongoExampleRepository } from './adapters/secondary/mongo/example.repository'
