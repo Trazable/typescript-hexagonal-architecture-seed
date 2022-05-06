@@ -5,8 +5,9 @@ export enum MessageAttributeOperation {
   DELETE = 'delete',
 }
 
-export type MessageAtributes = {
+export type MessageAttributes = {
   version: string
+  addons?: string
   correlationId?: string
   companyId: string
   microserviceTrigger?: string
@@ -22,8 +23,9 @@ export interface IQueue {
    * Publish message
    *
    * @param topicName - Topic name on publish the message
+   * @param message - Message to publish
    * @param attributes - Message attributes to publish
    * @returns The message Id
    */
-  publish(message: string, attributes: MessageAtributes): Promise<string | undefined>
+  publish(topicName: string, message: string, attributes: MessageAttributes): Promise<string | undefined>
 }
