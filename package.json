@@ -43,7 +43,7 @@
     "express-enforces-ssl": "^1.1.0",
     "helmet": "^4.4.1",
     "http-status-codes": "^2.1.4",
-    "mongodb": "^3.6.4",
+    "mongodb": "^4.5.0",
     "morgan": "^1.10.0",
     "saslprep": "^1.0.3",
     "source-map-support": "^0.5.19",
