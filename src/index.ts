@@ -4,9 +4,6 @@ import { ExpressApi } from './adapters/primary/rest/express'
 import { MongoManager } from './adapters/secondary/mongo'
 import { MongoExampleRepository } from './adapters/secondary/mongo/example.repository'
 import { install as installSourceMapSupport } from 'source-map-support'
-import { GetAll } from './use-cases/getAll'
-import { ChangeName } from './use-cases/changeName'
-import { ShowMessage } from './use-cases/showMessage'
 import { GoogleWinstonLogger } from './adapters/secondary/google/logger'
 import { GoogleCloudSecret } from './adapters/secondary/google/secret'
 import { GoogleKMS } from './adapters/secondary/google/kms'
@@ -17,77 +14,58 @@ import { AxiosHttp } from './adapters/secondary/http/axios-http'
 import { TrazableAuth } from './adapters/secondary/trazable/trazable-auth'
 import {
   DATABASE_LOGGER,
-  ADD_USE_CASE_LOGGER,
-  GET_ALL_USE_CASE_LOGGER,
-  CHANGE_NAME_USE_CASE_LOGGER,
+  EXAMPLE_REPOSITORY,
   EXPRESS_API_LOGGER,
-  SHOW_MESSAGE_USE_CASE_LOGGER,
+  ID_GENERATOR,
   PUBSUB_LOGGER,
-  EXAMPLE_CREATED_EVENT,
+  QUEUE_PUBLISHER,
+  USE_CASES_LOGGER,
 } from './constants'
 import { GooglePubSub } from './adapters/primary/queue/pubsub'
 import { Config } from './config'
+import Container from 'typedi'
 ;(async () => {
   // Source mapping => compiled js
   installSourceMapSupport()
 
+  // DATABASE IDENTIFIERS GENERATOR
+  Container.set(ID_GENERATOR, new NanoIdGenerator())
+
+  // QUEUE PUBLISHER
+  Container.set(
+    QUEUE_PUBLISHER,
+    new PubsubPublisher(Config.GCLOUD_PROJECT_ID || '', new GoogleWinstonLogger(PUBSUB_LOGGER))
+  )
+
   /// //// SECONDARY ADAPTERS (OUTPUT) \\\\ \\\
 
   // Mongo database configuration
-  const mongoManager = new MongoManager(
+  const mongoClient = await new MongoManager(
     new GoogleCloudSecret(new GoogleKMS(), new GoogleStorage()),
     new GoogleWinstonLogger(DATABASE_LOGGER)
-  )
-  // Connect database and retrieve the client
-  const mongoClient = await mongoManager.connect()
+  ).connect()
 
-  // USE-CASE LOGGERS
+  // DYNAMIC LOGGER INJECTION FOR EACH LOGGER
+  for (const useCaseLogger of Object.keys(USE_CASES_LOGGER)) {
+    Container.set(useCaseLogger, new GoogleWinstonLogger(useCaseLogger))
+  }
+
   if (mongoClient) {
-    /// //// PRIMARY PORTS (CORE) \\\\ \\\
-
-    // ADD
-    const addUseCaseLogger = new GoogleWinstonLogger(ADD_USE_CASE_LOGGER)
-    const addUseCase = new Add(
-      new MongoExampleRepository(mongoClient, addUseCaseLogger),
-      addUseCaseLogger,
-      new NanoIdGenerator(),
-      new PubsubPublisher(EXAMPLE_CREATED_EVENT, Config.GCLOUD_PROJECT_ID || '', addUseCaseLogger)
+    // Repositories
+    Container.set(
+      EXAMPLE_REPOSITORY,
+      new MongoExampleRepository(mongoClient, new GoogleWinstonLogger(EXAMPLE_REPOSITORY))
     )
-
-    // GET ALL
-    const getAllUseCaseLogger = new GoogleWinstonLogger(GET_ALL_USE_CASE_LOGGER)
-    const getAllUseCase = new GetAll(new MongoExampleRepository(mongoClient, getAllUseCaseLogger), getAllUseCaseLogger)
-
-    // CHANGE NAME
-    const changeNameUseCaseLogger = new GoogleWinstonLogger(CHANGE_NAME_USE_CASE_LOGGER)
-    const changeNameUseCase = new ChangeName(
-      new MongoExampleRepository(mongoClient, changeNameUseCaseLogger),
-      changeNameUseCaseLogger
-    )
-
-    // LOG CREATION
-    const showMessageUseCase = new ShowMessage(new GoogleWinstonLogger(SHOW_MESSAGE_USE_CASE_LOGGER))
 
     /// //// PRIMARY ADAPTERS (INPUT) \\\\ \\\
 
     // EXPRESS API
-    const api = new ExpressApi(
-      addUseCase,
-      getAllUseCase,
-      changeNameUseCase,
+    new ExpressApi(
       new GoogleWinstonLogger(EXPRESS_API_LOGGER),
       new TrazableAuth(new AxiosHttp(), Config.AUTH_URL)
-    )
-    // Start api at port 8080
-    api.start(Config.PORT || '8080')
+    ).start(Config.PORT || '8080')
 
     // GOOGLE PUBSUB
-    const googlePubSub = new GooglePubSub(
-      Config.GCLOUD_PROJECT_ID || '',
-      showMessageUseCase,
-      new GoogleWinstonLogger(PUBSUB_LOGGER)
-    )
-    // Start pubsub subscriptions
-    await googlePubSub.startSubscriptions()
+    new GooglePubSub(Config.GCLOUD_PROJECT_ID || '', new GoogleWinstonLogger(PUBSUB_LOGGER)).startSubscriptions()
   }
 })()
