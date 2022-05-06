@@ -5,15 +5,32 @@ import { PropertyRequiredError } from '../../exceptions/property-required'
 import { ILogger } from '../../ports/logger'
 import { IIDGenerator } from '../../ports/id-generator'
 import { IQueue, MessageAttributeOperation } from '../../ports/queue'
+import { Inject, Service } from 'typedi'
+import {
+  EXAMPLE_REPOSITORY,
+  ID_GENERATOR,
+  MESSAGE_PUBLISHED_TOPIC,
+  QUEUE_PUBLISHER,
+  USE_CASES_LOGGER,
+} from '../../constants'
 
 /**
  * Add new Example UseCase
  * @namespace Example
  */
+
+@Service()
 export class Add {
+  @Inject(EXAMPLE_REPOSITORY)
   private readonly repository: IExampleRepository
+
+  @Inject(USE_CASES_LOGGER.ADD_USE_CASE_LOGGER)
   public readonly logger: ILogger
+
+  @Inject(ID_GENERATOR)
   private readonly idGenerator: IIDGenerator
+
+  @Inject(QUEUE_PUBLISHER)
   private readonly queue: IQueue
 
   constructor(repository: IExampleRepository, logger: ILogger, idGenerator: IIDGenerator, queue: IQueue) {
@@ -61,7 +78,7 @@ export class Add {
 
     this.logger.info('New example created succesfully')
 
-    this.queue.publish(JSON.stringify(newExample), {
+    this.queue.publish(MESSAGE_PUBLISHED_TOPIC, JSON.stringify(newExample), {
       version: '1',
       companyId: '1',
       collection: 'example',

@@ -9,7 +9,7 @@ export class AuthenticationMiddleware {
     this.auth = auth
   }
 
-  authenticate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  authenticate = async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
     // Validate has an authentication header
     if (!req.headers.authorization) return res.status(StatusCodes.UNAUTHORIZED).end()
 

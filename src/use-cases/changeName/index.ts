@@ -2,13 +2,20 @@ import { IExampleRepository } from '../../repositories/example.repository'
 import { Example } from '../../entities/example'
 import { NotFoundError } from '../../exceptions/not-found'
 import { ILogger } from '../../ports/logger'
+import { Inject, Service } from 'typedi'
+import { EXAMPLE_REPOSITORY, USE_CASES_LOGGER } from '../../constants'
 
 /**
  * Change an example name by id UseCase
  * @namespace Example
  */
+
+@Service()
 export class ChangeName {
+  @Inject(EXAMPLE_REPOSITORY)
   private readonly repository: IExampleRepository
+
+  @Inject(USE_CASES_LOGGER.CHANGE_NAME_USE_CASE_LOGGER)
   public readonly logger: ILogger
 
   constructor(repository: IExampleRepository, logger: ILogger) {

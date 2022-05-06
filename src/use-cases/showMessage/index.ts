@@ -1,10 +1,15 @@
+import { Inject, Service } from 'typedi'
+import { USE_CASES_LOGGER } from '../../constants'
 import { ILogger } from '../../ports/logger'
 
 /**
  * Log Creations UseCase
  * @namespace Example
  */
+
+@Service()
 export class ShowMessage {
+  @Inject(USE_CASES_LOGGER.SHOW_MESSAGE_USE_CASE_LOGGER)
   public readonly logger: ILogger
 
   constructor(logger: ILogger) {
