@@ -17,7 +17,6 @@ services:
             - DB_USER=mongoadmin
             - DB_PASSWORD=secret
             - DB_URI=mongodb://mongo:27017/project_name?authSource=admin
-            - GCLOUD_PROJECT_ID=gloud_project_id
             - SUBSCRIPTION_NAME=subscription_name
             - PUBSUB_EMULATOR_HOST=pubsub_emulator:8432
             - PUBSUB_PROJECT_ID=fake_project
