@@ -41,7 +41,6 @@
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "express-enforces-ssl": "^1.1.0",
-    "express-swagger-generator": "^1.1.17",
     "helmet": "^4.4.1",
     "http-status-codes": "^2.1.4",
     "mongodb": "^3.6.4",
