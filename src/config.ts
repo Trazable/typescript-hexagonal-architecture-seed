@@ -17,9 +17,6 @@ export const Config = {
   KMS_LOCATION: process.env.KMS_LOCATION, // Keyring location
   KMS_KEY_WALLETS: process.env.KMS_KEY_WALLETS, // Wallets key (wallets)
 
-  // PUBSUB
-  SUBSCRIPTION_NAME: process.env.SUBSCRIPTION_NAME,
-
   AUTH_URL: process.env.AUTH_URL, // Trazable Microservice Auth URL
   PORT: process.env.PORT, // Port on serve http primary adapter // default 8080
   DB_URI: process.env.DB_URI, // Optional env variable if no secret is provided
