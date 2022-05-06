@@ -24,9 +24,8 @@ export class MongoManager {
       this.client = new MongoClient(
         dataBaseSecrets?.DB_URI || Config.DB_URI || 'mongodb://mongo:27017/project_name?authSource=admin',
         {
-          useUnifiedTopology: true,
           auth: {
-            user: dataBaseSecrets?.DB_USER || Config.DB_USER || 'mongoadmin',
+            username: dataBaseSecrets?.DB_USER || Config.DB_USER || 'mongoadmin',
             password: dataBaseSecrets?.DB_PASSWORD || Config.DB_PASSWORD || 'secret',
           },
         }
@@ -42,9 +41,9 @@ export class MongoManager {
       this.logger.info('Database connected')
 
       return this.client
-    } catch (error) {
-      this.logger.error('An error ocured connecting to the database')
-      this.logger.error(error.stack)
+    } catch (error: unknown) {
+      this.logger.error('An error occurred connecting to the database')
+      if (error instanceof Error) this.logger.error(error?.stack || error.message)
     }
   }
 
@@ -52,8 +51,8 @@ export class MongoManager {
     try {
       this.client && this.client.close()
       this.client = undefined
-    } catch (error) {
-      this.logger.error(error.stack)
+    } catch (error: unknown) {
+      if (error instanceof Error) this.logger.error(error?.stack || error.message)
     }
   }
 
@@ -63,14 +62,6 @@ export class MongoManager {
 
   getDatabase(): Db | undefined {
     return this.client && this.client.db()
-  }
-
-  isConnected(): boolean {
-    let isConnected = false
-    if (this.client) {
-      isConnected = this.client.isConnected()
-    }
-    return isConnected
   }
 
   private async getDataBaseSecrets(): Promise<Record<string, string> | undefined> {
