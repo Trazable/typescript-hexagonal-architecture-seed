@@ -5,8 +5,6 @@ FROM node:14-alpine AS base
 
 WORKDIR /app
 
-HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/ping || exit 1
-
 ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY package*.json ./
@@ -26,8 +24,6 @@ RUN npm run test && \
 FROM node:14-alpine AS production
 
 WORKDIR /app
-
-HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/ping || exit 1
 
 ENV \
   PATH=/app/node_modules/.bin:$PATH \
