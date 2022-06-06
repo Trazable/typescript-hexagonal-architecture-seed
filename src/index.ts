@@ -13,6 +13,7 @@ import { NanoIdGenerator } from './adapters/secondary/nanoid-generator'
 import { AxiosHttp } from './adapters/secondary/http/axios-http'
 import { TrazableAuth } from './adapters/secondary/trazable/trazable-auth'
 import {
+  APPLICATION_LOGGER,
   DATABASE_LOGGER,
   EXAMPLE_REPOSITORY,
   EXPRESS_API_LOGGER,
@@ -24,7 +25,10 @@ import {
 import { GooglePubSub } from './adapters/primary/queue/pubsub'
 import { Config } from './config'
 import Container from 'typedi'
-;(async () => {
+
+const applicationLogger = new GoogleWinstonLogger(APPLICATION_LOGGER)
+
+async function main() {
   // Source mapping => compiled js
   installSourceMapSupport()
 
@@ -68,4 +72,9 @@ import Container from 'typedi'
     // GOOGLE PUBSUB
     new GooglePubSub(Config.GCLOUD_PROJECT_ID || '', new GoogleWinstonLogger(PUBSUB_LOGGER)).startSubscriptions()
   }
-})()
+}
+
+main().catch(error => {
+  applicationLogger.error(error)
+  process.exit(0)
+})
