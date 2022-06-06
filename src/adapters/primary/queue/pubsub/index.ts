@@ -2,7 +2,7 @@ import { PubSub } from '@google-cloud/pubsub'
 import { ExampleHandler } from './message-handlers/example.handler'
 import { ILogger } from '../../../../ports/logger'
 import { Subscription } from './subscription'
-import { SHOW_MESSAGE_SUBSCRIPTION } from '../../../../constants'
+import { MESSAGE_PUBLISHED_TOPIC, SHOW_MESSAGE_SUBSCRIPTION } from '../../../../constants'
 
 /*
  * Google PubSub configuration
@@ -23,11 +23,9 @@ export class GooglePubSub {
   async startSubscriptions(): Promise<void> {
     const exampleHandler = new ExampleHandler()
 
-    await new Subscription(
-      this.pubSubClient,
-      exampleHandler.showMessageHandler,
-      this.logger,
-      SHOW_MESSAGE_SUBSCRIPTION
-    ).initSubscription()
+    await new Subscription(this.pubSubClient, exampleHandler.showMessageHandler, this.logger, [
+      SHOW_MESSAGE_SUBSCRIPTION,
+      MESSAGE_PUBLISHED_TOPIC,
+    ]).initSubscription()
   }
 }
