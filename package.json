@@ -36,7 +36,7 @@
   "dependencies": {
     "@google-cloud/kms": "^2.3.1",
     "@google-cloud/logging-winston": "^4.0.4",
-    "@google-cloud/pubsub": "^2.10.0",
+    "@google-cloud/pubsub": "^3.0.1",
     "@google-cloud/storage": "^5.8.1",
     "axios": "^0.21.1",
     "express": "^4.17.1",
