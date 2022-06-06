@@ -18,13 +18,16 @@ export class PubsubPublisher implements IQueue {
   ): Promise<string | undefined> {
     let messageId
     try {
-      messageId = await this.pubSubClient.topic(topicName).publish(Buffer.from(message), {
-        ...attributes,
-        ...(correlationId || this.logger.getCorrelationId()
-          ? { correlationId: correlationId || this.logger.getCorrelationId() }
-          : {}),
-        microserviceTrigger: 'EXAMPLE',
-      } as MessageAttributes)
+      messageId = await this.pubSubClient.topic(topicName).publishMessage({
+        data: Buffer.from(message),
+        attributes: {
+          ...attributes,
+          ...(correlationId || this.logger.getCorrelationId()
+            ? { correlationId: correlationId || this.logger.getCorrelationId() }
+            : {}),
+          microserviceTrigger: 'EXAMPLE',
+        } as MessageAttributes,
+      })
       this.logger.info(`Message published on topic ${topicName} succesfully`)
       this.logger.info(message)
     } catch (error) {
